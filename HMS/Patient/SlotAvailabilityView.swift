@@ -16,7 +16,9 @@ struct DoctorCard: View {
     var experience: Int
     let gridItems = Array(repeating: GridItem(.flexible()), count: 3)
     let times = ["9:00", "10:00", "11:00", "12:00", "1:00", "2:00", "3:00", "4:00", "5:00"]
-    var slotStatus: [String: Bool] // Dictionary to store slot availability
+    var boookedSlots = ["9:00", "10:00", "11:00"]
+    
+    @State private var selectedSlot: String? = nil
     
     @State private var selectedSlotIndex: Int? = nil // Track selected slot index
     @State private var selectedDate = Date()
@@ -27,17 +29,6 @@ struct DoctorCard: View {
         self.rating = rating
         self.qualifications = qualifications
         self.experience = experience
-        
-        // Initialize slot status with default availability (all slots available)
-        var status = [String: Bool]()
-        for time in times {
-            status[time] = true
-        }
-        // Mark some slots as blocked
-               status["10:00"] = false
-               status["2:00"] = false
-               status["4:00"] = false
-        self.slotStatus = status
     }
     
     
@@ -110,7 +101,7 @@ struct DoctorCard: View {
                             
                             LazyVGrid(columns: gridItems, spacing: 10) {
                                 ForEach(times, id: \.self) { time in
-                                    slotButton(time: time)
+                                    TimeButton(time: time, bookedSlots: boookedSlots, selectedSlot: $selectedSlot)
                                 }
                             }                .padding()
             }
@@ -131,32 +122,46 @@ struct DoctorCard: View {
        
     }
     
-    @ViewBuilder
-        func slotButton(time: String) -> some View {
-            let isBooked = !slotStatus[time, default: true] // Check if the slot is booked
-            
-            Button(action: {
-                if !isBooked {
-                    selectedSlotIndex = times.firstIndex(of: time) // Update selected slot index when tapped if not booked
-                }
-            }) {
-                RoundedRectangle(cornerRadius: 15)
-                    .overlay(
-                        Text(time)
-                            .font(.headline)
-                            .foregroundColor(isBooked ? .gray : .blue)
-                    )
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 15)
-                            .stroke(isBooked ? Color.gray : Color.blue, lineWidth: 1)
-                    )
-                    .foregroundColor(selectedSlotIndex == times.firstIndex(of: time) ? .blue : (isBooked ? .white : .clear))
-            }
-            .frame(width: 90, height: 50)
-        }
-    
-    
 }
+
+struct TimeButton: View {
+    var time: String
+    var bookedSlots: [String]
+    @Binding var selectedSlot: String?
+   
+    var body: some View {
+        let isBooked = bookedSlots.contains(time)
+        let isSelected = selectedSlot == time
+        let isSelectable = !isBooked
+        
+        Button(action: {
+            // Update selected time slot if it is selectable
+            if isSelectable {
+                selectedSlot = time
+            }
+        }) {
+            RoundedRectangle(cornerRadius: 15)
+                .fill(isBooked ? Color.white : (isSelected ? Color.blue : Color.white)) // Fill color based on booking and selection status
+                .overlay(
+                    Text(time)
+                        .font(.headline)
+                        .foregroundColor(isBooked ? .gray : (isSelected ? .white : .blue)) // Set text color based on selection and availability
+                )
+                .overlay(
+                    RoundedRectangle(cornerRadius: 15)
+                        .stroke(isBooked ? Color.gray : Color.blue, lineWidth: 1) // Set border color based on booking status
+                )
+                .opacity(isBooked ? 0.5 : 1.0) // Reduce opacity if booked
+                .disabled(isBooked) // Disable button if booked
+        }
+        .frame(width: 90, height: 50)
+    }
+}
+
+
+
+
+
 
 
 
