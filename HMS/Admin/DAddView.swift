@@ -6,8 +6,7 @@
 //
 
 import SwiftUI
-
-import SwiftUI
+import Firebase
 
 struct DAddView: View {
     @State private var image: Image?
@@ -43,17 +42,13 @@ struct DAddView: View {
                 
                 HStack{
                     imageView
-                                    .onTapGesture {
-                                        self.isImagePickerPresented.toggle()
-                                    }
-                                    .sheet(isPresented: $isImagePickerPresented) {
-                                        ImagePickerView(image: self.$image)
-                                    }.padding(.top, 10).padding(.bottom,10).padding()
-
-
-
+                        .onTapGesture {
+                            self.isImagePickerPresented.toggle()
+                        }
+                        .sheet(isPresented: $isImagePickerPresented) {
+                            ImagePickerView(image: self.$image)
+                        }.padding(.top, 10).padding(.bottom,10).padding()
                 }
-                
                 
                 InputFieldView(data: $dname, title: "Name")
                 InputFieldView(data: $demp, title: "Employee Id")
@@ -65,7 +60,7 @@ struct DAddView: View {
                     Picker("Specialisation", selection: $dspecialisationIndex) {
                         ForEach(0..<specializations.count) { index in
                             Text(specializations[index].rawValue)
-                                
+                            
                         }
                     }
                     .accentColor(.black)
@@ -100,26 +95,29 @@ struct DAddView: View {
                 
                 
                 Button(action: {
-                                    // Print entered data
-                                    print("Name: \(dname)")
-                                    print("Employee ID: \(demp)")
-                                    print("Email: \(demail)")
-                                    print("Department: \(ddepartment)")
-                                    print("Password: \(dpass)")
-                                    print("Specialisation: \(specializations[dspecialisationIndex].rawValue)")
-                                    print("Contact: \(dcontact)")
-                                    print("Experience: \(dexperience)")
-                                    print("Degree: \(ddegree)")
-                                    print("Cabin No.: \(dcabin)")
-                                }) {
-                                    Text("Save")
-                                        .frame(maxWidth: .infinity)
-                                        .padding()
-                                        .background(Color.black)
-                                        .foregroundColor(.white)
-                                        .cornerRadius(10)
-                                        .padding(.horizontal)
-                                }
+                    // Print entered data
+                    print("Name: \(dname)")
+                    print("Employee ID: \(demp)")
+                    print("Email: \(demail)")
+                    print("Department: \(ddepartment)")
+                    print("Password: \(dpass)")
+                    print("Specialisation: \(specializations[dspecialisationIndex].rawValue)")
+                    print("Contact: \(dcontact)")
+                    print("Experience: \(dexperience)")
+                    print("Degree: \(ddegree)")
+                    print("Cabin No.: \(dcabin)")
+                    
+                    register()
+                    
+                }) {
+                    Text("Save")
+                        .frame(maxWidth: .infinity)
+                        .padding()
+                        .background(Color.black)
+                        .foregroundColor(.white)
+                        .cornerRadius(10)
+                        .padding(.horizontal)
+                }
             }
             .padding()
             
@@ -141,7 +139,39 @@ struct DAddView: View {
                     .fill(Color.gray)
                     .frame(width: 125, height: 125)
                     .overlay(Image(systemName: "person.circle.fill")
-                                .foregroundColor(.white))
+                        .foregroundColor(.white))
+            }
+        }
+    }
+    
+    
+    func register() {
+        Auth.auth().createUser(withEmail: demail, password: dpass) { result, error in
+            if let error = error {
+                print(error.localizedDescription)
+            }
+            else{
+                if let result = result {
+                    let userUID = result.user.uid
+                    let userType = "doctor"
+                    addUserType(userUID: userUID, userType: userType)
+                    print("doctor created")
+                }
+            }
+        }
+    }
+    
+    func addUserType(userUID: String, userType: String) {
+        let db = Firestore.firestore()
+        let ref = db.collection("userType").document(userUID)
+        ref.setData([
+            "authID": userUID,
+            "user": userType
+        ]) { error in
+            if let error = error {
+                print("Error setting user type: \(error.localizedDescription)")
+            } else {
+                print("User type \(userType) added for UID: \(userUID)")
             }
         }
     }
@@ -152,14 +182,14 @@ struct DAddView: View {
 
 struct ImagePickerView: UIViewControllerRepresentable {
     @Binding var image: Image?
-
+    
     class Coordinator: NSObject, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
         @Binding var image: Image?
-
+        
         init(image: Binding<Image?>) {
             _image = image
         }
-
+        
         func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
             if let uiImage = info[.originalImage] as? UIImage {
                 image = Image(uiImage: uiImage)
@@ -167,19 +197,19 @@ struct ImagePickerView: UIViewControllerRepresentable {
             picker.dismiss(animated: true, completion: nil)
         }
     }
-
+    
     func makeCoordinator() -> Coordinator {
         return Coordinator(image: $image)
     }
-
+    
     func makeUIViewController(context: Context) -> UIImagePickerController {
         let imagePicker = UIImagePickerController()
         imagePicker.delegate = context.coordinator
         return imagePicker
     }
-
+    
     func updateUIViewController(_ uiViewController: UIImagePickerController, context: Context) {}
-
+    
 }
 
 #Preview {

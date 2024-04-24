@@ -42,20 +42,20 @@ struct DoctorModel: Hashable, Codable, Identifiable {
     }
     
     enum Specialization: String, Codable {
-        case Cardiologist
-        case Orthopedic
-        case Endocrinologist
-        case Gastroenterology
-        case Hematologist
-        case Neurologist
-        case Oncologist
-        case Orthopedist
-        case Pediatrician
-        case Psychiatrist
-        case Pulmonologist
-        case Rheumatologist
-        case Urologist
-        case Ophthalmologist
-        case Gynecologist
+        case Cardiologist = "Cardiologist"
+        case Orthopedic = "Orthopedic"
+        case Endocrinologist = "Endocrinologist"
+        case Gastroenterology = "Gastroenterology"
+        case Hematologist = "Hematologist"
+        case Neurologist = "Neurologist"
+        case Oncologist = "Oncologist"
+        case Orthopedist = "Orthopedist"
+        case Pediatrician = "Pediatrician"
+        case Psychiatrist = "Psychiatrist"
+        case Pulmonologist = "Pulmonologist"
+        case Rheumatologist = "Rheumatologist"
+        case Urologist = "Urologist"
+        case Ophthalmologist = "Ophthalmologist"
+        case Gynecologist = "Gynecologist"
     }
 }
