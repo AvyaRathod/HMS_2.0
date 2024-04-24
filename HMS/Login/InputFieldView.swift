@@ -20,7 +20,15 @@ struct InputFieldView: View {
       .overlay(
        RoundedRectangle(cornerSize: CGSize(width: 4, height: 4))
          .stroke(Color.gray, lineWidth: 1)
-      )
+      ).onChange(of: data) { newValue in
+          // Validate contact number format only if it's the contact field
+          if title == "Contact" {
+              if !newValue.isEmpty && !newValue.hasPrefix("+91") {
+                  // Prepend "+91" to the number
+                  data = "+91 " + newValue.filter { $0.isNumber }
+              }
+          }
+      }
      HStack {
       Text(title ?? "Input")
        .font(.headline)
