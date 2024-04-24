@@ -36,8 +36,7 @@ struct PatientHomeScreen: View {
                 .padding()
                 
                 HStack{
-                    VitalsHeartView()
-                    VitalsSPO2View()
+                  VitalsView()
                 }
                 .padding()
                 
