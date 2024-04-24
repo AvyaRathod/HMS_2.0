@@ -18,6 +18,7 @@
 		41149F002BD63E9A00E32FD7 /* Admin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41149EFF2BD63E9A00E32FD7 /* Admin.swift */; };
 		41149F022BD63EA200E32FD7 /* Patient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41149F012BD63EA200E32FD7 /* Patient.swift */; };
 		41149F062BD63EAF00E32FD7 /* Doc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41149F052BD63EAF00E32FD7 /* Doc.swift */; };
+		412405D92BD9053A00C6482E /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 412405D82BD9053900C6482E /* .gitignore */; };
 		413A15E12BD0F6330035CDAB /* HMSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 413A15E02BD0F6330035CDAB /* HMSApp.swift */; };
 		413A15E32BD0F6330035CDAB /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 413A15E22BD0F6330035CDAB /* ContentView.swift */; };
 		413A15E52BD0F6340035CDAB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 413A15E42BD0F6340035CDAB /* Assets.xcassets */; };
@@ -46,6 +47,7 @@
 		41149EFF2BD63E9A00E32FD7 /* Admin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Admin.swift; sourceTree = "<group>"; };
 		41149F012BD63EA200E32FD7 /* Patient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Patient.swift; sourceTree = "<group>"; };
 		41149F052BD63EAF00E32FD7 /* Doc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Doc.swift; sourceTree = "<group>"; };
+		412405D82BD9053900C6482E /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		413A15DD2BD0F6330035CDAB /* HMS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HMS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		413A15E02BD0F6330035CDAB /* HMSApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HMSApp.swift; sourceTree = "<group>"; };
 		413A15E22BD0F6330035CDAB /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -126,6 +128,7 @@
 		413A15D42BD0F6330035CDAB = {
 			isa = PBXGroup;
 			children = (
+				412405D82BD9053900C6482E /* .gitignore */,
 				413A15DF2BD0F6330035CDAB /* HMS */,
 				413A15DE2BD0F6330035CDAB /* Products */,
 				416C8E552BD7BC6B00309235 /* Frameworks */,
@@ -249,6 +252,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				412405D92BD9053A00C6482E /* .gitignore in Resources */,
 				413A15E82BD0F6340035CDAB /* Preview Assets.xcassets in Resources */,
 				413A15E52BD0F6340035CDAB /* Assets.xcassets in Resources */,
 				416C8E602BD8EA0D00309235 /* GoogleService-Info.plist in Resources */,
