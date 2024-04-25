@@ -15,23 +15,44 @@ struct StaffInfoView: View {
             VStack {
                 List {
                     ForEach(filteredStaff()) { staff in
-                        HStack {
-                            Image(systemName: "person.circle.fill")
-                                .font(.largeTitle)
-                                .padding(.trailing)
-                            VStack(alignment: .leading) {
-                                Text(staff.name)
-                                    .fontWeight(.bold)
-                                Text(staff.spec)
-                                    .foregroundColor(.gray)
-                                Text("Employee Id: \(staff.id)")
-                                    .foregroundColor(.gray)
+                        NavigationLink(destination: EmptyView()){
+                            HStack {
+                                Image(systemName: "person.circle.fill")
+                                    .font(.largeTitle)
+                                    .padding(.trailing)
+                                VStack(alignment: .leading) {
+                                    Text(staff.name)
+                                        .fontWeight(.bold)
+                                    Text(staff.spec)
+                                        .foregroundColor(.gray)
+                                    Text("Employee Id: \(staff.id)")
+                                        .foregroundColor(.gray)
+                                }
                             }
                         }
                     }
+                    .swipeActions(edge: .leading, allowsFullSwipe: false) {
+                            Button("Flag") {
+                                // Action to flag the item
+                            }
+                            .tint(.yellow)
+                            
+                            Button("Delete") {
+                                // Action to delete the item
+                            }
+                            .tint(.red)
+                        }
+                        .swipeActions(edge: .trailing, allowsFullSwipe: false) {
+                            Button("Archive") {
+                                // Action to archive the item
+                            }
+                            .tint(.blue)
+                        }
+
+                    
                 }
                 .searchable(text: $searchText)
-            }
+                            }
             .navigationTitle("Staff info")
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
