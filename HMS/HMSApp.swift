@@ -18,14 +18,53 @@ class AppDelegate: NSObject, UIApplicationDelegate {
   }
 }
 
+enum userType: String {
+    case patient
+    case admin
+    case doctor
+    case unknown
+    
+}
+
+class UserTypeManager: ObservableObject {
+    @Published var userType: userType = .unknown
+}
+
+
 @main
 struct HMSApp: App {
+    @StateObject var userTypeManager = UserTypeManager()
     
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     
     var body: some Scene {
         WindowGroup {
-            ContentView()
+                    if userTypeManager.userType == .unknown {
+                        LoginView(userTypeManager: userTypeManager) // Pass UserTypeManager here
+                    } else {
+                        MainTabs()
+                            .environmentObject(userTypeManager)
+                    }
+                }
+    }
+}
+
+
+struct MainTabs: View {
+    @EnvironmentObject var userTypeManager: UserTypeManager
+    
+    var body: some View {
+        NavigationStack{
+            switch userTypeManager.userType {
+            case .patient:
+                Patient()
+            case .admin:
+                Admin()
+            case .doctor:
+                Doc()
+            case .unknown:
+                ContentView()
+            }
         }
     }
 }

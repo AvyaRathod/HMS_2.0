@@ -10,36 +10,31 @@ import SwiftUI
 struct Admin: View {
     var body: some View {
         TabView {
-            Text("Home")
+            AdminHome()
                 .tabItem {
                     Image(systemName: "house")
                     Text("Home")
                 }
-            Text("Record")
+            Text("Tab 2")
                 .tabItem {
-                    Image(systemName: "book")
-                    Text("Record")
+                    Image(systemName: "person.3.fill")
+                    Text("Staff Info")
                 }
-            StaffInfoView()
+            Text("Tab 3")
                 .tabItem {
                     VStack {
-                        Image(systemName: "person.3.fill")
+                        Image(systemName: "exclamationmark.triangle.fill")
                             .foregroundColor(.red)
                             .frame(width:100, height: 100)
                             .clipShape(Circle())
                             .background(.red)
-                        Text("Staff Info")
+                        Text("Alert")
                     }
                 }
-            Text("Alert")
+            Text("Tab 4")
                 .tabItem {
-                    Image(systemName: "light.beacon.max.fill")
-                    Text("Alert")
-                }
-            Text("Health Events")
-                .tabItem {
-                    Image(systemName: "heart.square.fill")
-                    Text("Health Events")
+                    Image(systemName: "heart.text.square.fill")
+                    Text("Health events")
                 }
         }
     }

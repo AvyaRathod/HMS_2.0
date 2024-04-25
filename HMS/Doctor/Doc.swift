@@ -9,7 +9,14 @@ import SwiftUI
 
 struct Doc: View {
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        TabView{
+            DoctorHome()
+                .tabItem { Image(systemName: "house")
+                    Text("Home") }
+            
+            HealthEvents().tabItem { Image(systemName: "heart.text.square.fill")
+                Text("Home") }
+        }
     }
 }
 
