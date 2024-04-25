@@ -15,12 +15,12 @@ struct Admin: View {
                     Image(systemName: "house")
                     Text("Home")
                 }
-            Text("Tab 2")
+            StaffInfoView()
                 .tabItem {
                     Image(systemName: "person.3.fill")
                     Text("Staff Info")
                 }
-            Text("Tab 3")
+            Text("Alert")
                 .tabItem {
                     VStack {
                         Image(systemName: "exclamationmark.triangle.fill")
@@ -31,7 +31,7 @@ struct Admin: View {
                         Text("Alert")
                     }
                 }
-            Text("Tab 4")
+            Text("Health events")
                 .tabItem {
                     Image(systemName: "heart.text.square.fill")
                     Text("Health events")
