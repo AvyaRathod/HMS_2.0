@@ -36,10 +36,10 @@ struct Admin: View {
                     Image(systemName: "heart.text.square.fill")
                     Text("Health events")
                 }
+            
         }
     }
 }
-
 
 #Preview {
     Admin()
