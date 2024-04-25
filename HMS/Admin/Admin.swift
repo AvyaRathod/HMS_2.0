@@ -46,9 +46,6 @@ struct Admin: View {
 }
 
 
-
-
-
 #Preview {
     Admin()
 }
