@@ -12,33 +12,26 @@ struct DoctorModel: Hashable, Codable, Identifiable {
     var name: String
     var department: String
     var email: String
-    var password: String
     var contact: String
-    var experience: Int
+    var experience: String
     var employeeID: String
-    var image: String? // You can store image as URL or any other representation
-    var specialization: Specialization
+    var image: String?
+    var specialisation: String
     var degree: String
     var cabinNumber: String
-
-    var appointments: [String]?
-    var patients: [String]?
-
+    
     enum CodingKeys: String, CodingKey {
         case id
         case name
-        case department = "dept"
+        case department
         case email
-        case password
         case contact
         case experience
-        case employeeID = "empId"
+        case employeeID = "DocID"
         case image
-        case specialization = "spec"
+        case specialisation
         case degree
-        case cabinNumber = "cabinNo"
-        case appointments
-        case patients
+        case cabinNumber = "cabin"
     }
     
     enum Specialization: String, Codable {
@@ -57,5 +50,22 @@ struct DoctorModel: Hashable, Codable, Identifiable {
         case Urologist = "Urologist"
         case Ophthalmologist = "Ophthalmologist"
         case Gynecologist = "Gynecologist"
+    }
+    
+    init(from dictionary: [String: Any], id: String) {
+        self.id = id
+        self.name = dictionary["name"] as? String ?? ""
+        self.department = dictionary["department"] as? String ?? ""
+        self.email = dictionary["email"] as? String ?? ""
+        self.contact = dictionary["contact"] as? String ?? ""
+        self.experience = dictionary["experience"] as? String ?? ""
+        self.employeeID = dictionary["DocID"] as? String ?? ""
+        self.image = dictionary["image"] as? String
+        self.specialisation = dictionary["specialisation"] as? String ?? ""
+        self.degree = dictionary["degree"] as? String ?? ""
+        self.cabinNumber = dictionary["cabin"] as? String ?? ""
+        
+        // If 'specialisation' in the dictionary is not among the Specialization enum, it defaults to the raw value
+        // as a string to match the Firestore field directly.
     }
 }

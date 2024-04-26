@@ -16,7 +16,6 @@ struct DoctorList: Identifiable {
     let Gender: String
 }
 
-
 struct FilterExperienceView: View {
     @Binding var isFiltering: Bool
     @Binding var selectedExperience: Int
