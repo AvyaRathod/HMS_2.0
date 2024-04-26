@@ -51,12 +51,12 @@
 		6BD105862BD6560100506D84 /* HealthEventTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BD105852BD6560100506D84 /* HealthEventTab.swift */; };
 		8414566F2BD9109A00691A79 /* DoctorProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8414566D2BD9109A00691A79 /* DoctorProfileView.swift */; };
 		841456702BD9109A00691A79 /* DoctorList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8414566E2BD9109A00691A79 /* DoctorList.swift */; };
-		E437886C2BDA4DF900EE6EDF /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E437886B2BDA4DF900EE6EDF /* GoogleService-Info.plist */; };
 		E437886E2BDA4E6A00EE6EDF /* SplashScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = E437886D2BDA4E6A00EE6EDF /* SplashScreen.swift */; };
 		E43788702BDA4E9A00EE6EDF /* OnBoarding.swift in Sources */ = {isa = PBXBuildFile; fileRef = E437886F2BDA4E9A00EE6EDF /* OnBoarding.swift */; };
 		E43788722BDA4EC300EE6EDF /* PageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E43788712BDA4EC300EE6EDF /* PageModel.swift */; };
 		E43788742BDA4EDF00EE6EDF /* PageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E43788732BDA4EDF00EE6EDF /* PageView.swift */; };
 		E46B50D82BD76D12007A57F5 /* SlotBookView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E46B50D72BD76D12007A57F5 /* SlotBookView.swift */; };
+		F597B4462BDBE02300FEF4E1 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F597B4452BDBE02300FEF4E1 /* GoogleService-Info.plist */; };
 		F5A456262BD90AA00068A069 /* vitals.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5A456252BD90AA00068A069 /* vitals.swift */; };
 		F5A456602BD91AEE0068A069 /* Appointment-Manage.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5A4565F2BD91AEE0068A069 /* Appointment-Manage.swift */; };
 		F5A456622BD91B000068A069 /* appointments-upcoming.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5A456612BD91B000068A069 /* appointments-upcoming.swift */; };
@@ -94,12 +94,12 @@
 		6BD105852BD6560100506D84 /* HealthEventTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthEventTab.swift; sourceTree = "<group>"; };
 		8414566D2BD9109A00691A79 /* DoctorProfileView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DoctorProfileView.swift; sourceTree = "<group>"; };
 		8414566E2BD9109A00691A79 /* DoctorList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DoctorList.swift; sourceTree = "<group>"; };
-		E437886B2BDA4DF900EE6EDF /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		E437886D2BDA4E6A00EE6EDF /* SplashScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashScreen.swift; sourceTree = "<group>"; };
 		E437886F2BDA4E9A00EE6EDF /* OnBoarding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBoarding.swift; sourceTree = "<group>"; };
 		E43788712BDA4EC300EE6EDF /* PageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageModel.swift; sourceTree = "<group>"; };
 		E43788732BDA4EDF00EE6EDF /* PageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageView.swift; sourceTree = "<group>"; };
 		E46B50D72BD76D12007A57F5 /* SlotBookView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlotBookView.swift; sourceTree = "<group>"; };
+		F597B4452BDBE02300FEF4E1 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		F5A456252BD90AA00068A069 /* vitals.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = vitals.swift; sourceTree = "<group>"; };
 		F5A456272BD90AC80068A069 /* HMS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = HMS.entitlements; sourceTree = "<group>"; };
 		F5A4565F2BD91AEE0068A069 /* Appointment-Manage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Appointment-Manage.swift"; sourceTree = "<group>"; };
@@ -216,7 +216,7 @@
 		413A15DF2BD0F6330035CDAB /* HMS */ = {
 			isa = PBXGroup;
 			children = (
-				E437886B2BDA4DF900EE6EDF /* GoogleService-Info.plist */,
+				F597B4452BDBE02300FEF4E1 /* GoogleService-Info.plist */,
 				F5A456272BD90AC80068A069 /* HMS.entitlements */,
 				41149EFA2BD634AD00E32FD7 /* Doctor */,
 				41149EF92BD634A700E32FD7 /* Login */,
@@ -342,7 +342,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				412405D92BD9053A00C6482E /* .gitignore in Resources */,
-				E437886C2BDA4DF900EE6EDF /* GoogleService-Info.plist in Resources */,
+				F597B4462BDBE02300FEF4E1 /* GoogleService-Info.plist in Resources */,
 				413A15E82BD0F6340035CDAB /* Preview Assets.xcassets in Resources */,
 				413A15E52BD0F6340035CDAB /* Assets.xcassets in Resources */,
 			);
