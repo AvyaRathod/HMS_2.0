@@ -24,7 +24,7 @@ struct Patient: View {
                         Text("SOS")
                     }
                 }
-            Text("Tab 4")
+            DoctorListView()
                 .tabItem {
                     Image(systemName: "plus.app")
                     Text("Book")

@@ -147,6 +147,7 @@ struct DoctorCardView: View {
     @State private var showBookButton = true
     
     var body: some View {
+        
         VStack(alignment: .leading, spacing: 10) {
             HStack{
                 Image(doctor.profileImageName)
@@ -154,7 +155,7 @@ struct DoctorCardView: View {
                     .aspectRatio(contentMode: .fill)
                     .frame( width: 110, height: 150, alignment: .leading)
                     .cornerRadius(10)
-                    
+                
                 
                 VStack(alignment: .leading){
                     HStack{
@@ -170,7 +171,7 @@ struct DoctorCardView: View {
                             }
                         }
                     }
-                        
+                    
                     HStack{
                         Text(doctor.description)
                             .font(.system(size: 15))
@@ -184,37 +185,30 @@ struct DoctorCardView: View {
                     }
                     Text(doctor.experience)
                         .font(.system(size: 14, weight: .semibold))
-                        
-                        
+                    
+                    
                     HStack{
                         Spacer()
-                        if showBookButton {
-                            Button(action: {
-                                // Book appointment action
-                            }) {
-                                Text("Book")
-                                    .foregroundColor(.white)
-                                    .padding(.horizontal, 20)
-                                    .padding(.vertical, 10)
-                                    .background(Color.blue)
-                                    .cornerRadius(30)
-                            }
+                        NavigationLink(destination: SlotBookView()) {
+                            Text("Book")
+                                .foregroundColor(.white)
+                                .padding(.horizontal, 20)
+                                .padding(.vertical, 10)
+                                .background(Color.blue)
+                                .cornerRadius(30)
                         }
-                        
-                        
-                        
-                        
-                           
                     }
+                    
                 }
             }
-
-        }
-        .frame(maxWidth: .infinity)
-        .padding()
-        .background(Color("doclist"))
-        .cornerRadius(10)
-        .shadow(radius: 5)
+            
+        }.frame(maxWidth: .infinity)
+                .padding()
+                .background(Color("doclist"))
+                .cornerRadius(10)
+                .shadow(radius: 5)
+        
+    
         
 
     }

@@ -56,7 +56,7 @@
 		E43788702BDA4E9A00EE6EDF /* OnBoarding.swift in Sources */ = {isa = PBXBuildFile; fileRef = E437886F2BDA4E9A00EE6EDF /* OnBoarding.swift */; };
 		E43788722BDA4EC300EE6EDF /* PageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E43788712BDA4EC300EE6EDF /* PageModel.swift */; };
 		E43788742BDA4EDF00EE6EDF /* PageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E43788732BDA4EDF00EE6EDF /* PageView.swift */; };
-		E46B50D82BD76D12007A57F5 /* SlotAvailabilityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E46B50D72BD76D12007A57F5 /* SlotAvailabilityView.swift */; };
+		E46B50D82BD76D12007A57F5 /* SlotBookView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E46B50D72BD76D12007A57F5 /* SlotBookView.swift */; };
 		F5A456262BD90AA00068A069 /* vitals.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5A456252BD90AA00068A069 /* vitals.swift */; };
 		F5A456602BD91AEE0068A069 /* Appointment-Manage.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5A4565F2BD91AEE0068A069 /* Appointment-Manage.swift */; };
 		F5A456622BD91B000068A069 /* appointments-upcoming.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5A456612BD91B000068A069 /* appointments-upcoming.swift */; };
@@ -99,7 +99,7 @@
 		E437886F2BDA4E9A00EE6EDF /* OnBoarding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBoarding.swift; sourceTree = "<group>"; };
 		E43788712BDA4EC300EE6EDF /* PageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageModel.swift; sourceTree = "<group>"; };
 		E43788732BDA4EDF00EE6EDF /* PageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageView.swift; sourceTree = "<group>"; };
-		E46B50D72BD76D12007A57F5 /* SlotAvailabilityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlotAvailabilityView.swift; sourceTree = "<group>"; };
+		E46B50D72BD76D12007A57F5 /* SlotBookView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlotBookView.swift; sourceTree = "<group>"; };
 		F5A456252BD90AA00068A069 /* vitals.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = vitals.swift; sourceTree = "<group>"; };
 		F5A456272BD90AC80068A069 /* HMS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = HMS.entitlements; sourceTree = "<group>"; };
 		F5A4565F2BD91AEE0068A069 /* Appointment-Manage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Appointment-Manage.swift"; sourceTree = "<group>"; };
@@ -162,13 +162,13 @@
 				8414566E2BD9109A00691A79 /* DoctorList.swift */,
 				8414566D2BD9109A00691A79 /* DoctorProfileView.swift */,
 				41149F012BD63EA200E32FD7 /* Patient.swift */,
+				E46B50D72BD76D12007A57F5 /* SlotBookView.swift */,
 				6B14B04C2BD68CB1004F0B78 /* PatientHomeScreen.swift */,
 				F5A4565F2BD91AEE0068A069 /* Appointment-Manage.swift */,
 				F5A456632BD97DFB0068A069 /* appo-completed.swift */,
 				F5A456652BD988F50068A069 /* appo-cancelled.swift */,
 				F5A456612BD91B000068A069 /* appointments-upcoming.swift */,
 				6B5FFCCE2BD63F4C00224FC2 /* Patient Components */,
-				E46B50D72BD76D12007A57F5 /* SlotAvailabilityView.swift */,
 			);
 			path = Patient;
 			sourceTree = "<group>";
@@ -355,7 +355,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E46B50D82BD76D12007A57F5 /* SlotAvailabilityView.swift in Sources */,
+				E46B50D82BD76D12007A57F5 /* SlotBookView.swift in Sources */,
 				2DAC00552BD78B450080098C /* InputFieldView.swift in Sources */,
 				413A15E32BD0F6330035CDAB /* ContentView.swift in Sources */,
 				8414566F2BD9109A00691A79 /* DoctorProfileView.swift in Sources */,
