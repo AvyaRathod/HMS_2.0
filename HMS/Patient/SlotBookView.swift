@@ -107,7 +107,7 @@ struct DoctorCard: View {
             }
             Button(action: {
                         // Action to perform when the button is tapped
-                        print("Button tapped!")
+                print(selectedDate.formatted(date: .numeric, time: .omitted) , selectedSlot , name)
                     }) {
                         // Button label
                         Text("Book Slot")
@@ -159,19 +159,13 @@ struct TimeButton: View {
 }
 
 
-
-
-
-
-
-
 struct SlotBookView: View {
     var body: some View {
         DoctorCard(name: "Dr. John Doe", profession: "Cardiologist", rating: 4.5, qualifications: "MBBS, MD", experience: 10)
     }
 }
 
-struct ContentView_Previews: PreviewProvider {
+struct SlotBookView_Previews: PreviewProvider {
     static var previews: some View {
         SlotBookView()
     }

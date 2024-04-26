@@ -1,9 +1,4 @@
-//
-//  DoctorProfileView.swift
-//  HMS
-//
-//  Created by admin on 22/04/24.
-//
+
 
 import SwiftUI
 
@@ -16,8 +11,6 @@ struct Doctor {
 
 struct DoctorProfileView: View {
     var doctor: Doctor
-    
-//    @State private var isBookingSheetPresented = false
     
     var body: some View {
         VStack {
@@ -205,6 +198,11 @@ struct TabBarItem: View {
     }
 }
 
+struct DoctorProfileView_Previews: PreviewProvider {
+    static var previews: some View {
+        DoctorProfileView(doctor: Doctor(name: "Dr.John", specialization: "Orthopedic", profileImageName: "person.fill", Degree: "MBBS"))
+    }
+}
 
 //struct AppointmentBookingView: View {
 //    var doctor: Doctor
