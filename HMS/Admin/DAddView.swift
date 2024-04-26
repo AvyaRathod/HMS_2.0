@@ -95,19 +95,20 @@ struct DAddView: View {
                 
                 
                 Button(action: {
-                    // Print entered data
-                    print("Name: \(dname)")
-                    print("Employee ID: \(demp)")
-                    print("Email: \(demail)")
-                    print("Department: \(ddepartment)")
-                    print("Password: \(dpass)")
-                    print("Specialisation: \(specializations[dspecialisationIndex].rawValue)")
-                    print("Contact: \(dcontact)")
-                    print("Experience: \(dexperience)")
-                    print("Degree: \(ddegree)")
-                    print("Cabin No.: \(dcabin)")
-                    
-                    register()
+                    let doctorData: [String: Any] = [
+                                "name": dname,
+                                "DocID": demp,
+                                "email": demail,
+                                "department": ddepartment,
+                                "specialisation": specializations[dspecialisationIndex].rawValue,
+                                "contact": dcontact,
+                                "experience": dexperience,
+                                "degree": ddegree,
+                                "cabin": dcabin,
+                                "image": dimage
+                            ]
+
+                            registerDoctor(doctorData: doctorData)
                     
                 }) {
                     Text("Save")
@@ -145,21 +146,29 @@ struct DAddView: View {
     }
     
     
-    func register() {
-        Auth.auth().createUser(withEmail: demail, password: dpass) { result, error in
-            if let error = error {
-                print(error.localizedDescription)
+    func registerDoctor(doctorData: [String: Any]) {
+            guard let email = doctorData["email"] as? String,
+                  let password = dpass as? String else {  // Use the password from the form
+                print("Invalid email or password")
+                return
             }
-            else{
-                if let result = result {
-                    let userUID = result.user.uid
+
+            Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
+                if let error = error {
+                    print("Error registering doctor \(email): \(error.localizedDescription)")
+                } else if let authResult = authResult {
+                    let userUID = authResult.user.uid
                     let userType = "doctor"
+                    // Set the user type
                     addUserType(userUID: userUID, userType: userType)
-                    print("doctor created")
+                    // Add doctor profile details, omitting the password for security reasons
+                    var profileData = doctorData
+                    profileData["authID"] = userUID  // Add the UID to the profile data
+                    addDoctorProfile(userUID: userUID, doctorData: profileData)
+                    print("Doctor registered and data added for \(email)")
                 }
             }
         }
-    }
     
     func addUserType(userUID: String, userType: String) {
         let db = Firestore.firestore()
@@ -174,6 +183,21 @@ struct DAddView: View {
                 print("User type \(userType) added for UID: \(userUID)")
             }
         }
+    }
+    
+    func addDoctorProfile(userUID: String, doctorData: [String: Any]) {
+        var newDoctorData = doctorData
+        newDoctorData["authID"] = userUID // Ensure the doctorData includes the authID
+
+        let db = Firestore.firestore()
+        db.collection("doctors").document() // Leave .document() empty for autoID
+           .setData(newDoctorData) { error in
+                if let error = error {
+                    print("Error adding doctor profile: \(error.localizedDescription)")
+                } else {
+                    print("Doctor profile added for UID: \(userUID)")
+                }
+            }
     }
     
     
