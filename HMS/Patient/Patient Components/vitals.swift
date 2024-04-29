@@ -122,6 +122,7 @@ class HealthKitManager: NSObject, ObservableObject {
 }
 
 // SwiftUI View to display health vitals
+// SwiftUI View to display health vitals
 struct VitalsView: View {
     @StateObject private var healthKitManager = HealthKitManager()
     @State private var steps: Double?
@@ -134,19 +135,19 @@ struct VitalsView: View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack(spacing: 20) {
                 // Steps
-                HealthVitalView(title: "Steps", value: steps.map { "\(Int($0))" } ?? "Loading...", color: Color.blue.opacity(0.7), imageName: "figure.walk")
+                HealthVitalView(title: "Steps", value: steps.map { "\(Int($0))" } ?? "NA", unit: "", color: Color.blue.opacity(0.5), imageName: "figure.walk")
                 
                 // Heart Rate
-                HealthVitalView(title: "Heart Rate", value: heartRate.map { "\(Int($0)) bpm" } ?? "Loading...", color: Color.green.opacity(0.7), imageName: "heart")
+                HealthVitalView(title: "Heart Rate", value: heartRate.map { "\(Int($0))" } ?? "NA", unit: "bpm", color: Color.red.opacity(0.5), imageName: "heart")
                 
                 // SpO2
-                HealthVitalView(title: "SpO2", value: spo2.map { "\(Int($0))%" } ?? "Loading...", color: Color.orange.opacity(0.7), imageName: "waveform.path.ecg")
+                HealthVitalView(title: "SpO2", value: spo2.map { "\(Int($0))" } ?? "NA", unit: "%", color: Color.orange.opacity(0.5), imageName: "waveform.path.ecg")
                 
                 // Blood Pressure
                 if let systolic = systolic, let diastolic = diastolic {
-                    HealthVitalView(title: "Blood Pressure", value: "\(Int(systolic))/\(Int(diastolic)) mmHg", color: Color.purple.opacity(0.7), imageName: "heart.text.square")
+                    HealthVitalView(title: "Blood Pressure", value: "\(Int(systolic))/\(Int(diastolic))", unit: "mmHg", color: Color.purple.opacity(0.5), imageName: "heart.text.square")
                 } else {
-                    HealthVitalView(title: "Blood Pressure", value: "Loading...", color: Color.purple.opacity(0.7), imageName: "heart.text.square")
+                    HealthVitalView(title: "Blood Pressure", value: "NA", unit: "mmHg", color: Color.purple.opacity(0.5), imageName: "heart.text.square")
                 }
             }
             .padding()
@@ -178,33 +179,45 @@ struct VitalsView: View {
     }
 }
 
+
+
 // SwiftUI View to display a health vital in a rectangular box with an image
 struct HealthVitalView: View {
     let title: String
     let value: String
+    let unit: String
     let color: Color
     let imageName: String
     
     var body: some View {
-        VStack {
-            Image(systemName: imageName)
-                .font(.title)
-                .foregroundColor(.white)
-            
-            Text(title)
-                .font(.headline)
-                .foregroundColor(.white)
-                .padding(.bottom, 5)
-            
-            Text(value)
-                .font(.title3)
-                .foregroundColor(.white)
-        }
-        .frame(width: 150, height: 150)
-        .background(color)
-        .cornerRadius(10)
+        RoundedRectangle(cornerRadius: 20)
+            .frame(width: 180, height: 150)
+            .foregroundColor(color)
+            .overlay(
+                VStack {
+                    HStack {
+                        Image(systemName: imageName)
+                            .foregroundColor(.black.opacity(0.8))
+                        
+                        Text(title)
+                            .foregroundColor(.black.opacity(0.8))
+                            .font(.headline)
+                    }
+                    HStack {
+                        Text(value)
+                            .foregroundColor(.black)
+                            .font(.system(size: 50))
+                            .fontWeight(.bold)
+                        Text(unit)
+                            .foregroundColor(.black)
+                            .font(.system(size: 20))
+                    }
+                }
+                .padding(.horizontal)
+            )
     }
 }
+
 
 struct VitalsView_Previews: PreviewProvider {
     static var previews: some View {
