@@ -9,10 +9,9 @@ import SwiftUI
 
 struct PatientHomeScreen: View {
     var body: some View {
-        ScrollView{
-            VStack{
+                    VStack{
                 HStack(spacing:-9){
-                    Image(systemName: "person")
+                    Image(systemName: "person.fill")
                         .resizable()
                         .frame(width: 60, height: 60)
                         .clipShape(Circle())
@@ -33,12 +32,13 @@ struct PatientHomeScreen: View {
                     Spacer()
                     
                 }
-                .padding()
+                .padding(.bottom,6)
                 
                 HStack{
                   VitalsView()
                 }
-                .padding()
+                .padding(.bottom,-10)
+                .padding(.top,-10)
                 
                 VStack {
                     Text("Health Events")
@@ -54,6 +54,7 @@ struct PatientHomeScreen: View {
                         .padding(.leading,-15)
                     }
                 }
+                .padding(.bottom,-8)
 //                .padding(.vertical)
                 
                 VStack {
@@ -68,13 +69,17 @@ struct PatientHomeScreen: View {
                             DoctorInfoAppointmentTab(backgroundColor: .blue)
                         }
                         .padding(.leading,4)
+                        
                     }
                 }
                 .padding(.vertical,6)
+                .padding(.bottom,-50)
+                        
             }
-        }.background(Color.white.opacity(0.2))
+                    .padding(.top,-40)
+        }
     }
-}
+
 
 #Preview {
     PatientHomeScreen()
