@@ -15,7 +15,7 @@ struct SignUpView: View {
     @State private var confirmPassword = ""
     @State private var contactNo = ""
     @State private var showAlert = false // State variable to control alert presentation
-    @State private var userType: userType = .patient
+    @State private var userType: UserType = .patient
     @ObservedObject var userTypeManager: UserTypeManager
     
     var body: some View {
@@ -130,6 +130,7 @@ struct SignUpView: View {
                     let userType = "patient"
                     addUserType(userUID: userUID, userType: userType)
                     userTypeManager.userType = .patient
+                    userTypeManager.userID = userUID
                     print("user created")
                 }
             }

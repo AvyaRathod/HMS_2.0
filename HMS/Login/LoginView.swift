@@ -102,18 +102,24 @@ struct LoginView: View {
     func fetchUserType(userUID: String) {
         let db = Firestore.firestore()
         let ref = db.collection("userType").whereField("authID", isEqualTo: userUID)
-        
+
         ref.getDocuments { (querySnapshot, err) in
             if let err = err {
                 print("Error getting documents: \(err)")
-            } else {
-                for document in querySnapshot!.documents {
-                    if let userTypeString = document.data()["user"] as? String,
-                       let userType = userType(rawValue: userTypeString) {
-                        print("User Type: \(userType)")
-                        
-                        userTypeManager.userType = userType // Update userTypeManager
-                        userTypeManager.userID = userUID
+            } else if let querySnapshot = querySnapshot, let document = querySnapshot.documents.first {
+                // Assuming that each userUID will only have one userType document
+                if let userTypeString = document.data()["user"] as? String {
+                    print("User Type: \(userTypeString)")
+
+                    // Update UserTypeManager with the fetched userType string
+                    DispatchQueue.main.async {
+                        self.userTypeManager.userType = UserType(rawValue: userTypeString) ?? .unknown
+                        self.userTypeManager.userID = userUID
+                    }
+                } else {
+                    print("User type not found for UID: \(userUID)")
+                    DispatchQueue.main.async {
+                        self.userTypeManager.userType = .unknown
                     }
                 }
             }

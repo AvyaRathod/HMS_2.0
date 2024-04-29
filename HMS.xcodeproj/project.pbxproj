@@ -52,7 +52,6 @@
 		6BD105862BD6560100506D84 /* HealthEventTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BD105852BD6560100506D84 /* HealthEventTab.swift */; };
 		8414566F2BD9109A00691A79 /* DoctorProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8414566D2BD9109A00691A79 /* DoctorProfileView.swift */; };
 		E437886C2BDA4DF900EE6EDF /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E437886B2BDA4DF900EE6EDF /* GoogleService-Info.plist */; };
-		E437886E2BDA4E6A00EE6EDF /* SplashScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = E437886D2BDA4E6A00EE6EDF /* SplashScreen.swift */; };
 		E43788702BDA4E9A00EE6EDF /* OnBoarding.swift in Sources */ = {isa = PBXBuildFile; fileRef = E437886F2BDA4E9A00EE6EDF /* OnBoarding.swift */; };
 		E43788722BDA4EC300EE6EDF /* PageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E43788712BDA4EC300EE6EDF /* PageModel.swift */; };
 		E43788742BDA4EDF00EE6EDF /* PageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E43788732BDA4EDF00EE6EDF /* PageView.swift */; };
@@ -96,7 +95,6 @@
 		6BD105852BD6560100506D84 /* HealthEventTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthEventTab.swift; sourceTree = "<group>"; };
 		8414566D2BD9109A00691A79 /* DoctorProfileView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DoctorProfileView.swift; sourceTree = "<group>"; };
 		E437886B2BDA4DF900EE6EDF /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		E437886D2BDA4E6A00EE6EDF /* SplashScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashScreen.swift; sourceTree = "<group>"; };
 		E437886F2BDA4E9A00EE6EDF /* OnBoarding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBoarding.swift; sourceTree = "<group>"; };
 		E43788712BDA4EC300EE6EDF /* PageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageModel.swift; sourceTree = "<group>"; };
 		E43788732BDA4EDF00EE6EDF /* PageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageView.swift; sourceTree = "<group>"; };
@@ -230,7 +228,6 @@
 				413A15E22BD0F6330035CDAB /* ContentView.swift */,
 				413A15E42BD0F6340035CDAB /* Assets.xcassets */,
 				413A15E62BD0F6340035CDAB /* Preview Content */,
-				E437886D2BDA4E6A00EE6EDF /* SplashScreen.swift */,
 				E437886F2BDA4E9A00EE6EDF /* OnBoarding.swift */,
 				E43788712BDA4EC300EE6EDF /* PageModel.swift */,
 				E43788732BDA4EDF00EE6EDF /* PageView.swift */,
@@ -387,7 +384,6 @@
 				164571B32BDA0CD000855DDF /* DoctorHome.swift in Sources */,
 				F5A456642BD97DFB0068A069 /* appo-completed.swift in Sources */,
 				1645716F2BD7B74A00855DDF /* PatientModel.swift in Sources */,
-				E437886E2BDA4E6A00EE6EDF /* SplashScreen.swift in Sources */,
 				2DAC005B2BD78BCC0080098C /* SignUpView.swift in Sources */,
 				2DAC00572BD78B6E0080098C /* phoneVerificationView.swift in Sources */,
 				2DAC00532BD78B180080098C /* LoginView.swift in Sources */,

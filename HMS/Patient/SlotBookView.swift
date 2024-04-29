@@ -49,7 +49,7 @@ struct SlotBookView: View {
     
     let doctor: DoctorModel
     let gridItems = Array(repeating: GridItem(.flexible()), count: 3)
-    let times = ["9:00", "10:00", "11:00", "12:00", "1:00", "2:00", "3:00", "4:00", "5:00"]
+    let times = ["9:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00"]
     
     
     @State private var selectedSlotIndex: Int? = nil // Track selected slot index
@@ -148,7 +148,7 @@ struct SlotBookView: View {
         }
         .onAppear {
             fetchAppointments()
-        }        
+        }
     }
     
     

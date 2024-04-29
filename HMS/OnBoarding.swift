@@ -8,12 +8,10 @@
 import SwiftUI
 
 struct OnBoarding: View {
-    
+    @Binding var isOnboardingCompleted: Bool
     @State private var  PageIndex = 0
     private let pages: [Page] = Page.samplePages
     private let dotAppearance = UIPageControl.appearance()
-    
-    
     
     var body: some View {
         TabView(selection:  $PageIndex){
@@ -47,10 +45,11 @@ struct OnBoarding: View {
         PageIndex += 1
     }
     func goToZero(){
-        PageIndex = 0
+        isOnboardingCompleted = true
+                            UserDefaults.standard.set(true, forKey: "isOnboardingCompleted")
     }
 }
 
-#Preview {
-    OnBoarding()
-}
+//#Preview {
+//    OnBoarding(isOnboardingCompleted: false)
+//}
