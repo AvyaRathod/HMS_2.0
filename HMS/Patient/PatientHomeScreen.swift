@@ -11,82 +11,82 @@ import Firebase
 struct PatientHomeScreen: View {
     @State private var appointments: [AppointmentModel] = []
     @EnvironmentObject var userTypeManager: UserTypeManager
-
+    
     
     var body: some View {
-                    VStack{
-                HStack(spacing:-9){
-                    Image(systemName: "person.fill")
-                        .resizable()
-                        .frame(width: 60, height: 60)
-                        .clipShape(Circle())
-                        .aspectRatio(contentMode: .fit)
-                        .padding(.trailing, 10)
-                    
-                    
-                    VStack(alignment: .leading){
-                        Text("Hello")
-                            .bold()
-                            .font(.title)
-                            .padding(.leading)
-                        
-                        Text("Gaurav Ganju")
-                            .padding(.horizontal)
-                            .font(.title2)
-                    }
-                    Spacer()
-                    
-                }
-                .padding(.bottom,6)
+        VStack{
+            HStack(spacing:-9){
+                Image(systemName: "person.fill")
+                    .resizable()
+                    .frame(width: 60, height: 60)
+                    .clipShape(Circle())
+                    .aspectRatio(contentMode: .fit)
+                    .padding(.trailing, 10)
                 
-                HStack{
-                    VitalsView()
-                }
-                .padding(.bottom,-10)
-                .padding(.top,-10)
                 
-                VStack {
-                    Text("Health Events")
-                        .font(.title)
-                        .padding(.leading,-180)
+                VStack(alignment: .leading){
+                    Text("Hello")
                         .bold()
-                    
-                    ScrollView(.horizontal, showsIndicators: false){
-                        HStack(spacing: -60){
-                            HealthEventTabs(title: "Blood Donation", subTitle: "Camp", time: "09:30 AM Onwards", eventCount: 12, dayOfWeek: "Tue")
-                            HealthEventTabs(title: "Blood Donation", subTitle: "Camp", time: "09:30 AM Onwards", eventCount: 12, dayOfWeek: "Tue")
-                        }
-                        .padding(.leading,-15)
-                    }
-                }
-                .padding(.bottom,-8)
-
-                
-                VStack {
-                    Text("My Appointments")
                         .font(.title)
-                        .bold()
-                    // Fix alignment by removing hardcoded padding
-                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .padding(.leading)
+                    
+                    Text("Gaurav Ganju")
                         .padding(.horizontal)
-                    
-                    // Appointments list
-                    ScrollView(.horizontal, showsIndicators: false) {
-                        HStack {
-                            ForEach(appointments) { appointment in
-                                DoctorInfoAppointmentTab(appointment: appointment, backgroundColor: .blue)
-                            }
+                        .font(.title2)
+                }
+                Spacer()
+                
+            }
+            .padding(.bottom,6)
+            
+            HStack{
+                VitalsView()
+            }
+            .padding(.bottom,-10)
+            .padding(.top,-10)
+            
+            VStack {
+                Text("Health Events")
+                    .font(.title)
+                    .padding(.leading,-180)
+                    .bold()
+                
+                ScrollView(.horizontal, showsIndicators: false){
+                    HStack(spacing: -60){
+                        HealthEventTabs(title: "Blood Donation", subTitle: "Camp", time: "09:30 AM Onwards", eventCount: 12, dayOfWeek: "Tue")
+                        HealthEventTabs(title: "Blood Donation", subTitle: "Camp", time: "09:30 AM Onwards", eventCount: 12, dayOfWeek: "Tue")
+                    }
+                    .padding(.leading,-15)
+                }
+            }
+            .padding(.bottom,-8)
+            
+            
+            VStack {
+                Text("My Appointments")
+                    .font(.title)
+                    .bold()
+                // Fix alignment by removing hardcoded padding
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding(.horizontal)
+                
+                // Appointments list
+                ScrollView(.horizontal, showsIndicators: false) {
+                    HStack {
+                        ForEach(appointments) { appointment in
+                            DoctorInfoAppointmentTab(appointment: appointment, backgroundColor: .blue)
                         }
                     }
                 }
-                .padding(.vertical)
             }
+            .padding(.vertical)
         }
         .background(Color.white.opacity(0.2))
         .onAppear {
             fetchAppointments()
         }
     }
+    
     
     private func fetchAppointments() {
         let db = Firestore.firestore()
