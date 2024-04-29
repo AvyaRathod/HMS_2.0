@@ -6,8 +6,13 @@
 //
 
 import SwiftUI
+import Firebase
 
 struct PatientHomeScreen: View {
+    @State private var appointments: [AppointmentModel] = []
+    @EnvironmentObject var userTypeManager: UserTypeManager
+
+    
     var body: some View {
         ScrollView{
             VStack{
@@ -36,7 +41,7 @@ struct PatientHomeScreen: View {
                 .padding()
                 
                 HStack{
-                  VitalsView()
+                    VitalsView()
                 }
                 .padding()
                 
@@ -54,26 +59,70 @@ struct PatientHomeScreen: View {
                         .padding(.leading,-15)
                     }
                 }
-//                .padding(.vertical)
+                //                .padding(.vertical)
                 
                 VStack {
                     Text("My Appointments")
                         .font(.title)
                         .bold()
-                        .padding(.leading,-118)
+                    // Fix alignment by removing hardcoded padding
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .padding(.horizontal)
                     
-                    ScrollView(.horizontal, showsIndicators: false){
-                        HStack(spacing: -4){
-                            DoctorInfoAppointmentTab(backgroundColor: .blue)
-                            DoctorInfoAppointmentTab(backgroundColor: .blue)
+                    // Appointments list
+                    ScrollView(.horizontal, showsIndicators: false) {
+                        HStack {
+                            ForEach(appointments) { appointment in
+                                DoctorInfoAppointmentTab(appointment: appointment, backgroundColor: .blue)
+                            }
                         }
-                        .padding(.leading,4)
                     }
                 }
-                .padding(.vertical,6)
+                .padding(.vertical)
             }
-        }.background(Color.white.opacity(0.2))
+        }
+        .background(Color.white.opacity(0.2))
+        .onAppear {
+            fetchAppointments()
+        }
     }
+    
+    private func fetchAppointments() {
+        let db = Firestore.firestore()
+        let appointmentsRef = db.collection("appointments")
+        let today = Date()
+        appointmentsRef
+            .whereField("PatID", isEqualTo: userTypeManager.userID)
+            .whereField("Date", isGreaterThanOrEqualTo: DateFormatter.appointmentDateFormatter.string(from: today))
+        
+            .getDocuments { (querySnapshot, error) in
+                if let error = error {
+                    print("Error getting appointments: \(error.localizedDescription)")
+                } else if let querySnapshot = querySnapshot {
+                    var fetchedAppointments: [AppointmentModel] = []
+                    for document in querySnapshot.documents {
+                        if let appointment = AppointmentModel(document: document.data(), id: document.documentID) {
+                            fetchedAppointments.append(appointment)
+                        }
+                    }
+                    // Sort fetched appointments by date and time
+                    fetchedAppointments.sort {
+                        $0.date < $1.date || ($0.date == $1.date && $0.timeSlot < $1.timeSlot)
+                    }
+                    DispatchQueue.main.async {
+                        self.appointments = fetchedAppointments
+                    }
+                }
+            }
+    }
+}
+
+extension DateFormatter {
+    static let appointmentDateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "dd/MM/yyyy" // Adjust the date format to match the one used in your Firestore
+        return formatter
+    }()
 }
 
 #Preview {

@@ -113,6 +113,7 @@ struct LoginView: View {
                         print("User Type: \(userType)")
                         
                         userTypeManager.userType = userType // Update userTypeManager
+                        userTypeManager.userID = userUID
                     }
                 }
             }
