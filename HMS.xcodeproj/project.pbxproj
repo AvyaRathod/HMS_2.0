@@ -62,6 +62,7 @@
 		F5A456622BD91B000068A069 /* appointments-upcoming.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5A456612BD91B000068A069 /* appointments-upcoming.swift */; };
 		F5A456642BD97DFB0068A069 /* appo-completed.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5A456632BD97DFB0068A069 /* appo-completed.swift */; };
 		F5A456662BD988F50068A069 /* appo-cancelled.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5A456652BD988F50068A069 /* appo-cancelled.swift */; };
+		F5B406622BDF666600569CDF /* payment-confirm.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B406612BDF666600569CDF /* payment-confirm.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -106,6 +107,7 @@
 		F5A456612BD91B000068A069 /* appointments-upcoming.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "appointments-upcoming.swift"; sourceTree = "<group>"; };
 		F5A456632BD97DFB0068A069 /* appo-completed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "appo-completed.swift"; sourceTree = "<group>"; };
 		F5A456652BD988F50068A069 /* appo-cancelled.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "appo-cancelled.swift"; sourceTree = "<group>"; };
+		F5B406612BDF666600569CDF /* payment-confirm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "payment-confirm.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -164,6 +166,7 @@
 				41149F012BD63EA200E32FD7 /* Patient.swift */,
 				E46B50D72BD76D12007A57F5 /* SlotBookView.swift */,
 				6B14B04C2BD68CB1004F0B78 /* PatientHomeScreen.swift */,
+				F5B406612BDF666600569CDF /* payment-confirm.swift */,
 				F5A4565F2BD91AEE0068A069 /* Appointment-Manage.swift */,
 				F5A456632BD97DFB0068A069 /* appo-completed.swift */,
 				F5A456652BD988F50068A069 /* appo-cancelled.swift */,
@@ -380,6 +383,7 @@
 				164571AD2BD9076300855DDF /* DAddView.swift in Sources */,
 				164571B12BD9240C00855DDF /* AdminHome.swift in Sources */,
 				F5A456262BD90AA00068A069 /* vitals.swift in Sources */,
+				F5B406622BDF666600569CDF /* payment-confirm.swift in Sources */,
 				164571B32BDA0CD000855DDF /* DoctorHome.swift in Sources */,
 				F5A456642BD97DFB0068A069 /* appo-completed.swift in Sources */,
 				1645716F2BD7B74A00855DDF /* PatientModel.swift in Sources */,
