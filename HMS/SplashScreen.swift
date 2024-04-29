@@ -11,12 +11,12 @@ struct SplashView: View {
     @State private var isActive = false
     @State private var size = 0.6
     @State private var opacity = 0.5
-    
+    @ObservedObject var userTypeManager: UserTypeManager
     
     var body: some View {
         
         if isActive {
-            SignUpView()
+            SignUpView(userTypeManager: userTypeManager)
   
         } else {
             VStack{
@@ -50,8 +50,8 @@ struct SplashView: View {
 }
 
 
-struct SplashView_Previews: PreviewProvider {
-    static var previews: some View {
-        SplashView()
-    }
-}
+//struct SplashView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        SplashView()
+//    }
+//}
