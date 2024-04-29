@@ -52,6 +52,21 @@ struct DoctorModel: Hashable, Codable, Identifiable {
         case Gynecologist = "Gynecologist"
     }
     
+    init(id: String? = nil, name: String, department: String, email: String, contact: String, experience: String, employeeID: String, image: String? = nil, specialisation: String, degree: String, cabinNumber: String) {
+        self.id = id
+        self.name = name
+        self.department = department
+        self.email = email
+        self.contact = contact
+        self.experience = experience
+        self.employeeID = employeeID
+        self.image = image
+        self.specialisation = specialisation
+        self.degree = degree
+        self.cabinNumber = cabinNumber
+    }
+    
+    // Existing initializer for dictionary data - keep if needed
     init(from dictionary: [String: Any], id: String) {
         self.id = id
         self.name = dictionary["name"] as? String ?? ""
@@ -64,8 +79,5 @@ struct DoctorModel: Hashable, Codable, Identifiable {
         self.specialisation = dictionary["specialisation"] as? String ?? ""
         self.degree = dictionary["degree"] as? String ?? ""
         self.cabinNumber = dictionary["cabin"] as? String ?? ""
-        
-        // If 'specialisation' in the dictionary is not among the Specialization enum, it defaults to the raw value
-        // as a string to match the Firestore field directly.
     }
 }

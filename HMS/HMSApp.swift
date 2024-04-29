@@ -23,11 +23,11 @@ enum userType: String {
     case admin
     case doctor
     case unknown
-    
 }
 
 class UserTypeManager: ObservableObject {
     @Published var userType: userType = .unknown
+    @Published var userID: String = ""
 }
 
 
