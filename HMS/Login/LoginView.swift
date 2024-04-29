@@ -44,7 +44,7 @@ struct LoginView: View {
                     Image("Line or").padding(.leading,-6)
                     
                     NavigationLink{
-                        SignUpView()
+                        SignUpView(userTypeManager: userTypeManager)
                     } label: {
                         Text("Sign In")
                             .fontWeight(.heavy)
