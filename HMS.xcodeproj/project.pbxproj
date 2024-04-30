@@ -50,8 +50,10 @@
 		6B14B04D2BD68CB1004F0B78 /* PatientHomeScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B14B04C2BD68CB1004F0B78 /* PatientHomeScreen.swift */; };
 		6B14B04F2BD6CCA9004F0B78 /* VitalsHeartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B14B04E2BD6CCA9004F0B78 /* VitalsHeartView.swift */; };
 		6B14B0512BD6CF37004F0B78 /* VitalsSPO2View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B14B0502BD6CF37004F0B78 /* VitalsSPO2View.swift */; };
+		6B18905D2BE0EAB90067DC82 /* PrescriptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B18905C2BE0EAB90067DC82 /* PrescriptionView.swift */; };
 		6B5FFCD02BD63F7D00224FC2 /* DoctorInfoAppointmentTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B5FFCCF2BD63F7D00224FC2 /* DoctorInfoAppointmentTab.swift */; };
 		6B6B0F2E2BE0B754007DE140 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6B6B0F2D2BE0B754007DE140 /* GoogleService-Info.plist */; };
+		6BBBCA642BE0F676009D2944 /* DepartmentDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BBBCA632BE0F676009D2944 /* DepartmentDetailView.swift */; };
 		6BD105862BD6560100506D84 /* HealthEventTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BD105852BD6560100506D84 /* HealthEventTab.swift */; };
 		8414566F2BD9109A00691A79 /* DoctorProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8414566D2BD9109A00691A79 /* DoctorProfileView.swift */; };
 		E43788702BDA4E9A00EE6EDF /* OnBoarding.swift in Sources */ = {isa = PBXBuildFile; fileRef = E437886F2BDA4E9A00EE6EDF /* OnBoarding.swift */; };
@@ -95,8 +97,10 @@
 		6B14B04C2BD68CB1004F0B78 /* PatientHomeScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatientHomeScreen.swift; sourceTree = "<group>"; };
 		6B14B04E2BD6CCA9004F0B78 /* VitalsHeartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VitalsHeartView.swift; sourceTree = "<group>"; };
 		6B14B0502BD6CF37004F0B78 /* VitalsSPO2View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VitalsSPO2View.swift; sourceTree = "<group>"; };
+		6B18905C2BE0EAB90067DC82 /* PrescriptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrescriptionView.swift; sourceTree = "<group>"; };
 		6B5FFCCF2BD63F7D00224FC2 /* DoctorInfoAppointmentTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoctorInfoAppointmentTab.swift; sourceTree = "<group>"; };
 		6B6B0F2D2BE0B754007DE140 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		6BBBCA632BE0F676009D2944 /* DepartmentDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DepartmentDetailView.swift; sourceTree = "<group>"; };
 		6BD105852BD6560100506D84 /* HealthEventTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthEventTab.swift; sourceTree = "<group>"; };
 		8414566D2BD9109A00691A79 /* DoctorProfileView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DoctorProfileView.swift; sourceTree = "<group>"; };
 		E437886F2BDA4E9A00EE6EDF /* OnBoarding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBoarding.swift; sourceTree = "<group>"; };
@@ -173,6 +177,7 @@
 			isa = PBXGroup;
 			children = (
 				41DA0BF82BDEAF5700D25913 /* DoctorListView.swift */,
+				6B18905C2BE0EAB90067DC82 /* PrescriptionView.swift */,
 				8414566D2BD9109A00691A79 /* DoctorProfileView.swift */,
 				41149F012BD63EA200E32FD7 /* Patient.swift */,
 				E46B50D72BD76D12007A57F5 /* SlotBookView.swift */,
@@ -182,6 +187,7 @@
 				F5A456632BD97DFB0068A069 /* appo-completed.swift */,
 				F5A456652BD988F50068A069 /* appo-cancelled.swift */,
 				F5A456612BD91B000068A069 /* appointments-upcoming.swift */,
+				6BBBCA632BE0F676009D2944 /* DepartmentDetailView.swift */,
 				6B5FFCCE2BD63F4C00224FC2 /* Patient Components */,
 			);
 			path = Patient;
@@ -390,7 +396,9 @@
 				F5A456602BD91AEE0068A069 /* Appointment-Manage.swift in Sources */,
 				6B14B0512BD6CF37004F0B78 /* VitalsSPO2View.swift in Sources */,
 				E43788742BDA4EDF00EE6EDF /* PageView.swift in Sources */,
+				6BBBCA642BE0F676009D2944 /* DepartmentDetailView.swift in Sources */,
 				41DA0BF92BDEAF5700D25913 /* DoctorListView.swift in Sources */,
+				6B18905D2BE0EAB90067DC82 /* PrescriptionView.swift in Sources */,
 				164571AD2BD9076300855DDF /* DAddView.swift in Sources */,
 				164571B12BD9240C00855DDF /* AdminHome.swift in Sources */,
 				F5A456262BD90AA00068A069 /* vitals.swift in Sources */,
