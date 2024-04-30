@@ -120,7 +120,7 @@ struct PaymentConfirmationPage: View {
                     .padding(.vertical, 20)
                 
                 VStack(spacing: 20) {
-                    NavigationLink(destination: AppointmentDetailsView()) {
+                    NavigationLink(destination: EmptyView()) {
                         Text("View Appointment")
                             .foregroundColor(.white)
                             .padding()
@@ -146,13 +146,6 @@ struct PaymentConfirmationPage: View {
         }
     }
 }
-
-struct AppointmentDetailsView: View {
-    var body: some View {
-        Text("Appointment Details")
-    }
-}
-
 
 
 struct PaymentConfirmationPage_Previews: PreviewProvider {
