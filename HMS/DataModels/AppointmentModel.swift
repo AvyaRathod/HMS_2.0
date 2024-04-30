@@ -18,6 +18,7 @@ struct AppointmentModel: Identifiable {
     let reason: String
     
     // Additional fields to store doctor's details after fetching
+    var patientName: String?
     var doctorName: String?
     var doctorSpecialisation: String?
     // Any additional fields for doctor details here...
