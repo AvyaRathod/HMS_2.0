@@ -31,7 +31,7 @@ struct Admin: View {
                         Text("Alert")
                     }
                 }
-            Text("Health events")
+            AdminEventsView(events: sampleHealthEvents)
                 .tabItem {
                     Image(systemName: "heart.text.square.fill")
                     Text("Health events")
