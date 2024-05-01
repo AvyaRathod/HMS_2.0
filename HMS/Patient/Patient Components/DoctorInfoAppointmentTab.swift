@@ -2,6 +2,8 @@ import SwiftUI
 import Firebase
 
 struct DoctorInfoAppointmentTab: View {
+    
+    @Binding var appointments: [AppointmentModel]  // now this is a binding
     let appointment: AppointmentModel
     var backgroundColor: Color
     
@@ -39,7 +41,7 @@ struct DoctorInfoAppointmentTab: View {
                     }
                     Spacer()
                     Button(action: {
-                        // Action to cancel the appointment
+                        cancelAppointment()
                     }) {
                         Text("Cancel")
                             .font(.headline)
@@ -61,7 +63,7 @@ struct DoctorInfoAppointmentTab: View {
     private func fetchDoctorDetails() {
         let db = Firestore.firestore()
         let doctorsRef = db.collection("doctors")
-
+        
         doctorsRef.whereField("DocID", isEqualTo: appointment.doctorID).getDocuments { (querySnapshot, error) in
             if let error = error {
                 print("Error fetching doctor details: \(error.localizedDescription)")
@@ -73,7 +75,7 @@ struct DoctorInfoAppointmentTab: View {
                     self.specialisation = "Specialisation unknown."
                     return
                 }
-
+                
                 self.doctorName = data["name"] as? String ?? "No name available"
                 self.specialisation = data["specialisation"] as? String ?? "No specialisation available"
             } else {
@@ -83,8 +85,20 @@ struct DoctorInfoAppointmentTab: View {
             }
         }
     }
-
-
+    
+    private func cancelAppointment() {
+        let db = Firestore.firestore()
+        db.collection("appointments").document(appointment.id).delete() { err in
+            if let err = err {
+                print("Error removing document: \(err)")
+            } else {
+                print("Document successfully removed!")
+                if let index = self.appointments.firstIndex(where: { $0.id == self.appointment.id }) {
+                    DispatchQueue.main.async {
+                        self.appointments.remove(at: index)
+                    }
+                }
+            }
+        }
+    }
 }
-
-// Preview provider here, if needed

@@ -74,7 +74,7 @@ struct PatientHomeScreen: View {
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack {
                         ForEach(appointments) { appointment in
-                            DoctorInfoAppointmentTab(appointment: appointment, backgroundColor: .blue)
+                            DoctorInfoAppointmentTab(appointments: $appointments, appointment: appointment, backgroundColor: .blue)
                         }
                     }
                 }

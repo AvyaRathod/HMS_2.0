@@ -132,8 +132,8 @@ struct SlotBookView: View {
                 print(selectedDate.formatted(date: .numeric, time: .omitted) , selectedSlot!)
                 
                 guard let slot = selectedSlot else { return }
-                                
-                                createBooking(for: doctor, on: selectedDate, at: slot)
+                
+                createBooking(for: doctor, on: selectedDate, at: slot)
                 
             }) {
                 // Button label
@@ -145,8 +145,12 @@ struct SlotBookView: View {
                     .cornerRadius(20) // Apply corner radius to create rounded corners
                     .frame(width: 200,height: 100)
             }
+            .disabled(selectedSlot == nil)
         }
         .onAppear {
+            fetchAppointments()
+        }
+        .onChange(of: selectedDate) { _ in
             fetchAppointments()
         }
     }

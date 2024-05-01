@@ -15,14 +15,8 @@ struct Patient: View {
                 }
             Text("Tab 3")
                 .tabItem {
-                    VStack {
-                        Image(systemName: "sos")
-                            .foregroundColor(.red)
-                            .frame(width:100, height: 100)
-                            .clipShape(Circle())
-                            .background(.red)
-                        Text("SOS")
-                    }
+                    Label("SOS", systemImage: "exclamationmark.circle")
+                                            .foregroundColor(.red)
                 }
             DoctorListView()
                 .tabItem {
@@ -36,7 +30,33 @@ struct Patient: View {
                 }
         }
     }
+    
+    func sosAction(){
+        print("SOS")
+    }
 }
+
+struct RedCircleView: View {
+    var body: some View {
+        ZStack {
+            Circle()
+                .fill(Color.red) // Set the circle color
+                .frame(width: 100, height: 100) // Set the size of the circle
+
+            Text("SOS")
+                .foregroundColor(.white) // Set the text color
+                .font(.title) // Set the font of the text
+                .fontWeight(.bold) // Make the text bold
+        }
+    }
+}
+
+struct RedCircleView_Previews: PreviewProvider {
+    static var previews: some View {
+        RedCircleView()
+    }
+}
+
 
 struct Patient_Previews: PreviewProvider {
     static var previews: some View {
