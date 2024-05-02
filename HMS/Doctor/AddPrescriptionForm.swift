@@ -1,10 +1,3 @@
-//
-//  AddPrescriptionForm.swift
-//  HMS
-//
-//  Created by Vishnu on 29/04/24.
-//
-
 import SwiftUI
 
 @MainActor
@@ -18,7 +11,7 @@ final class PrescriptionViewModel: ObservableObject {
 struct AddPrescriptionForm: View {
     @State private var doctorId = ""
     @State private var patientId = ""
-    @State private var prescription = ""
+    @State private var patientStatus = ""
     @State private var description = ""
     @State private var referedDoctorId = ""
     @State private var medicines: [MedicineDetail] = []
@@ -28,6 +21,8 @@ struct AddPrescriptionForm: View {
     @State private var intakeAfternoon = false
     @State private var intakeNight = false
     @State private var beforeFood = false
+    @State private var afterFood = false
+    @State private var prescribedTest = ""
     
     @StateObject private var viewModel = PrescriptionViewModel()
     
@@ -40,23 +35,30 @@ struct AddPrescriptionForm: View {
                 }
                 
                 Section(header: Text("Prescription Details")) {
-                    Text("Prescription")
+                    TextField("Patient Condition", text: $patientStatus)
                     TextEditor(text: $description)
-                            .foregroundColor(.black)
-                            .frame(minHeight: 100)
-
-                    TextField("Description", text: $description)
-                    TextField("Referred Doctor ID", text: $referedDoctorId)
-                                    }
-                
-                Section(header: Text("Medicine Details")) {
+                        .foregroundColor(.black)
+                        .frame(minHeight: 100)
+                    
+                    
+                    
+                }
+                Section(header: Text("Medicine")) {
                     ForEach(medicines.indices, id: \.self) { index in
-                        MedicineRow(medicineDetail: $medicines[index])
+                        MedicineRow(medicineDetail: $medicines[index]) {
+                            removeMedicine(at: index)
+                        }
                     }
+
                     Button("Add Medicine") {
                         addMedicine()
                     }
                 }
+                Section(header: Text("Prescribed Tests")) {
+                    TextEditor(text: $prescribedTest)
+                }
+                    TextField("Referred Doctor ID", text: $referedDoctorId)
+                                    
                 
                 Section {
                     HStack {
@@ -66,7 +68,6 @@ struct AddPrescriptionForm: View {
                         }
                         .fontWeight(.bold)
                         .padding()
-                        .background(.blue)
                         .foregroundColor(.primary)
                         .cornerRadius(3.0)
                         .frame(width: 900 , height: 40)
@@ -77,6 +78,11 @@ struct AddPrescriptionForm: View {
             .navigationTitle("Prescription")
         }
     }
+    
+    func removeMedicine(at index: Int) {
+            medicines.remove(at: index)
+        }
+    
     
     func addMedicine() {
         let medicineDetail = MedicineDetail(
@@ -103,14 +109,16 @@ struct AddPrescriptionForm: View {
             result[medicine.name] = PrescriptionModel.MedicineDetails(
                 dosage: medicine.dosage,
                 intakePattern: medicine.getIntakePattern(),
-                beforeFood: medicine.beforeFood
+                beforeFood: medicine.beforeFood,
+                afterFood: medicine.afterFood
             )
         }
         
         let prescriptionData = PrescriptionModel(
             doctorId: doctorId,
             patentId: patientId,
-            prescription: prescription,
+            prescription: "",
+            patientStatus: patientStatus,
             description: description,
             referedDoctorId: referedDoctorId,
             prescribedMedicines: prescribedMedicines
@@ -118,19 +126,61 @@ struct AddPrescriptionForm: View {
 
         viewModel.addPatientRecord(patientId: patientId, prescriptionData: prescriptionData)
     }
+    
 }
+
+    struct CheckboxField: View {
+        let title: String
+        @Binding var isSelected: Bool
+
+        var body: some View {
+            Button {
+                isSelected.toggle()
+            } label: {
+                HStack {
+                    Image(systemName: isSelected ? "checkmark.square.fill" : "square")
+                        .foregroundColor(isSelected ? .blue : .gray)
+                    Text(title)
+                }
+            }
+            .buttonStyle(PlainButtonStyle())
+        }
+    }
 
 struct MedicineRow: View {
     @Binding var medicineDetail: MedicineDetail
+    var removeAction: () -> Void
     
     var body: some View {
         VStack(alignment: .leading) {
-            TextField("Medicine Name", text: $medicineDetail.name)
-            TextField("Dosage", text: $medicineDetail.dosage)
-            Toggle("Morning", isOn: $medicineDetail.intakeMorning)
-            Toggle("Afternoon", isOn: $medicineDetail.intakeAfternoon)
-            Toggle("Night", isOn: $medicineDetail.intakeNight)
-            Toggle("Before Food", isOn: $medicineDetail.beforeFood)
+            HStack{
+                TextField("Medicine Name", text: $medicineDetail.name)
+                TextField("Dosage", text: $medicineDetail.dosage)
+                Button(action: removeAction) {
+                                    Image(systemName: "minus.circle")
+                                        .foregroundColor(.red)
+                                }
+                                           }
+            
+            HStack{
+            CheckboxField(title: "Morning", isSelected: $medicineDetail.intakeMorning)
+                CheckboxField(title: "Afternoon", isSelected: $medicineDetail.intakeAfternoon)
+                CheckboxField(title: "Night", isSelected: $medicineDetail.intakeNight)
+            }
+            HStack{
+                CheckboxField(title: "Before Food", isSelected: $medicineDetail.beforeFood)
+                    .onChange(of: medicineDetail.beforeFood) { value in
+                                            if value {
+                                                medicineDetail.toggleBeforeAfterFood(checkbox: "Before Food")
+                                            }
+                                        }
+                CheckboxField(title: "After Food", isSelected: $medicineDetail.afterFood)
+                    .onChange(of: medicineDetail.afterFood) { value in
+                                            if value {
+                                                medicineDetail.toggleBeforeAfterFood(checkbox: "After Food")
+                                            }
+                                        }
+            }
         }
     }
 }
@@ -142,6 +192,17 @@ struct MedicineDetail {
     var intakeAfternoon: Bool = false
     var intakeNight: Bool = false
     var beforeFood: Bool = false
+    var afterFood: Bool = false
+    
+    mutating func toggleBeforeAfterFood(checkbox: String) {
+            if checkbox == "Before Food" {
+                beforeFood = true
+                afterFood = false
+            } else if checkbox == "After Food" {
+                beforeFood = false
+                afterFood = true
+            }
+        }
     
     func getIntakePattern() -> [PrescriptionModel.IntakeTime] {
         var pattern: [PrescriptionModel.IntakeTime] = []

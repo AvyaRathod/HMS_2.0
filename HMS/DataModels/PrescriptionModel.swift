@@ -14,6 +14,7 @@ struct PrescriptionModel: Codable, Identifiable {
     let doctorId: String
     let patentId: String
     var prescription: String
+    var patientStatus: String
     var description: String
     var referedDoctorId: String?
     var prescribedMedicines: [String: MedicineDetails]
@@ -23,6 +24,7 @@ struct PrescriptionModel: Codable, Identifiable {
         let dosage: String
         let intakePattern: [IntakeTime]
         let beforeFood: Bool
+        let afterFood: Bool
     }
     
     enum IntakeTime: String, Codable {
@@ -31,10 +33,11 @@ struct PrescriptionModel: Codable, Identifiable {
         case night = "Night"
     }
     
-    init(doctorId: String, patentId: String, prescription: String, description: String, referedDoctorId: String? = nil, prescribedMedicines: [String : MedicineDetails], prescribedTest: [String]? = nil) {
+    init(doctorId: String, patentId: String, prescription: String, patientStatus: String, description: String, referedDoctorId: String? = nil, prescribedMedicines: [String : MedicineDetails], prescribedTest: [String]? = nil) {
         self.doctorId = doctorId
         self.patentId = patentId
         self.prescription = prescription
+        self.patientStatus = patientStatus
         self.description = description
         self.referedDoctorId = referedDoctorId
         self.prescribedMedicines = prescribedMedicines
@@ -46,6 +49,7 @@ struct PrescriptionModel: Codable, Identifiable {
         self.doctorId = try container.decode(String.self, forKey: .doctorId)
         self.patentId = try container.decode(String.self, forKey: .patentId)
         self.prescription = try container.decode(String.self, forKey: .prescription)
+        self.patientStatus = try container.decode(String.self, forKey: .prescribedTest)
         self.description = try container.decode(String.self, forKey: .description)
         self.referedDoctorId = try container.decodeIfPresent(String.self, forKey: .referedDoctorId)
         self.prescribedMedicines = try container.decode([String: MedicineDetails].self, forKey: .prescribedMedicines)
