@@ -6,12 +6,24 @@
 //
 
 import SwiftUI
+import Firebase
 
 struct DAppointments: View {
-    @StateObject var AppointmentsModel: AppointmentViewModel = AppointmentViewModel()
+    @EnvironmentObject var userTypeManager: UserTypeManager
+    @State private var doctor: DoctorModel?
+
+    @State var storedAppointment: [AppointmentModel] = []
+    
+    @State var currentWeek: [Date] = []
+    @State var currentDay: Date = Date()
+    @State var filteredAppointment: [AppointmentModel]?
+    @State var DocID = ""
+    
     @Namespace var animation
+    
+    
     var body: some View {
-        NavigationView{ 
+        NavigationView{
             ScrollView(.vertical, showsIndicators: false){
                 
                 LazyVStack(spacing: 15, pinnedViews: [.sectionHeaders]){
@@ -21,29 +33,29 @@ struct DAppointments: View {
                         ScrollView(.horizontal, showsIndicators: false){
                             HStack(spacing: 10){
                                 
-                                ForEach(AppointmentsModel.currentWeek, id: \.self){ day in
+                                ForEach(currentWeek, id: \.self){ day in
                                     
                                     VStack(spacing: 10){
                                         
-                                        Text(AppointmentsModel.extractDate(date: day, format: "EEE"))
+                                        Text(extractDate(date: day, format: "EEE"))
                                             .font(.system(size: 14))
                                             .fontWeight(.semibold)
                                         
-                                        Text(AppointmentsModel.extractDate(date: day, format: "dd"))
+                                        Text(extractDate(date: day, format: "dd"))
                                             .font(.system(size: 15))
                                             .fontWeight(.bold)
                                         
                                         Circle()
                                             .fill(.yellow)
                                             .frame(width: 8, height: 8)
-                                            .opacity(AppointmentsModel.isToday(date: day) ? 1 : 0)
+                                            .opacity(isToday(date: day) ? 1 : 0)
                                         
                                     }
-                                    .foregroundColor(AppointmentsModel.isToday(date: day) ? .white : .black)
+                                    .foregroundColor(isToday(date: day) ? .white : .black)
                                     .frame(width: 45, height: 90)
                                     .background(
                                         ZStack{
-                                            if AppointmentsModel.isToday(date: day){
+                                            if isToday(date: day){
                                                 Capsule()
                                                     .fill(.black)
                                                     .matchedGeometryEffect(id: "CURRENTDAY", in: animation)
@@ -52,7 +64,7 @@ struct DAppointments: View {
                                     )
                                     .contentShape(Capsule())
                                     .onTapGesture {
-                                        AppointmentsModel.currentDay = day
+                                        currentDay = day
                                     }
                                     
                                 }
@@ -69,11 +81,72 @@ struct DAppointments: View {
             }
             .ignoresSafeArea(.container, edges: .top)
         }
+        .onAppear{
+            fetchDoctor()
+            fetchCurrentWeek()
+        }
+    }
+    
+    func fetchDoctor() {
+            let db = Firestore.firestore()
+            let doctorsRef = db.collection("doctors")
+            doctorsRef
+                .whereField("authID", isEqualTo: userTypeManager.userID)
+                .getDocuments { (querySnapshot, error) in
+                    if let error = error {
+                        print("Error getting doctor: \(error.localizedDescription)")
+                        return
+                    }
+                    
+                    guard let querySnapshot = querySnapshot, !querySnapshot.documents.isEmpty,
+                          let document = querySnapshot.documents.first else {
+                        print("No documents or doctor fetched")
+                        return
+                    }
+                    
+                    let doctorData = document.data()
+                    let fetchedDoctor = DoctorModel(from: doctorData, id: document.documentID)
+                    DispatchQueue.main.async {
+                        self.doctor = fetchedDoctor
+                        print("Fetched Doctor ID: \(fetchedDoctor.employeeID)")
+                        fetchAppointments()
+                    }
+                }
+        }
+    
+    func fetchAppointments() {
+        let db = Firestore.firestore()
+        let appointmentsRef = db.collection("appointments")
+        appointmentsRef
+            .whereField("DocID", isEqualTo: doctor?.employeeID)
+            .getDocuments {(querySnapshot, error) in
+                if let error = error {
+                    print("Error getting appointments: \(error.localizedDescription)")
+                    return
+                }
+                
+                guard let querySnapshot = querySnapshot else {
+                    print("No documents fetched")
+                    return
+                }
+                
+                var fetchedAppointments: [AppointmentModel] = []
+                for document in querySnapshot.documents {
+                    if let appointment = AppointmentModel(document: document.data(), id: document.documentID) {
+                        fetchedAppointments.append(appointment)
+                    }
+                }
+                
+                DispatchQueue.main.async {
+                    storedAppointment = fetchedAppointments
+                    filterTodayAppointments()
+                }
+            }
     }
     
     func TasksView() -> some View{
         LazyVStack(spacing: 18){
-            if let appointments = AppointmentsModel.filteredAppointment{
+            if let appointments = filteredAppointment{
                 if appointments.isEmpty{
                     Text("No Appoinments!!!")
                         .font(.system(size: 16))
@@ -97,13 +170,13 @@ struct DAppointments: View {
         }
         .padding()
         .padding(.top)
-        .onChange(of: AppointmentsModel.currentDay){ newValue in
-            AppointmentsModel.filterTodayAppointments()
+        .onChange(of: currentDay){ newValue in
+            fetchAppointments()
             
         }
     }
     
-    func AppointmentCardView(appointment: Appointments) -> some View{
+    func AppointmentCardView(appointment: AppointmentModel) -> some View{
         HStack(alignment: .top, spacing: 30){
             VStack(spacing: 10){
                 Circle()
@@ -167,6 +240,62 @@ struct DAppointments: View {
         .padding(.top, getSafeArea().top)
         .background(Color.white)
     }
+    
+    func filterTodayAppointments() {
+        DispatchQueue.global(qos: .userInteractive).async {
+            let calendar = Calendar.current
+            // Ensure that we compare only the date components (Year, Month, Day)
+            let todayStart = calendar.startOfDay(for: self.currentDay)
+
+            let filtered = self.storedAppointment.filter { appointment in
+                let appointmentDay = calendar.startOfDay(for: appointment.date)
+                return appointmentDay == todayStart
+            }
+
+            DispatchQueue.main.async {
+                withAnimation {
+                    self.filteredAppointment = filtered
+                    print("Filtered Appointments: \(self.filteredAppointment?.count ?? 0)")
+                }
+            }
+        }
+    }
+
+
+    
+    func fetchCurrentWeek(){
+        let today = Date()
+        let calendar = Calendar.current
+       
+        
+        
+        let week = calendar.dateInterval(of: .weekOfMonth, for: today)
+        guard let firstWeekDay = week?.start else{
+             return
+         }
+         // Iterating to get the full week
+        (0..<7).forEach { day in
+            if let weekday = calendar.date(byAdding: .day, value: day, to: firstWeekDay) {
+                currentWeek.append(weekday)
+            }
+        }
+
+    }
+    
+    func extractDate(date: Date, format: String) -> String{
+        let formatter = DateFormatter()
+        
+        formatter.dateFormat = format
+        
+        return formatter.string(from: date)
+    }
+    
+    func isToday(date: Date) -> Bool{
+        let calendar = Calendar.current
+        
+        return calendar.isDate(currentDay, inSameDayAs: date)
+    }
+    
 }
 
 extension View{
@@ -197,8 +326,8 @@ extension View{
 }
 
 struct AppointmentDetailsView: View {
-  let appointment: Appointments // Property to hold the selected task
-
+  let appointment: AppointmentModel
+    
   var body: some View {
     VStack(alignment: .leading, spacing: 20) {
       Text(appointment.patientName!)

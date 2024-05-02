@@ -45,25 +45,9 @@ class UserTypeManager: ObservableObject {
 }
 
 
-
-class UserAuth: ObservableObject {
-    @Published var isLoggedIn: Bool {
-        didSet {
-            UserDefaults.standard.set(isLoggedIn, forKey: "isLoggedIn")
-        }
-    }
-    
-    init(isLoggedIn: Bool = false) {
-        self.isLoggedIn = UserDefaults.standard.bool(forKey: "isLoggedIn")
-    }
-}
-
-
 @main
 struct HMSApp: App {
-    @StateObject var userAuth = UserAuth()
     @StateObject var userTypeManager = UserTypeManager()
-    @StateObject var locationManager = LocationManager()
     
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     @AppStorage("isOnboardingCompleted") var isOnboardingCompleted: Bool = UserDefaults.standard.bool(forKey: "isOnboardingCompleted")
@@ -120,7 +104,7 @@ struct HMSApp: App {
                         }
                 }
             }
-        }.environmentObject(locationManager)
+        }
     }
 }
     

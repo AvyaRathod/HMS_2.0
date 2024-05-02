@@ -52,5 +52,27 @@ struct AppointmentModel: Identifiable {
         self.isComplete = isComplete
         self.reason = reason
     }
+    
+    init(id:String,doctorID:String,patientID:String,bill: Int,
+     date: Date,
+     timeSlot: String,
+     isComplete: Bool,
+     reason: String,
+     patientName: String,
+     doctorName: String,
+     doctorSpecialisation: String) {
+        self.id = id
+        self.doctorID = doctorID
+        self.patientID = patientID
+        self.bill = bill
+        self.date = date
+        self.timeSlot = timeSlot
+        self.isComplete = isComplete
+        self.reason = reason
+        self.patientName = patientName
+        self.doctorName = doctorName
+        self.doctorSpecialisation = doctorSpecialisation
+    }
+    
 }
 

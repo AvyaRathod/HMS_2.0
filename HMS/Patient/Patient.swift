@@ -8,12 +8,12 @@ struct Patient: View {
                     Image(systemName: "house")
                     Text("Home")
                 }
-            AppointmentsView()
+            Text("Tab 2")
                 .tabItem {
                     Image(systemName: "book")
-                    Text("Appointments")
+                    Text("Record")
                 }
-            SosView()
+            Text("Tab 3")
                 .tabItem {
                     Label("SOS", systemImage: "exclamationmark.circle")
                                             .foregroundColor(.red)
@@ -23,7 +23,7 @@ struct Patient: View {
                     Image(systemName: "plus.app")
                     Text("Book")
                 }
-            Text("Tab 5")
+            LogoutView()
                 .tabItem {
                     Image(systemName: "person.crop.circle")
                     Text("Account")
@@ -35,22 +35,6 @@ struct Patient: View {
         print("SOS")
     }
 }
-
-struct RedCircleView: View {
-    var body: some View {
-        ZStack {
-            Circle()
-                .fill(Color.red) // Set the circle color
-                .frame(width: 100, height: 100) // Set the size of the circle
-
-            Text("SOS")
-                .foregroundColor(.white) // Set the text color
-                .font(.title) // Set the font of the text
-                .fontWeight(.bold) // Make the text bold
-        }
-    }
-}
-
 
 
 struct Patient_Previews: PreviewProvider {
