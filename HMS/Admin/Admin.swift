@@ -20,7 +20,7 @@ struct Admin: View {
                     Image(systemName: "person.3.fill")
                     Text("Staff Info")
                 }
-            Text("Alert")
+            SOSAdmin()
                 .tabItem {
                     VStack {
                         Image(systemName: "exclamationmark.triangle.fill")
