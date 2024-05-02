@@ -8,12 +8,12 @@ struct Patient: View {
                     Image(systemName: "house")
                     Text("Home")
                 }
-            Text("Tab 2")
+            AppointmentsView()
                 .tabItem {
                     Image(systemName: "book")
                     Text("Record")
                 }
-            Text("Tab 3")
+            SosView()
                 .tabItem {
                     Label("SOS", systemImage: "exclamationmark.circle")
                                             .foregroundColor(.red)

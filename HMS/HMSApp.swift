@@ -48,7 +48,7 @@ class UserTypeManager: ObservableObject {
 @main
 struct HMSApp: App {
     @StateObject var userTypeManager = UserTypeManager()
-    
+    @StateObject var locationManager = LocationManager()
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     @AppStorage("isOnboardingCompleted") var isOnboardingCompleted: Bool = UserDefaults.standard.bool(forKey: "isOnboardingCompleted")
     @State private var splashIsActive = false
@@ -104,7 +104,7 @@ struct HMSApp: App {
                         }
                 }
             }
-        }
+        }.environmentObject(locationManager)
     }
 }
     

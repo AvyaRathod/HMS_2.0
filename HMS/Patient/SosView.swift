@@ -29,7 +29,7 @@ struct SosView: View {
                 
                 Toggle("", isOn: $isOn)
                     .toggleStyle(CustomToggleStyle(isOn: $isOn))
-                    .padding(80)
+
                 
                 Circle()
                     .fill(.white.opacity(0.3))
@@ -62,7 +62,8 @@ struct SosView: View {
                 
                 if timerFinished {
                     VStack(alignment: .leading) {
-                        Text("Location : \n \(locationManager.location?.coordinate.latitude ?? 0.0), \(locationManager.location?.coordinate.longitude ?? 0.0)").padding(.bottom)
+                        Text("Location sent successfully! ")
+//                        Text("Location : \n \(locationManager.location?.coordinate.latitude ?? 0.0), \(locationManager.location?.coordinate.longitude ?? 0.0)").padding(.bottom)
                         
                     }
                     .onAppear {
