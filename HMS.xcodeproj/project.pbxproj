@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		161DDE9E2BE3699F0014E754 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 161DDE9D2BE3699F0014E754 /* LocationManager.swift */; };
 		1645716E2BD7B74A00855DDF /* DoctorModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1645716C2BD7B74A00855DDF /* DoctorModel.swift */; };
 		1645716F2BD7B74A00855DDF /* PatientModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1645716D2BD7B74A00855DDF /* PatientModel.swift */; };
 		164571AD2BD9076300855DDF /* DAddView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 164571AC2BD9076300855DDF /* DAddView.swift */; };
@@ -75,6 +76,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		161DDE9D2BE3699F0014E754 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		1645716C2BD7B74A00855DDF /* DoctorModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DoctorModel.swift; sourceTree = "<group>"; };
 		1645716D2BD7B74A00855DDF /* PatientModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PatientModel.swift; sourceTree = "<group>"; };
 		164571AC2BD9076300855DDF /* DAddView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DAddView.swift; sourceTree = "<group>"; };
@@ -271,6 +273,7 @@
 				E437886F2BDA4E9A00EE6EDF /* OnBoarding.swift */,
 				E43788712BDA4EC300EE6EDF /* PageModel.swift */,
 				E43788732BDA4EDF00EE6EDF /* PageView.swift */,
+				161DDE9D2BE3699F0014E754 /* LocationManager.swift */,
 			);
 			path = HMS;
 			sourceTree = "<group>";
@@ -425,6 +428,7 @@
 				6B18905D2BE0EAB90067DC82 /* PrescriptionView.swift in Sources */,
 				164571AD2BD9076300855DDF /* DAddView.swift in Sources */,
 				164571B12BD9240C00855DDF /* AdminHome.swift in Sources */,
+				161DDE9E2BE3699F0014E754 /* LocationManager.swift in Sources */,
 				F5A456262BD90AA00068A069 /* vitals.swift in Sources */,
 				2700B43B2BE102C70089F26D /* AddPrescriptionForm.swift in Sources */,
 				F5B406622BDF666600569CDF /* payment-confirm.swift in Sources */,

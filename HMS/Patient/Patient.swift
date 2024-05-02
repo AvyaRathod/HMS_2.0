@@ -8,10 +8,10 @@ struct Patient: View {
                     Image(systemName: "house")
                     Text("Home")
                 }
-            Text("Tab 2")
+            AppointmentsView()
                 .tabItem {
                     Image(systemName: "book")
-                    Text("Record")
+                    Text("Appointments")
                 }
             Text("Tab 3")
                 .tabItem {
@@ -51,11 +51,6 @@ struct RedCircleView: View {
     }
 }
 
-struct RedCircleView_Previews: PreviewProvider {
-    static var previews: some View {
-        RedCircleView()
-    }
-}
 
 
 struct Patient_Previews: PreviewProvider {
