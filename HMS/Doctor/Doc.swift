@@ -11,15 +11,22 @@ struct Doc: View {
     var body: some View {
         TabView{
             DoctorHome()
-                .tabItem { Image(systemName: "house")
-                    Text("Home") }
+                .tabItem {
+                    Image(systemName: "house")
+                    Text("Home")
+                }
             
-            HealthEvents().tabItem { Image(systemName: "heart.text.square.fill")
-                Text("Home") }
+            DoctorHealthEventsView(events: sampleHealthEvents)
+                .tabItem {
+                    Image(systemName: "calendar")
+                    Text("Events")
+                }
         }
     }
 }
 
+
 #Preview {
     Doc()
 }
+
