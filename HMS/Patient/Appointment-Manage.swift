@@ -13,7 +13,7 @@ struct AppointmentsView: View {
     enum Tab {
         case upcoming
         case completed
-        case cancelled
+        
     }
 
     let bookings: [DoctorBooking] = [
@@ -28,14 +28,7 @@ struct AppointmentsView: View {
             .map { CompletedDoctor(doctorName: $0.doctorName, doctorType: $0.doctorType, doctorImage: $0.doctorImage) }
     }
 
-    var cancelledDoctors: [CancelledDoctor] {
-        // Prepare cancelled doctor appointments based on bookings
-        // For demonstration, let's consider some hardcoded cancelled doctors
-        return [
-            CancelledDoctor(doctorName: "Dr. Sarah Johnson", doctorType: "Ophthalmologist", doctorImage: Image("doc4")),
-            CancelledDoctor(doctorName: "Dr. Michael Brown", doctorType: "Neurologist", doctorImage: Image("doc5"))
-        ]
-    }
+
 
     var body: some View {
         VStack {
@@ -68,16 +61,7 @@ struct AppointmentsView: View {
                 .background(selectedTab == .completed ? Color.blue.opacity(0.2) : Color.clear)
                 .cornerRadius(10)
 
-                // Cancelled Appointments Button
-                Button(action: {
-                    selectedTab = .cancelled
-                }) {
-                    Text("Cancelled")
-                        .padding()
-                        .foregroundColor(selectedTab == .cancelled ? .blue : .black)
-                }
-                .background(selectedTab == .cancelled ? Color.blue.opacity(0.2) : Color.clear)
-                .cornerRadius(10)
+
             }
             .padding()
 
@@ -101,15 +85,7 @@ struct AppointmentsView: View {
                     }
                     .padding()
                 }
-            case .cancelled:
-                ScrollView {
-                    VStack(spacing: 16) {
-                        ForEach(cancelledDoctors, id: \.id) { doctor in
-                            CancelledDoctorView(doctor: doctor)
-                        }
-                    }
-                    .padding()
-                }
+
             }
 
             Spacer()
@@ -161,50 +137,4 @@ struct CompletedDoctorView: View {
     }
 }
 
-struct CancelledDoctor: Identifiable {
-    let id = UUID()
-    var doctorName: String
-    var doctorType: String
-    var doctorImage: Image
-}
 
-struct CancelledDoctorView: View {
-    let doctor: CancelledDoctor
-
-    var body: some View {
-        VStack(spacing: 16) {
-            HStack {
-                doctor.doctorImage
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(width: 120, height: 120)
-                    .clipShape(Circle())
-                    .padding(.trailing, 8)
-                VStack(alignment: .leading, spacing: 4) {
-                    Text("Dr. \(doctor.doctorName)")
-                        .font(.subheadline)
-                    Text(doctor.doctorType)
-                        .font(.subheadline)
-                        .foregroundColor(.gray)
-                }
-            }
-            Rectangle()
-                .fill(Color.blue)
-                .frame(width: 100, height: 50)
-                .cornerRadius(8)
-                .overlay(
-                    Button(action: {
-                        // Cancel action
-                    }) {
-                        Text("Rebook")
-                            .foregroundColor(.white)
-                            .padding()
-                    }
-                )
-        }
-        .padding()
-        .background(Color.white)
-        .cornerRadius(8)
-        .shadow(radius: 4)
-    }
-}

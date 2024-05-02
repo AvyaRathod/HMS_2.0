@@ -10,20 +10,21 @@ import SwiftUI
 struct Doc: View {
     var body: some View {
         TabView{
-            LogoutView()
-                .tabItem {
-                    Image(systemName: "house")
-                    Text("Home")
-                }
+            
             DAppointments()
                 .tabItem {
                     Image(systemName: "house")
-                    Text("Appointments")
+                    Text("Home")
                 }
             DoctorHealthEventsView(events: sampleHealthEvents)
                 .tabItem {
                     Image(systemName: "calendar")
                     Text("Events")
+                }
+            LogoutView()
+                .tabItem {
+                    Image(systemName: "person.fill")
+                    Text("Profile")
                 }
             
         }
