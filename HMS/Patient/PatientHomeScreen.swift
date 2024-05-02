@@ -121,7 +121,7 @@ struct PatientHomeScreen: View {
 extension DateFormatter {
     static let appointmentDateFormatter: DateFormatter = {
         let formatter = DateFormatter()
-        formatter.dateFormat = "dd/MM/yyyy" // Adjust the date format to match the one used in your Firestore
+        formatter.dateFormat = "dd/MM/yyyy"
         return formatter
     }()
 }

@@ -127,26 +127,29 @@ struct SlotBookView: View {
                     }
                 }                .padding()
             }
-            Button(action: {
-                // Action to perform when the button is tapped
-                print(selectedDate.formatted(date: .numeric, time: .omitted) , selectedSlot!)
-                
-                guard let slot = selectedSlot else { return }
-                
-                createBooking(for: doctor, on: selectedDate, at: slot)
-                
-            }) {
-                // Button label
-                Text("Book Slot")
-                    .font(.title3.bold())
-                    .padding() // Add padding around the text
-                    .foregroundColor(.white) // Set text color
-                    .background(Color.blue) // Set background color
-                    .cornerRadius(20) // Apply corner radius to create rounded corners
-                    .frame(width: 200,height: 100)
+            NavigationLink(destination: PaymentDetailsView()){
+                Button(action: {
+                    // Action to perform when the button is tapped
+                    print(selectedDate.formatted(date: .numeric, time: .omitted) , selectedSlot!)
+                    
+                    guard let slot = selectedSlot else { return }
+                    
+                    createBooking(for: doctor, on: selectedDate, at: slot)
+                    
+                }) {
+                    // Button label
+                    Text("Book Slot")
+                        .font(.title3.bold())
+                        .padding() // Add padding around the text
+                        .foregroundColor(.white) // Set text color
+                        .background(Color.blue) // Set background color
+                        .cornerRadius(20) // Apply corner radius to create rounded corners
+                        .frame(width: 200,height: 100)
+                }
+                .disabled(selectedSlot == nil)
             }
-            .disabled(selectedSlot == nil)
         }
+        
         .onAppear {
             fetchAppointments()
         }
