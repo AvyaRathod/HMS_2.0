@@ -49,7 +49,7 @@ struct WaveDivider: Shape {
 struct PaymentConfirmationPage: View {
     var appointmentDetails: AppointmentDetails
     var body: some View {
-        NavigationView{
+        NavigationStack{
             VStack {
                 Image(systemName: "checkmark.circle.fill")
                     .resizable()

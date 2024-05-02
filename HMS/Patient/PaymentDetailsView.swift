@@ -10,7 +10,7 @@ import SwiftUI
 struct PaymentDetailsView: View {
     var body: some View {
         let appointment = AppointmentDetails(doctor: "Dr. Kenny Adeola", patient: "Madilyn Doe", date: "19 Nov, 2023", time: "8:30 AM")
-        NavigationView{
+        NavigationStack{
             VStack(spacing:15){
                     Text("Debit Card")
                         .font(.system(size: 20))
