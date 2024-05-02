@@ -63,7 +63,7 @@ struct SosView: View {
                 if timerFinished {
                     VStack(alignment: .leading) {
                         Text("Location sent successfully! ")
-//                        Text("Location : \n \(locationManager.location?.coordinate.latitude ?? 0.0), \(locationManager.location?.coordinate.longitude ?? 0.0)").padding(.bottom)
+
                         
                     }
                     .onAppear {

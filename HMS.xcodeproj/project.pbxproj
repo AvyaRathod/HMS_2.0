@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		161DDE9E2BE3699F0014E754 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 161DDE9D2BE3699F0014E754 /* LocationManager.swift */; };
 		161DDEA42BE38DB50014E754 /* EmergencyModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 161DDEA32BE38DB50014E754 /* EmergencyModel.swift */; };
+		161DDEA62BE3B4A20014E754 /* SOSAdmin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 161DDEA52BE3B4A20014E754 /* SOSAdmin.swift */; };
 		1645716E2BD7B74A00855DDF /* DoctorModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1645716C2BD7B74A00855DDF /* DoctorModel.swift */; };
 		1645716F2BD7B74A00855DDF /* PatientModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1645716D2BD7B74A00855DDF /* PatientModel.swift */; };
 		164571AD2BD9076300855DDF /* DAddView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 164571AC2BD9076300855DDF /* DAddView.swift */; };
@@ -80,6 +81,7 @@
 /* Begin PBXFileReference section */
 		161DDE9D2BE3699F0014E754 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		161DDEA32BE38DB50014E754 /* EmergencyModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmergencyModel.swift; sourceTree = "<group>"; };
+		161DDEA52BE3B4A20014E754 /* SOSAdmin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SOSAdmin.swift; sourceTree = "<group>"; };
 		1645716C2BD7B74A00855DDF /* DoctorModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DoctorModel.swift; sourceTree = "<group>"; };
 		1645716D2BD7B74A00855DDF /* PatientModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PatientModel.swift; sourceTree = "<group>"; };
 		164571AC2BD9076300855DDF /* DAddView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DAddView.swift; sourceTree = "<group>"; };
@@ -191,6 +193,7 @@
 				41CC4C102BDA315E00BE8EE5 /* Admin.swift */,
 				F514B40A2BE0E81A0003B731 /* healthevents-admin.swift */,
 				F514B40E2BE100680003B731 /* imagepicker.swift */,
+				161DDEA52BE3B4A20014E754 /* SOSAdmin.swift */,
 			);
 			path = Admin;
 			sourceTree = "<group>";
@@ -423,6 +426,7 @@
 				E43788722BDA4EC300EE6EDF /* PageModel.swift in Sources */,
 				416A9D722BE3A48D006AC2D3 /* LogoutView.swift in Sources */,
 				164571CF2BDA497A00855DDF /* StaffInfoView.swift in Sources */,
+				161DDEA62BE3B4A20014E754 /* SOSAdmin.swift in Sources */,
 				41CC4C112BDA315E00BE8EE5 /* Admin.swift in Sources */,
 				F514B40B2BE0E81A0003B731 /* healthevents-admin.swift in Sources */,
 				2DAC00592BD78B8D0080098C /* PdetailView.swift in Sources */,
