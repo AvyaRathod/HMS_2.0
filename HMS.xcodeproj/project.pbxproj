@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		161DDE9E2BE3699F0014E754 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 161DDE9D2BE3699F0014E754 /* LocationManager.swift */; };
+		161DDEA42BE38DB50014E754 /* EmergencyModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 161DDEA32BE38DB50014E754 /* EmergencyModel.swift */; };
 		1645716E2BD7B74A00855DDF /* DoctorModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1645716C2BD7B74A00855DDF /* DoctorModel.swift */; };
 		1645716F2BD7B74A00855DDF /* PatientModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1645716D2BD7B74A00855DDF /* PatientModel.swift */; };
 		164571AD2BD9076300855DDF /* DAddView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 164571AC2BD9076300855DDF /* DAddView.swift */; };
@@ -79,6 +80,7 @@
 
 /* Begin PBXFileReference section */
 		161DDE9D2BE3699F0014E754 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
+		161DDEA32BE38DB50014E754 /* EmergencyModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmergencyModel.swift; sourceTree = "<group>"; };
 		1645716C2BD7B74A00855DDF /* DoctorModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DoctorModel.swift; sourceTree = "<group>"; };
 		1645716D2BD7B74A00855DDF /* PatientModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PatientModel.swift; sourceTree = "<group>"; };
 		164571AC2BD9076300855DDF /* DAddView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DAddView.swift; sourceTree = "<group>"; };
@@ -178,6 +180,7 @@
 				F514B40C2BE0EDFD0003B731 /* EventsModel.swift */,
 				2700B43C2BE102E60089F26D /* PrescriptionModel.swift */,
 				41149EFD2BD63E9000E32FD7 /* AppointmentModel.swift */,
+				161DDEA32BE38DB50014E754 /* EmergencyModel.swift */,
 			);
 			path = DataModels;
 			sourceTree = "<group>";
@@ -448,6 +451,7 @@
 				2DAC00572BD78B6E0080098C /* phoneVerificationView.swift in Sources */,
 				2DAC00532BD78B180080098C /* LoginView.swift in Sources */,
 				6B5FFCD02BD63F7D00224FC2 /* DoctorInfoAppointmentTab.swift in Sources */,
+				161DDEA42BE38DB50014E754 /* EmergencyModel.swift in Sources */,
 				F5A456662BD988F50068A069 /* appo-cancelled.swift in Sources */,
 				41149F022BD63EA200E32FD7 /* Patient.swift in Sources */,
 			);
@@ -588,6 +592,8 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHealthShareUsageDescription = "need for functioning";
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "This app requires location access";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "This app requires location access";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -620,6 +626,8 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHealthShareUsageDescription = "need for functioning";
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "This app requires location access";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "This app requires location access";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
