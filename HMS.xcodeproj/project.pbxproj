@@ -57,6 +57,8 @@
 		6BBBCA642BE0F676009D2944 /* DepartmentDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BBBCA632BE0F676009D2944 /* DepartmentDetailView.swift */; };
 		6BD105862BD6560100506D84 /* HealthEventTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BD105852BD6560100506D84 /* HealthEventTab.swift */; };
 		8414566F2BD9109A00691A79 /* DoctorProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8414566D2BD9109A00691A79 /* DoctorProfileView.swift */; };
+		84BC647D2BE10E88001D369B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 84BC647C2BE10E88001D369B /* GoogleService-Info.plist */; };
+		84BC647F2BE10E9F001D369B /* PrescriptionEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84BC647E2BE10E9F001D369B /* PrescriptionEntry.swift */; };
 		E43788702BDA4E9A00EE6EDF /* OnBoarding.swift in Sources */ = {isa = PBXBuildFile; fileRef = E437886F2BDA4E9A00EE6EDF /* OnBoarding.swift */; };
 		E43788722BDA4EC300EE6EDF /* PageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E43788712BDA4EC300EE6EDF /* PageModel.swift */; };
 		E43788742BDA4EDF00EE6EDF /* PageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E43788732BDA4EDF00EE6EDF /* PageView.swift */; };
@@ -111,6 +113,8 @@
 		6BBBCA632BE0F676009D2944 /* DepartmentDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DepartmentDetailView.swift; sourceTree = "<group>"; };
 		6BD105852BD6560100506D84 /* HealthEventTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthEventTab.swift; sourceTree = "<group>"; };
 		8414566D2BD9109A00691A79 /* DoctorProfileView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DoctorProfileView.swift; sourceTree = "<group>"; };
+		84BC647C2BE10E88001D369B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		84BC647E2BE10E9F001D369B /* PrescriptionEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrescriptionEntry.swift; sourceTree = "<group>"; };
 		E437886F2BDA4E9A00EE6EDF /* OnBoarding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBoarding.swift; sourceTree = "<group>"; };
 		E43788712BDA4EC300EE6EDF /* PageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageModel.swift; sourceTree = "<group>"; };
 		E43788732BDA4EDF00EE6EDF /* PageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageView.swift; sourceTree = "<group>"; };
@@ -232,6 +236,7 @@
 				F514B4082BE0E5600003B731 /* events-doctor.swift */,
 				2700B43A2BE102C70089F26D /* AddPrescriptionForm.swift */,
 				164571B42BDA0CEE00855DDF /* HealthEvents.swift */,
+				84BC647E2BE10E9F001D369B /* PrescriptionEntry.swift */,
 			);
 			path = Doctor;
 			sourceTree = "<group>";
@@ -257,7 +262,7 @@
 		413A15DF2BD0F6330035CDAB /* HMS */ = {
 			isa = PBXGroup;
 			children = (
-				2700B4382BE1026B0089F26D /* GoogleService-Info.plist */,
+				84BC647C2BE10E88001D369B /* GoogleService-Info.plist */,
 				F5A456272BD90AC80068A069 /* HMS.entitlements */,
 				41149EFA2BD634AD00E32FD7 /* Doctor */,
 				41149EF92BD634A700E32FD7 /* Login */,
@@ -382,7 +387,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				412405D92BD9053A00C6482E /* .gitignore in Resources */,
-				2700B4392BE1026B0089F26D /* GoogleService-Info.plist in Resources */,
+				84BC647D2BE10E88001D369B /* GoogleService-Info.plist in Resources */,
 				413A15E82BD0F6340035CDAB /* Preview Assets.xcassets in Resources */,
 				413A15E52BD0F6340035CDAB /* Assets.xcassets in Resources */,
 			);
@@ -404,6 +409,7 @@
 				6B14B04F2BD6CCA9004F0B78 /* VitalsHeartView.swift in Sources */,
 				F514B40F2BE100680003B731 /* imagepicker.swift in Sources */,
 				413A15E12BD0F6330035CDAB /* HMSApp.swift in Sources */,
+				84BC647F2BE10E9F001D369B /* PrescriptionEntry.swift in Sources */,
 				41149F062BD63EAF00E32FD7 /* Doc.swift in Sources */,
 				F5A456622BD91B000068A069 /* appointments-upcoming.swift in Sources */,
 				41149EFE2BD63E9000E32FD7 /* AppointmentModel.swift in Sources */,
