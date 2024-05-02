@@ -13,7 +13,7 @@ struct Patient: View {
                     Image(systemName: "book")
                     Text("Appointments")
                 }
-            Text("Tab 3")
+            SosView()
                 .tabItem {
                     Label("SOS", systemImage: "exclamationmark.circle")
                                             .foregroundColor(.red)

@@ -63,6 +63,7 @@ class UserAuth: ObservableObject {
 struct HMSApp: App {
     @StateObject var userAuth = UserAuth()
     @StateObject var userTypeManager = UserTypeManager()
+    @StateObject var locationManager = LocationManager()
     
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     @AppStorage("isOnboardingCompleted") var isOnboardingCompleted: Bool = UserDefaults.standard.bool(forKey: "isOnboardingCompleted")
@@ -119,7 +120,7 @@ struct HMSApp: App {
                         }
                 }
             }
-        }
+        }.environmentObject(locationManager)
     }
 }
     
