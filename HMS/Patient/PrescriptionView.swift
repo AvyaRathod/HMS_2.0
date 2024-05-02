@@ -13,39 +13,41 @@ struct PrescriptionView: View {
 
     var body: some View {
         NavigationView{
-            ScrollView{
-                VStack(alignment: .leading, spacing: 20) {
-                    Text("Description:")
-                        .font(.headline)
-                    Text(prescription.description)
-                        .font(.body)
-                    
-                    
-                    Divider()
-                    
-                    Text("Prescribed Medicine:")
-                        .font(.headline)
-                    Text(prescription.prescribedMedicine)
-                         
-
-
-                    Divider()
-                    
-                    Text("Prescribed Tests:")
-                        .font(.headline)
-                    Text(prescription.prescribedTests)
-                        .font(.body)
-                    
-                    Divider()
-                    
-                    Text("Prescribed Treatment:")
-                        .font(.headline)
-                    Text(prescription.prescribedTreatment)
-                        .font(.body)
-                    Spacer()
+            Form{
+                ScrollView{
+                    VStack(alignment: .leading, spacing: 20) {
+                        Text("Description:")
+                            .font(.headline)
+                        Text(prescription.description)
+                            .font(.body)
+                        
+                        
+                        Divider()
+                        
+                        Text("Prescribed Medicine:")
+                            .font(.headline)
+                        Text(prescription.prescribedMedicine)
+                        
+                        
+                        
+                        Divider()
+                        
+                        Text("Prescribed Tests:")
+                            .font(.headline)
+                        Text(prescription.prescribedTests)
+                            .font(.body)
+                        
+                        Divider()
+                        
+                        Text("Prescribed Treatment:")
+                            .font(.headline)
+                        Text(prescription.prescribedTreatment)
+                            .font(.body)
+                        Spacer()
+                    }
+                    .padding()
+                    .navigationBarTitle("Prescription", displayMode: .automatic)
                 }
-                .padding()
-                .navigationBarTitle("Prescription", displayMode: .automatic)
             }
         }
     }

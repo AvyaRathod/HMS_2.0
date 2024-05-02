@@ -54,6 +54,7 @@
 		6B14B0512BD6CF37004F0B78 /* VitalsSPO2View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B14B0502BD6CF37004F0B78 /* VitalsSPO2View.swift */; };
 		6B18905D2BE0EAB90067DC82 /* PrescriptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B18905C2BE0EAB90067DC82 /* PrescriptionView.swift */; };
 		6B5FFCD02BD63F7D00224FC2 /* DoctorInfoAppointmentTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B5FFCCF2BD63F7D00224FC2 /* DoctorInfoAppointmentTab.swift */; };
+		6BB048CE2BE364CA0053AA67 /* PaymentDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BB048CD2BE364CA0053AA67 /* PaymentDetailsView.swift */; };
 		6BBBCA642BE0F676009D2944 /* DepartmentDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BBBCA632BE0F676009D2944 /* DepartmentDetailView.swift */; };
 		6BD105862BD6560100506D84 /* HealthEventTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BD105852BD6560100506D84 /* HealthEventTab.swift */; };
 		8414566F2BD9109A00691A79 /* DoctorProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8414566D2BD9109A00691A79 /* DoctorProfileView.swift */; };
@@ -80,7 +81,6 @@
 		164571AC2BD9076300855DDF /* DAddView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DAddView.swift; sourceTree = "<group>"; };
 		164571B02BD9240C00855DDF /* AdminHome.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminHome.swift; sourceTree = "<group>"; };
 		164571B22BDA0CD000855DDF /* DoctorHome.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoctorHome.swift; sourceTree = "<group>"; };
-		164571B42BDA0CEE00855DDF /* HealthEvents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthEvents.swift; sourceTree = "<group>"; };
 		2700B4382BE1026B0089F26D /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		2700B43A2BE102C70089F26D /* AddPrescriptionForm.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddPrescriptionForm.swift; sourceTree = "<group>"; };
 		2700B43C2BE102E60089F26D /* PrescriptionModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrescriptionModel.swift; sourceTree = "<group>"; };
@@ -108,6 +108,7 @@
 		6B14B0502BD6CF37004F0B78 /* VitalsSPO2View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VitalsSPO2View.swift; sourceTree = "<group>"; };
 		6B18905C2BE0EAB90067DC82 /* PrescriptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrescriptionView.swift; sourceTree = "<group>"; };
 		6B5FFCCF2BD63F7D00224FC2 /* DoctorInfoAppointmentTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoctorInfoAppointmentTab.swift; sourceTree = "<group>"; };
+		6BB048CD2BE364CA0053AA67 /* PaymentDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentDetailsView.swift; sourceTree = "<group>"; };
 		6BBBCA632BE0F676009D2944 /* DepartmentDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DepartmentDetailView.swift; sourceTree = "<group>"; };
 		6BD105852BD6560100506D84 /* HealthEventTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthEventTab.swift; sourceTree = "<group>"; };
 		8414566D2BD9109A00691A79 /* DoctorProfileView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DoctorProfileView.swift; sourceTree = "<group>"; };
@@ -206,6 +207,7 @@
 				F5A456652BD988F50068A069 /* appo-cancelled.swift */,
 				F5A456612BD91B000068A069 /* appointments-upcoming.swift */,
 				6BBBCA632BE0F676009D2944 /* DepartmentDetailView.swift */,
+				6BB048CD2BE364CA0053AA67 /* PaymentDetailsView.swift */,
 				6B5FFCCE2BD63F4C00224FC2 /* Patient Components */,
 			);
 			path = Patient;
@@ -231,7 +233,6 @@
 				164571B22BDA0CD000855DDF /* DoctorHome.swift */,
 				F514B4082BE0E5600003B731 /* events-doctor.swift */,
 				2700B43A2BE102C70089F26D /* AddPrescriptionForm.swift */,
-				164571B42BDA0CEE00855DDF /* HealthEvents.swift */,
 			);
 			path = Doctor;
 			sourceTree = "<group>";
@@ -401,6 +402,7 @@
 				413A15E32BD0F6330035CDAB /* ContentView.swift in Sources */,
 				8414566F2BD9109A00691A79 /* DoctorProfileView.swift in Sources */,
 				F5318A4A2BDFD94A00469110 /* health-events-patient.swift in Sources */,
+				6BB048CE2BE364CA0053AA67 /* PaymentDetailsView.swift in Sources */,
 				6B14B04F2BD6CCA9004F0B78 /* VitalsHeartView.swift in Sources */,
 				F514B40F2BE100680003B731 /* imagepicker.swift in Sources */,
 				413A15E12BD0F6330035CDAB /* HMSApp.swift in Sources */,
@@ -574,7 +576,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"HMS/Preview Content\"";
-				DEVELOPMENT_TEAM = ZRAZZ9X24U;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHealthShareUsageDescription = "need for functioning";
@@ -606,7 +608,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"HMS/Preview Content\"";
-				DEVELOPMENT_TEAM = ZRAZZ9X24U;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHealthShareUsageDescription = "need for functioning";
