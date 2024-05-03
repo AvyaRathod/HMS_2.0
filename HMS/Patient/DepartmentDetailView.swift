@@ -29,10 +29,6 @@ struct HospitalView: View {
                         .padding()
                 }
                 
-                // Instructions Text
-                Text("Tap a department to proceed")
-                    .font(.headline)
-                    .foregroundColor(.black)
             }
             .navigationBarTitle("Departments")
         }
@@ -99,9 +95,9 @@ struct SearchBarDept: View {
 // Departments Grid
 struct DepartmentsGridView: View {
     let departments = [
-          "Cardiology", "Neurology", "Orthopedics", "Pediatrics",
-          "Dermatology", "Urology",
-          "Endocrinology", "Rheumatology"
+          "Cardiology", "neurology", "orthopedics", "pediatrics",
+          "dermatology", "gynecology",
+          "endocrinology"
       ]
     let columns = [
         GridItem(.adaptive(minimum: 150))
@@ -119,36 +115,18 @@ struct DepartmentsGridView: View {
                         .shadow(radius: 2)
                         .overlay(
                             VStack{
-                                Image(systemName: "")
+                                Image(department)
+                                    .resizable()
                                     .frame(width: 70,height: 70)
-                                    .background(.gray)
-                                    .clipShape(Circle())
+                                    
                                     .shadow(radius: 1)
                                     
                                 Text(department)
                                     .font(.system(size: 22))
                                     .foregroundColor(.black)
                                     .bold()
-                                Text("(280 Review)")
-                                    .font(.system(size: 15))
                 
-                                HStack{
-                                    Rectangle()
-                                        .frame(width: 70,height: 23)
-                                        .cornerRadius(15)
-                                        .foregroundColor(Color.green.opacity(0.2))
-                                        .shadow(radius: 1)
-                                        .overlay(
-                                            HStack(spacing:2){
-                                                Image(systemName: "star.fill")
-                                                    .foregroundColor(.green)
-                                                Text("4.4")
-                                                    .foregroundStyle(Color.green)
-                                                    
-                                            }
-                                        )
-                                }
-                                .padding(.top,-5)
+                                
                             }
                         )
                 }

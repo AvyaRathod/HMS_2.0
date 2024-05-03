@@ -120,7 +120,7 @@ struct DAddView: View {
                         .padding(.horizontal)
                 }
             }
-            .padding()
+            .padding(.top, -50)
             
             
         }
