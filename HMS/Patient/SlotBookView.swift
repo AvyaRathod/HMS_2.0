@@ -63,7 +63,7 @@ struct SlotBookView: View {
             ZStack {
                 RoundedRectangle(cornerRadius: 28)
                     .fill(LinearGradient(
-                        gradient: Gradient(colors: [Color.blue.opacity(1), Color.blue.opacity(0.5)]),
+                        gradient: Gradient(colors: [Color.customBlue.opacity(0.5), Color.customBlue.opacity(1)]),
                         startPoint: .leading,
                         endPoint: .trailing))
                     .frame(width: 361, height: 180)
@@ -239,6 +239,7 @@ struct SlotBookView_Previews: PreviewProvider {
 
 
 extension Color {
+    static let customColor = Color(hex: "#002D62")
     init(hex: String) {
         let scanner = Scanner(string: hex)
         var rgbValue: UInt64 = 0
