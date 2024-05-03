@@ -9,6 +9,7 @@ import SwiftUI
 
 struct SosView: View {
     @EnvironmentObject var locationManager: LocationManager
+    @EnvironmentObject var userTypeManager: UserTypeManager
     @State var isOn: Bool = false
     @State private var countdownTimer: Timer?
     @State var countdown: Int = 5 // Initial countdown value
@@ -68,7 +69,7 @@ struct SosView: View {
                     }
                     .onAppear {
                         printLocation()
-                        EmergencyManager.shared.addEmergency(patientId: "123456789", latitude: "\(locationManager.location?.coordinate.latitude ?? 0.0)", longitude: "\(locationManager.location?.coordinate.longitude ?? 0.0)")
+                        EmergencyManager.shared.addEmergency(patientId: userTypeManager.userID, latitude: "\(locationManager.location?.coordinate.latitude ?? 0.0)", longitude: "\(locationManager.location?.coordinate.longitude ?? 0.0)")
                                             
                         
                     }

@@ -10,7 +10,7 @@ import SwiftUI
 struct Admin: View {
     var body: some View {
         TabView {
-            AdminHome()
+            LogoutView()
                 .tabItem {
                     Image(systemName: "house")
                     Text("Home")
