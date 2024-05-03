@@ -13,8 +13,7 @@ struct AdminDetails {
 }
 
 struct AdminProfile: View {
-    @State private var isEditingProfile = false
-    @State private var isViewingRecords = false
+   
     @State private var showAlert = false
     
     let admin: AdminDetails
@@ -50,29 +49,7 @@ struct AdminProfile: View {
                     .padding(.horizontal, 20)
                     
                     // Buttons
-                    VStack(spacing: 20) {
-                        Button(action: {
-                            isEditingProfile.toggle()
-                        }) {
-                            Text("Edit Profile")
-                                .padding()
-                                .frame(maxWidth: .infinity)
-                                .background(Color.blue.opacity(0.7))
-                                .foregroundColor(.white)
-                                .cornerRadius(10)
-                        }
-                        
-                        Button(action: {
-                            isViewingRecords.toggle()
-                        }) {
-                            Text("View Records")
-                                .padding()
-                                .frame(maxWidth: .infinity)
-                                .background(Color.blue.opacity(0.7))
-                                .foregroundColor(.white)
-                                .cornerRadius(10)
-                        }
-                    }
+             
                     .padding(.horizontal, 20)
                     
                     Spacer()
