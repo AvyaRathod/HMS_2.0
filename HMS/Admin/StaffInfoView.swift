@@ -9,6 +9,16 @@ struct StaffInfoView: View {
     var body: some View {
         NavigationStack {
             VStack {
+                HStack{
+                    SearchBar(text: $searchText) // Search bar inside VStack
+                                        .padding(.leading, 20)
+                    NavigationLink(destination: DAddView(), label: {
+                        Image(systemName: "plus")
+                            .font(.title)
+                    })
+                    .padding(.trailing, 17)
+                    
+                }
                 List {
                     ForEach(filteredStaff) { staff in
                         NavigationLink(destination: EmptyView()) {
@@ -32,7 +42,7 @@ struct StaffInfoView: View {
                             // Action to flag the item
                         }
                         .tint(.yellow)
-                        
+                         
                         Button("Delete") {
                             // Action to delete the item
                         }
@@ -45,23 +55,23 @@ struct StaffInfoView: View {
                         .tint(.blue)
                     }
                 }
-                .searchable(text: $searchText)
+//                .searchable(text: $searchText)
                 .refreshable {
                     await refreshData()
                 }
                 .navigationTitle("Staff info")
-                .toolbar {
-                    ToolbarItem(placement: .navigationBarTrailing) {
-                        NavigationLink(destination: DAddView(), label: {
-                            Image(systemName: "plus")
-                                .font(.title2)
-                        })
-                    }
-                }
-                .onAppear {
-                    Task {
-                        staffData = await fetchAllDoctors()
-                    }
+            }
+//            .toolbar {
+//                ToolbarItem(placement: .navigationBarTrailing) {
+//                    NavigationLink(destination: DAddView(), label: {
+//                        Image(systemName: "plus")
+//                            .font(.title)
+//                    })
+//                }
+//            }
+            .onAppear {
+                Task {
+                    staffData = await fetchAllDoctors()
                 }
             }
         }
