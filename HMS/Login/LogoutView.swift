@@ -12,7 +12,19 @@ struct LogoutView: View {
     @EnvironmentObject var userTypeManager: UserTypeManager
     
     var body: some View {
-        Button("Logout", action: logout)
+        Button(action: logout) {
+            Text("Logout")
+                .padding()
+                .frame(maxWidth: .infinity)
+                .background(Color.red)
+                .foregroundColor(.white)
+                .cornerRadius(10)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 10)
+                        .stroke(Color.red, lineWidth: 2)
+                )
+                .padding(.horizontal, 40) // Add padding to increase the button width
+        }
     }
 
     func logout() {
@@ -33,7 +45,8 @@ struct LogoutView: View {
     }
 }
 
-
-#Preview {
-    LogoutView()
+struct LogoutView_Previews: PreviewProvider {
+    static var previews: some View {
+        LogoutView()
+    }
 }
