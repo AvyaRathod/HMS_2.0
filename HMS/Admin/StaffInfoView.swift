@@ -54,7 +54,7 @@ struct StaffInfoView: View {
                     ToolbarItem(placement: .navigationBarTrailing) {
                         NavigationLink(destination: DAddView(), label: {
                             Image(systemName: "plus")
-                                .font(.title)
+                                .font(.title2)
                         })
                     }
                 }
