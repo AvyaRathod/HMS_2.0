@@ -18,7 +18,27 @@ struct LoginView: View {
                     Text("Welcome Back !").font(.largeTitle).fontWeight(.bold).padding(.bottom,42)
                     VStack(spacing:16.0){
                         InputFieldView(data: $username, title: usernameTitle).autocorrectionDisabled()
-                        InputFieldView(data: $password, title: passwordTitle).autocorrectionDisabled()
+                        ZStack {
+                            SecureField("", text: $password)
+                                .padding(.horizontal, 10)
+                                .frame(width: 360, height: 52)
+                                .overlay(
+                                    RoundedRectangle(cornerSize: CGSize(width: 4, height: 4))
+                                        .stroke(Color.gray, lineWidth: 1)
+                                )
+                            HStack {
+                                Text("Password")
+                                    .font(.headline)
+                                    .fontWeight(.medium)
+                                    .foregroundColor(Color.black)
+                                    .multilineTextAlignment(.leading)
+                                    .padding(.bottom, 2)
+                                    .background(Color(Color.white))
+                                Spacer()
+                            }
+                            .padding(.leading, 18)
+                            .offset(CGSize(width: 0, height: -25))
+                        }.padding(.top, 1)
                     }.padding(.bottom,25)
                     Button(action: {
                         login() // Call login method when button is tapped

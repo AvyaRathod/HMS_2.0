@@ -148,12 +148,28 @@ struct SignUpView: View {
                 print("Error setting user type: \(error.localizedDescription)")
             } else {
                 print("User type \(userType) added for UID: \(userUID)")
+                addUserData(userUID: userUID)
+            }
+        }
+    }
+    
+    func addUserData(userUID: String) {
+        let db = Firestore.firestore()
+        let Ref = db.collection("Patients")
+
+        let PatientData: [String: Any] = [
+            "userUID":userUID,
+            "Name": fullName,
+            "Email": email,
+            "Contact": contactNo,
+        ]
+
+        Ref.addDocument(data: PatientData) { error in
+            if let error = error {
+                print("Error creating patient: \(error.localizedDescription)")
+            } else {
+                print("patient created successfully")
             }
         }
     }
 }
-
-
-//#Preview {
-// SignUpView()
-//}

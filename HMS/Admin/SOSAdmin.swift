@@ -8,24 +8,35 @@
 
 import SwiftUI
 
+import Firebase
+import FirebaseFirestore
+
 struct SOSAdmin: View {
     @StateObject private var emergencyViewModel = EmergencyViewModel()
-    var body: some View {
-        VStack(spacing: 20) {
-            
-            ForEach(emergencyViewModel.emergencies, id: \.self) { emergency in
-                            LocationCard(name: emergency.patientId,
-                                         latitude: emergency.latitude,
-                                         longitude: emergency.longitude,
-                                         dateTime: formattedDate(from: emergency.timeStamp))
-                        }
+    @State private var timer = Timer.publish(every: 5, on: .main, in: .common).autoconnect()
 
-        }
-        .padding()
-        .onAppear {
-                    emergencyViewModel.getAllEmergencies()
+    
+    var body: some View {
+        ScrollView{
+            VStack(spacing: 20) {
+                
+                ForEach(emergencyViewModel.emergencies, id: \.self) { emergency in
+                    LocationCard(name: emergency.patientId,
+                                 latitude: emergency.latitude,
+                                 longitude: emergency.longitude,
+                                 dateTime: formattedDate(from: emergency.timeStamp))
                 }
-        
+                
+            }
+            .padding()
+            .onAppear {
+                emergencyViewModel.getAllEmergencies()
+            }
+            .onReceive(timer) { _ in
+                                emergencyViewModel.getAllEmergencies()
+                            }
+            
+        }
     }
     
     private func formattedDate(from date: Date) -> String {
@@ -78,6 +89,7 @@ struct LocationCard: View {
         if let url = URL(string: "http://maps.apple.com/?q=\(latitude),\(longitude)") {
             UIApplication.shared.open(url, options: [:], completionHandler: nil)
         }
+        
     }
 }
 

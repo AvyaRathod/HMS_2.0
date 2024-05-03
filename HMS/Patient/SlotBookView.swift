@@ -63,7 +63,7 @@ struct SlotBookView: View {
             ZStack {
                 RoundedRectangle(cornerRadius: 28)
                     .fill(LinearGradient(
-                        gradient: Gradient(colors: [Color.blue.opacity(1), Color.blue.opacity(0.5)]),
+                        gradient: Gradient(colors: [Color.customBlue.opacity(0.5), Color.customBlue.opacity(1)]),
                         startPoint: .leading,
                         endPoint: .trailing))
                     .frame(width: 361, height: 180)
@@ -75,24 +75,24 @@ struct SlotBookView: View {
                             .font(.title.bold())
                             .foregroundColor(.white)
                             .frame(maxWidth: .infinity, alignment: .leading)
-                            .padding()
+                            
                             .frame(alignment: .top)
                         
                         Text(doctor.specialisation)
-                            .font(.callout)
+                            .font(.title3)
                             .foregroundColor(.white)
                         
                         Text(doctor.degree)
-                            .font(.body)
+                            .font(.title3)
                             .foregroundColor(.white)
                         Text("Experience: \(doctor.experience) years")
-                            .font(.body)
+                            .font(.title3)
                             .foregroundColor(.white)
                     }
                     Image(systemName: "person.circle.fill")
                         .foregroundColor(.white)
                         .font(.system(size: 60))
-                        .padding(.trailing, 10)
+                        .padding(.trailing, 40)
                 }
                 .padding(.leading, 30)
                 Spacer()
@@ -106,9 +106,19 @@ struct SlotBookView: View {
                     .fill(Color(hex: "f5f5f5"))
                     .frame(width: 360, height: 70)
                 
-                DatePicker("Select a date", selection: $selectedDate, displayedComponents: .date)
-                    .datePickerStyle(CompactDatePickerStyle())
-                    .padding()
+                HStack {
+                       Text("Select a date")
+                           .foregroundColor(.black) // Set text color
+                           .font(.headline) // Set font style
+                           .padding(.leading, 25) // Adjust leading padding
+                       
+                       Spacer() // Add spacer to push DatePicker to the right
+                       
+                       DatePicker("", selection: $selectedDate, displayedComponents: .date)
+                           .datePickerStyle(CompactDatePickerStyle())
+                           .labelsHidden() // Hide default label to reduce spacing
+                           .padding(.trailing, 25) // Adjust trailing padding
+                   }
                 
                 
             }
@@ -229,6 +239,7 @@ struct SlotBookView_Previews: PreviewProvider {
 
 
 extension Color {
+    static let customColor = Color(hex: "#002D62")
     init(hex: String) {
         let scanner = Scanner(string: hex)
         var rgbValue: UInt64 = 0

@@ -1,4 +1,4 @@
-//
+
 //  Doc.swift
 //  HMS
 //
@@ -10,20 +10,20 @@ import SwiftUI
 struct Doc: View {
     var body: some View {
         TabView{
-            
-            DAppointments()
+            DoctorHome()
                 .tabItem {
                     Image(systemName: "house")
                     Text("Home")
                 }
+           
             DoctorHealthEventsView(events: sampleHealthEvents)
                 .tabItem {
                     Image(systemName: "calendar")
                     Text("Events")
                 }
-            LogoutView()
+            DoctorProfile(doctor: DoctorDetails(name: "Dr. John Smith", specialisation: "Cardiologist", employeeID: "DOC123", email: "johnsmith@example.com", contact: "555-1234"))
                 .tabItem {
-                    Image(systemName: "person.fill")
+                    Image(systemName: "person")
                     Text("Profile")
                 }
             
