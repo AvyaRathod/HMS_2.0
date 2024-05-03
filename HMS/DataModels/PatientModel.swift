@@ -18,17 +18,8 @@ struct PatientModel: Hashable, Codable, Identifiable {
     var address: String
     var contact: String
     var email: String
-    var password: String
     var emergencyContact: String
     var gender: Gender
-
-    var appointments: [String]?
-    var pastAppointments: [String]?
-    var pendingHealthRecords: [String]?
-    var healthRecords: [String]?
-    var medications: [String]?
-    var appointmentReports: [String]?
-    var aadhaar: String?
 
     enum Gender: String, CaseIterable, Codable {
         case male = "Male"

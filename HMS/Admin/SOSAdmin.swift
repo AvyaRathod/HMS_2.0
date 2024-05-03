@@ -8,9 +8,14 @@
 
 import SwiftUI
 
+import Firebase
+import FirebaseFirestore
+
 struct SOSAdmin: View {
     @StateObject private var emergencyViewModel = EmergencyViewModel()
     @State private var timer = Timer.publish(every: 5, on: .main, in: .common).autoconnect()
+
+    
     var body: some View {
         ScrollView{
             VStack(spacing: 20) {

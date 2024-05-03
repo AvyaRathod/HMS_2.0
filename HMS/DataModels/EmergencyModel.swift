@@ -47,6 +47,7 @@ final class EmergencyManager {
         let emergencyData = EmergencyModel(patientId: patientId, latitude: latitude, longitude: longitude, timeStamp: currentDate)
             do {
                 _ = try emergenciesCollection.addDocument(from: emergencyData)
+                print(patientId)
             } catch {
                 print("Error adding emergency data to Firestore: \(error)")
             }
