@@ -187,6 +187,7 @@
 		41149EF72BD6349700E32FD7 /* Admin */ = {
 			isa = PBXGroup;
 			children = (
+				8414566D2BD9109A00691A79 /* DoctorProfileView.swift */,
 				2723C01B2BDA18D90069BB71 /* StaffInfoView.swift */,
 				164571AC2BD9076300855DDF /* DAddView.swift */,
 				164571B02BD9240C00855DDF /* AdminHome.swift */,
@@ -203,7 +204,6 @@
 			children = (
 				41DA0BF82BDEAF5700D25913 /* DoctorListView.swift */,
 				6B18905C2BE0EAB90067DC82 /* PrescriptionView.swift */,
-				8414566D2BD9109A00691A79 /* DoctorProfileView.swift */,
 				41149F012BD63EA200E32FD7 /* Patient.swift */,
 				E46B50D72BD76D12007A57F5 /* SlotBookView.swift */,
 				F5318A492BDFD94A00469110 /* health-events-patient.swift */,

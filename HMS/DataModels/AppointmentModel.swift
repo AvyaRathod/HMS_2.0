@@ -74,5 +74,7 @@ struct AppointmentModel: Identifiable {
         self.doctorSpecialisation = doctorSpecialisation
     }
     
+    
+    
 }
 

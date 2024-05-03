@@ -21,7 +21,7 @@ struct StaffInfoView: View {
                 }
                 List {
                     ForEach(filteredStaff) { staff in
-                        NavigationLink(destination: EmptyView()) {
+                        NavigationLink(destination: DoctorProfileView(doctor: staff)) {
                             HStack {
                                 Image(systemName: "person.circle.fill")
                                     .font(.largeTitle)
@@ -37,22 +37,12 @@ struct StaffInfoView: View {
                             }
                         }
                     }
-                    .swipeActions(edge: .leading, allowsFullSwipe: false) {
-                        Button("Flag") {
-                            // Action to flag the item
-                        }
-                        .tint(.yellow)
-                         
+
+                    .swipeActions(edge: .trailing, allowsFullSwipe: false) {
                         Button("Delete") {
                             // Action to delete the item
                         }
                         .tint(.red)
-                    }
-                    .swipeActions(edge: .trailing, allowsFullSwipe: false) {
-                        Button("Archive") {
-                            // Action to archive the item
-                        }
-                        .tint(.blue)
                     }
                 }
 //                .searchable(text: $searchText)
