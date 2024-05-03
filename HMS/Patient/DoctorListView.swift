@@ -205,3 +205,6 @@ struct DoctorListView_Previews: PreviewProvider {
         DoctorListView()
     }
 }
+
+// The SearchBar view remains unchanged, as it's just a UI element.
+// ...

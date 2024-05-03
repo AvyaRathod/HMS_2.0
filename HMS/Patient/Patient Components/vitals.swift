@@ -135,19 +135,19 @@ struct VitalsView: View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack(spacing: 20) {
                 // Steps
-                HealthVitalView(title: "Steps", value: steps.map { "\(Int($0))" } ?? "NA", unit: "", gradient: Gradient(colors: [.blueShade.opacity(1),.blueShade.opacity(0.8)]), imageName: "figure.walk")
+                HealthVitalView(title: "Steps", value: steps.map { "\(Int($0))" } ?? "NA", unit: "", color: Color.blue.opacity(0.5), imageName: "figure.walk")
                 
                 // Heart Rate
-                HealthVitalView(title: "Heart Rate", value: heartRate.map { "\(Int($0))" } ?? "NA", unit: "bpm", gradient: Gradient(colors: [.blueShade.opacity(1),.blueShade.opacity(0.8)]), imageName: "heart")
+                HealthVitalView(title: "Heart Rate", value: heartRate.map { "\(Int($0))" } ?? "NA", unit: "bpm", color: Color.red.opacity(0.5), imageName: "heart")
                 
                 // SpO2
-                HealthVitalView(title: "SpO2", value: spo2.map { "\(Int($0))" } ?? "NA", unit: "%", gradient: Gradient(colors: [.blueShade.opacity(1),.blueShade.opacity(0.8)]), imageName: "waveform.path.ecg")
+                HealthVitalView(title: "SpO2", value: spo2.map { "\(Int($0))" } ?? "NA", unit: "%", color: Color.orange.opacity(0.5), imageName: "waveform.path.ecg")
                 
                 // Blood Pressure
                 if let systolic = systolic, let diastolic = diastolic {
-                    HealthVitalView(title: "Blood Pressure", value: "\(Int(systolic))/\(Int(diastolic))", unit: "mmHg", gradient: Gradient(colors: [.blueShade.opacity(1),.blueShade.opacity(0.8)]), imageName: "heart.text.square")
+                    HealthVitalView(title: "Blood Pressure", value: "\(Int(systolic))/\(Int(diastolic))", unit: "mmHg", color: Color.purple.opacity(0.5), imageName: "heart.text.square")
                 } else {
-                    HealthVitalView(title: "Blood Pressure", value: "NA", unit: "mmHg",gradient: Gradient(colors: [.blueShade.opacity(1),.blueShade.opacity(0.8)]), imageName: "heart.text.square")
+                    HealthVitalView(title: "Blood Pressure", value: "NA", unit: "mmHg", color: Color.purple.opacity(0.5), imageName: "heart.text.square")
                 }
             }
             .padding()
@@ -186,41 +186,35 @@ struct HealthVitalView: View {
     let title: String
     let value: String
     let unit: String
-    let gradient: Gradient
+    let color: Color
     let imageName: String
     
     var body: some View {
-        ZStack {
-            RoundedRectangle(cornerRadius: 20)
-                .frame(width: 150, height: 150)
-                .shadow(color: Color.black.opacity(0.3), radius: 10, x: 0, y: 5)
-            
-            RoundedRectangle(cornerRadius: 20)
-                .fill(LinearGradient(gradient: gradient, startPoint: .leading, endPoint: .trailing))
-                .frame(width: 150, height: 150)
-            
-            VStack {
-                HStack {
-                    Image(systemName: imageName)
-                        .foregroundColor(.white.opacity(0.8))
-                    
-                    Text(title)
-                        .foregroundColor(.white.opacity(0.8))
-                        .font(.headline)
+        RoundedRectangle(cornerRadius: 20)
+            .frame(width: 180, height: 150)
+            .foregroundColor(color)
+            .overlay(
+                VStack {
+                    HStack {
+                        Image(systemName: imageName)
+                            .foregroundColor(.black.opacity(0.8))
+                        
+                        Text(title)
+                            .foregroundColor(.black.opacity(0.8))
+                            .font(.headline)
+                    }
+                    HStack {
+                        Text(value)
+                            .foregroundColor(.black)
+                            .font(.system(size: 50))
+                            .fontWeight(.bold)
+                        Text(unit)
+                            .foregroundColor(.black)
+                            .font(.system(size: 20))
+                    }
                 }
-                HStack {
-                    Text(value)
-                        .foregroundColor(.white)
-                        .font(.system(size: 35))
-                        .fontWeight(.bold)
-                    Text(unit)
-                        .foregroundColor(.white)
-                        .font(.system(size: 20))
-                }
-            }
-            .padding(.horizontal)
-        }
-         
+                .padding(.horizontal)
+            )
     }
 }
 
