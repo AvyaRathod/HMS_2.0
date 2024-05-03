@@ -16,7 +16,6 @@
 		164571B12BD9240C00855DDF /* AdminHome.swift in Sources */ = {isa = PBXBuildFile; fileRef = 164571B02BD9240C00855DDF /* AdminHome.swift */; };
 		164571B32BDA0CD000855DDF /* DoctorHome.swift in Sources */ = {isa = PBXBuildFile; fileRef = 164571B22BDA0CD000855DDF /* DoctorHome.swift */; };
 		164571CF2BDA497A00855DDF /* StaffInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2723C01B2BDA18D90069BB71 /* StaffInfoView.swift */; };
-		2700B43B2BE102C70089F26D /* AddPrescriptionForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2700B43A2BE102C70089F26D /* AddPrescriptionForm.swift */; };
 		2700B43D2BE102E60089F26D /* PrescriptionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2700B43C2BE102E60089F26D /* PrescriptionModel.swift */; };
 		2D7D49E32BE0E2E000C84B9A /* DAppointments.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D7D49E22BE0E2E000C84B9A /* DAppointments.swift */; };
 		2DAC00532BD78B180080098C /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DAC00522BD78B180080098C /* LoginView.swift */; };
@@ -61,6 +60,10 @@
 		6BBBCA642BE0F676009D2944 /* DepartmentDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BBBCA632BE0F676009D2944 /* DepartmentDetailView.swift */; };
 		6BD105862BD6560100506D84 /* HealthEventTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BD105852BD6560100506D84 /* HealthEventTab.swift */; };
 		8414566F2BD9109A00691A79 /* DoctorProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8414566D2BD9109A00691A79 /* DoctorProfileView.swift */; };
+		84BC64892BE49B8C001D369B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 84BC64882BE49B8C001D369B /* GoogleService-Info.plist */; };
+		84BC648B2BE49E0F001D369B /* phs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84BC648A2BE49E0F001D369B /* phs.swift */; };
+		84BC648D2BE4B620001D369B /* DoctorList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84BC648C2BE4B620001D369B /* DoctorList.swift */; };
+		84BC648F2BE4E789001D369B /* PrescriptionEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84BC648E2BE4E789001D369B /* PrescriptionEntry.swift */; };
 		E424E7692BE36B7200811836 /* SosView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E424E7682BE36B7200811836 /* SosView.swift */; };
 		E43788702BDA4E9A00EE6EDF /* OnBoarding.swift in Sources */ = {isa = PBXBuildFile; fileRef = E437886F2BDA4E9A00EE6EDF /* OnBoarding.swift */; };
 		E43788722BDA4EC300EE6EDF /* PageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E43788712BDA4EC300EE6EDF /* PageModel.swift */; };
@@ -91,7 +94,6 @@
 		164571AC2BD9076300855DDF /* DAddView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DAddView.swift; sourceTree = "<group>"; };
 		164571B02BD9240C00855DDF /* AdminHome.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminHome.swift; sourceTree = "<group>"; };
 		164571B22BDA0CD000855DDF /* DoctorHome.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoctorHome.swift; sourceTree = "<group>"; };
-		2700B43A2BE102C70089F26D /* AddPrescriptionForm.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddPrescriptionForm.swift; sourceTree = "<group>"; };
 		2700B43C2BE102E60089F26D /* PrescriptionModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrescriptionModel.swift; sourceTree = "<group>"; };
 		2723C01B2BDA18D90069BB71 /* StaffInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaffInfoView.swift; sourceTree = "<group>"; };
 		2D7D49E22BE0E2E000C84B9A /* DAppointments.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DAppointments.swift; sourceTree = "<group>"; };
@@ -122,6 +124,10 @@
 		6BBBCA632BE0F676009D2944 /* DepartmentDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DepartmentDetailView.swift; sourceTree = "<group>"; };
 		6BD105852BD6560100506D84 /* HealthEventTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthEventTab.swift; sourceTree = "<group>"; };
 		8414566D2BD9109A00691A79 /* DoctorProfileView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DoctorProfileView.swift; sourceTree = "<group>"; };
+		84BC64882BE49B8C001D369B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		84BC648A2BE49E0F001D369B /* phs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = phs.swift; sourceTree = "<group>"; };
+		84BC648C2BE4B620001D369B /* DoctorList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DoctorList.swift; sourceTree = "<group>"; };
+		84BC648E2BE4E789001D369B /* PrescriptionEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrescriptionEntry.swift; sourceTree = "<group>"; };
 		E424E7682BE36B7200811836 /* SosView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SosView.swift; sourceTree = "<group>"; };
 		E437886F2BDA4E9A00EE6EDF /* OnBoarding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBoarding.swift; sourceTree = "<group>"; };
 		E43788712BDA4EC300EE6EDF /* PageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageModel.swift; sourceTree = "<group>"; };
@@ -212,6 +218,7 @@
 			isa = PBXGroup;
 			children = (
 				41DA0BF82BDEAF5700D25913 /* DoctorListView.swift */,
+				84BC648C2BE4B620001D369B /* DoctorList.swift */,
 				6B18905C2BE0EAB90067DC82 /* PrescriptionView.swift */,
 				41149F012BD63EA200E32FD7 /* Patient.swift */,
 				F57FCC412BE4C00400D53B42 /* profile-patient.swift */,
@@ -224,6 +231,7 @@
 				F5A456632BD97DFB0068A069 /* appo-completed.swift */,
 				F5A456612BD91B000068A069 /* appointments-upcoming.swift */,
 				6BBBCA632BE0F676009D2944 /* DepartmentDetailView.swift */,
+				84BC648A2BE49E0F001D369B /* phs.swift */,
 				6BB048CD2BE364CA0053AA67 /* PaymentDetailsView.swift */,
 				6B5FFCCE2BD63F4C00224FC2 /* Patient Components */,
 				E424E7682BE36B7200811836 /* SosView.swift */,
@@ -251,6 +259,7 @@
 				41149F052BD63EAF00E32FD7 /* Doc.swift */,
 				164571B22BDA0CD000855DDF /* DoctorHome.swift */,
 				F514B4082BE0E5600003B731 /* events-doctor.swift */,
+				84BC648E2BE4E789001D369B /* PrescriptionEntry.swift */,
 				F57FCC3F2BE4BFC800D53B42 /* profile-doctor.swift */,
 				2700B43A2BE102C70089F26D /* AddPrescriptionForm.swift */,
 			);
@@ -278,7 +287,7 @@
 		413A15DF2BD0F6330035CDAB /* HMS */ = {
 			isa = PBXGroup;
 			children = (
-				416A9D732BE3A552006AC2D3 /* GoogleService-Info.plist */,
+				84BC64882BE49B8C001D369B /* GoogleService-Info.plist */,
 				F5A456272BD90AC80068A069 /* HMS.entitlements */,
 				41149EFA2BD634AD00E32FD7 /* Doctor */,
 				41149EF92BD634A700E32FD7 /* Login */,
@@ -432,6 +441,7 @@
 				41149F062BD63EAF00E32FD7 /* Doc.swift in Sources */,
 				F5A456622BD91B000068A069 /* appointments-upcoming.swift in Sources */,
 				41149EFE2BD63E9000E32FD7 /* AppointmentModel.swift in Sources */,
+				84BC648D2BE4B620001D369B /* DoctorList.swift in Sources */,
 				2700B43D2BE102E60089F26D /* PrescriptionModel.swift in Sources */,
 				6BD105862BD6560100506D84 /* HealthEventTab.swift in Sources */,
 				E43788702BDA4E9A00EE6EDF /* OnBoarding.swift in Sources */,
@@ -442,6 +452,7 @@
 				164571CF2BDA497A00855DDF /* StaffInfoView.swift in Sources */,
 				161DDEA62BE3B4A20014E754 /* SOSAdmin.swift in Sources */,
 				41CC4C112BDA315E00BE8EE5 /* Admin.swift in Sources */,
+				84BC648B2BE49E0F001D369B /* phs.swift in Sources */,
 				F514B40B2BE0E81A0003B731 /* healthevents-admin.swift in Sources */,
 				2DAC00592BD78B8D0080098C /* PdetailView.swift in Sources */,
 				F5A456602BD91AEE0068A069 /* Appointment-Manage.swift in Sources */,
@@ -455,7 +466,6 @@
 				164571B12BD9240C00855DDF /* AdminHome.swift in Sources */,
 				161DDE9E2BE3699F0014E754 /* LocationManager.swift in Sources */,
 				F5A456262BD90AA00068A069 /* vitals.swift in Sources */,
-				2700B43B2BE102C70089F26D /* AddPrescriptionForm.swift in Sources */,
 				F5B406622BDF666600569CDF /* payment-confirm.swift in Sources */,
 				164571B32BDA0CD000855DDF /* DoctorHome.swift in Sources */,
 				F5A456642BD97DFB0068A069 /* appo-completed.swift in Sources */,
@@ -469,6 +479,7 @@
 				2DAC00532BD78B180080098C /* LoginView.swift in Sources */,
 				6B5FFCD02BD63F7D00224FC2 /* DoctorInfoAppointmentTab.swift in Sources */,
 				161DDEA42BE38DB50014E754 /* EmergencyModel.swift in Sources */,
+				84BC648F2BE4E789001D369B /* PrescriptionEntry.swift in Sources */,
 				41149F022BD63EA200E32FD7 /* Patient.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -615,7 +626,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -649,7 +660,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
