@@ -9,6 +9,7 @@ import SwiftUI
 import Firebase
 
 struct SignUpView: View {
+    @State var PatientData = PatientModel()
     @State private var fullName = ""
     @State private var email = ""
     @State private var password = ""
@@ -75,23 +76,28 @@ struct SignUpView: View {
                     .padding(.leading, 18)
                     .offset(CGSize(width: 0, height: -25))
                 }.padding(.top, 4)
-                
-                Button(action: register) {
-                    Text("Sign Up")
-                        .fontWeight(.heavy)
-                        .font(.title3)
-                        .frame(width: 300, height: 50)
-                        .foregroundColor(.white)
-                        .background(Color.black)
-                        .cornerRadius(40)
-                }
-                .disabled(!isFormValid)
-                .alert(isPresented: $showAlert) {
-                    Alert(
-                        title: Text("Error"),
-                        message: Text("Passwords do not match."),
-                        dismissButton: .default(Text("OK"))
-                    )
+                NavigationLink(destination: PdetailView(patientData: PatientModel(
+                                    name: fullName,
+                                    contact: contactNo,
+                                    email: email
+                ))) {
+                    Button(action: register) {
+                        Text("Sign Up")
+                            .fontWeight(.heavy)
+                            .font(.title3)
+                            .frame(width: 300, height: 50)
+                            .foregroundColor(.white)
+                            .background(Color.black)
+                            .cornerRadius(40)
+                    }
+                    .disabled(!isFormValid)
+                    .alert(isPresented: $showAlert) {
+                        Alert(
+                            title: Text("Error"),
+                            message: Text("Passwords do not match."),
+                            dismissButton: .default(Text("OK"))
+                        )
+                    }
                 }
                 
                 HStack {
@@ -132,6 +138,7 @@ struct SignUpView: View {
                     userTypeManager.userType = .patient
                     userTypeManager.userID = userUID
                     print("user created")
+                    addUserData(userUID: userUID)
                 }
             }
         }
@@ -148,28 +155,16 @@ struct SignUpView: View {
                 print("Error setting user type: \(error.localizedDescription)")
             } else {
                 print("User type \(userType) added for UID: \(userUID)")
-                addUserData(userUID: userUID)
             }
         }
     }
     
     func addUserData(userUID: String) {
-        let db = Firestore.firestore()
-        let Ref = db.collection("Patients")
-
-        let PatientData: [String: Any] = [
-            "userUID":userUID,
+        let PatientData = [
+            "userUID": userUID,
             "Name": fullName,
             "Email": email,
             "Contact": contactNo,
         ]
-
-        Ref.addDocument(data: PatientData) { error in
-            if let error = error {
-                print("Error creating patient: \(error.localizedDescription)")
-            } else {
-                print("patient created successfully")
-            }
-        }
     }
 }

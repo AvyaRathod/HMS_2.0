@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 struct DoctorModel: Hashable, Codable, Identifiable {
     var id: String?
@@ -80,4 +81,5 @@ struct DoctorModel: Hashable, Codable, Identifiable {
         self.degree = dictionary["degree"] as? String ?? ""
         self.cabinNumber = dictionary["cabin"] as? String ?? ""
     }
+    
 }

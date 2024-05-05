@@ -56,7 +56,7 @@ struct phoneVerificationView: View {
         // Button to verify code (replace with actual logic)
         NavigationLink {
          // Replace with your phone verification view
-         PdetailView()
+         EmptyView()
         } label: {
          Text("Verify")
           .fontWeight(.heavy)

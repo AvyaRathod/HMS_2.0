@@ -137,7 +137,7 @@ struct SlotBookView: View {
                     }
                 }                .padding()
             }
-            NavigationLink(destination: PaymentDetailsView()){
+            NavigationLink(destination: EmptyView()){
                 Button(action: {
                     // Action to perform when the button is tapped
                     print(selectedDate.formatted(date: .numeric, time: .omitted) , selectedSlot!)

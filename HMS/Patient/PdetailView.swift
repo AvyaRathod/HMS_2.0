@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct PdetailView: View {
+    @State var patientData: PatientModel
+    
     var title: String?
   @State private var gender = ""
   @State private var DOB = ""
@@ -175,6 +177,6 @@ struct PdetailView: View {
   }
 }
 
-#Preview {
-  PdetailView()
-}
+//#Preview {
+//  PdetailView()
+//}
