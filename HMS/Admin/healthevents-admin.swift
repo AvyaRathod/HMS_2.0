@@ -5,49 +5,41 @@
 //  Created by Protyush Kundu on 30/04/24.
 //
 
+
 import SwiftUI
 
-struct AdminHealth: View {
-    var body: some View {
-        Text("Admin Home")
-    }
-}
+
 
 struct AdminEventsView: View {
-    @State private var events: [HealthEvent]
     @State private var showAddEventSheet = false
-    
-    init(events: [HealthEvent]) {
-        self._events = State(initialValue: events)
-    }
+    @StateObject private var viewModel = EventsViewModel()
     
     var body: some View {
         NavigationView {
-            List(events, id: \.id) { event in
-                VStack(alignment: .leading, spacing: 8) {
-                    if !event.imageName.isEmpty {
-                        Image(event.imageName)
+            List(viewModel.events) { event in
+                NavigationLink(destination: EmptyView()) {
+                    VStack(alignment: .leading) {
+                        Image(systemName: "photo") // Placeholder image until you resolve the issue
                             .resizable()
-                            .frame(width: 300, height: 150)
-                            .aspectRatio(contentMode: .fit)
+                            .aspectRatio(contentMode: .fill)
+                            .frame(height: 150)
                             .clipped()
+                            .cornerRadius(10)
+                        
+                        Text(event.title)
+                            .font(.headline)
+                        Text("\(event.date) - \(event.time)")
+                            .font(.subheadline)
+                            .foregroundColor(.secondary)
                     }
-                    Text(event.title)
-                        .font(.title)
-                    Text("\(event.description)")
-                        .font(.headline)
-                        .foregroundColor(.primary.opacity(0.5))
-                    Text("Date: \(event.date)")
-                        .font(.title3)
-                        .foregroundColor(.primary)
-                    Text("Time: \(event.time)")
-                        .font(.title3)
-                        .foregroundColor(.primary)
-                    Text("Venue: \(event.venue)")
-                        .font(.title3)
-                        .foregroundColor(.primary)
                 }
-                .padding(.vertical, 8)
+                .swipeActions {
+                    Button(role: .destructive) {
+                        viewModel.deleteEvent(eventId: event.id)
+                    } label: {
+                        Label("Delete", systemImage: "trash")
+                    }
+                }
             }
             .navigationTitle("Health Events")
             .navigationBarItems(trailing:
@@ -58,24 +50,27 @@ struct AdminEventsView: View {
                 }
             )
             .sheet(isPresented: $showAddEventSheet) {
-                AddEventView(events: $events)
+                AddEventView()
+            }
+            .task {
+                try? await viewModel.getAllEvents()
+            }
+            .refreshable {
+                try? await viewModel.getAllEvents()
             }
         }
     }
 }
 
-
-
 struct AddEventView: View {
-    @Binding var events: [HealthEvent]
     @State private var title = ""
     @State private var description = ""
-    @State private var date = Date()
-    @State private var time = Date()
+    @State private var startTime = Date()
     @State private var venue = ""
     @State private var selectedImage: UIImage? = nil
     @State private var isShowingImagePicker = false
-
+    let healthEventsManager = HealthEventsManager.shared
+    
     var body: some View {
         NavigationView {
             Form {
@@ -83,9 +78,7 @@ struct AddEventView: View {
                     TextField("Title", text: $title)
                     TextField("Description", text: $description)
                     TextField("Venue", text: $venue)
-                    
-                    DatePicker("Date", selection: $date, in: Date()..., displayedComponents: .date)
-                    DatePicker("Time", selection: $time, in: Date()..., displayedComponents: .hourAndMinute)
+                    DatePicker("Date and Time", selection: $startTime, displayedComponents: [.date, .hourAndMinute])
                 }
                 
                 Section(header: Text("Add Picture")) {
@@ -110,8 +103,10 @@ struct AddEventView: View {
                         let timeFormatter = DateFormatter()
                         timeFormatter.timeStyle = .short
                         
-                        let newEvent = HealthEvent(title: title, description: description, date: dateFormatter.string(from: date), time: timeFormatter.string(from: time), venue: venue, imageName: "")
-                        events.append(newEvent)
+                        let newEvent = HealthEvent(id: UUID().uuidString, title: title, description: description, date: dateFormatter.string(from: startTime), time: timeFormatter.string(from: startTime), venue: venue, imageName: "") // Provide a placeholder value for imageName
+                        healthEventsManager.addHealthEvent(newEvent)
+                        
+                        // Call the function here addHeathEvents
                     }) {
                         Text("Add Event")
                     }
@@ -125,20 +120,6 @@ struct AddEventView: View {
     }
 }
 
-
-struct AdminView: View {
-    var body: some View {
-        NavigationView {
-            AdminEventsView(events: sampleHealthEvents)
-                .navigationTitle("Admin Home")
-        }
-    }
-}
-
-
-
-struct AdminView_Previews: PreviewProvider {
-    static var previews: some View {
-        AdminView()
-    }
+#Preview {
+    AdminEventsView()
 }

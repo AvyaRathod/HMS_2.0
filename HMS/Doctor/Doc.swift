@@ -16,7 +16,7 @@ struct Doc: View {
                     Text("Home")
                 }
            
-            DoctorHealthEventsView(events: sampleHealthEvents)
+            DoctorHealthEventsView()
                 .tabItem {
                     Image(systemName: "calendar")
                     Text("Events")

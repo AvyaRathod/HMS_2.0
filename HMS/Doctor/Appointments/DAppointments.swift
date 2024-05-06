@@ -156,7 +156,8 @@ struct DAppointments: View {
                 else{
                     ForEach(appointments){ appointment in
                         NavigationLink { // Use NavigationLink for task details screen
-                            AppointmentDetailsView(appointment: appointment) // Pass selected task
+                            /*AppointmentDetailsView(appointment: appointment)*/ // Pass selected task
+                            AddPrescriptionForm()
                                     } label: {
                                         AppointmentCardView(appointment: appointment)
                                     }

@@ -10,7 +10,7 @@ import FirebaseFirestore
 import FirebaseFirestoreSwift
 
 struct PrescriptionModel: Codable, Identifiable {
-    let id = UUID()
+    let id =  UUID()
     let doctorId: String
     let patentId: String
     var prescription: String
@@ -46,6 +46,7 @@ struct PrescriptionModel: Codable, Identifiable {
     
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
+        
         self.doctorId = try container.decode(String.self, forKey: .doctorId)
         self.patentId = try container.decode(String.self, forKey: .patentId)
         self.prescription = try container.decode(String.self, forKey: .prescription)
@@ -64,11 +65,11 @@ final class PrescriptionManager {
     private let prescriptionCollection = Firestore.firestore().collection("prescriptions")
     
     
-    func addPatientRecord(patientId: String, prescriptionData: PrescriptionModel) {
+    func addPatientRecord(id: String, prescriptionData: PrescriptionModel) {
         do {
             let data = try Firestore.Encoder().encode(prescriptionData)
             
-            prescriptionCollection.document(patientId).setData(data) { error in
+            prescriptionCollection.document(id).setData(data) { error in
                 if let error = error {
                     print("Error adding document: \(error)")
                 } else {
@@ -96,5 +97,7 @@ final class PrescriptionManager {
             print("Error encoding updated prescription data: \(error)")
         }
     }
+    
+    
     
 }
