@@ -1,11 +1,3 @@
-//
-//  SlotBookView.swift
-//  HMS
-//
-//  Created by Arul Gupta  on 22/04/24.
-//
-
-
 import SwiftUI
 import Firebase
 
@@ -43,7 +35,6 @@ struct TimeButton: View {
     }
 }
 
-
 struct SlotBookView: View {
     @EnvironmentObject var userTypeManager: UserTypeManager
     
@@ -51,101 +42,106 @@ struct SlotBookView: View {
     let gridItems = Array(repeating: GridItem(.flexible()), count: 3)
     let times = ["9:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00"]
     
-    
-    @State private var selectedSlotIndex: Int? = nil // Track selected slot index
-    
     @State private var bookedSlots: [String] = [] // Initialize as empty
     @State private var selectedSlot: String? = nil
     @State private var selectedDate = Date()
+    @State private var paymentConfirmationActive = false // Flag to control navigation to PaymentConfirmationPage
+    
+    func formattedDate(_ date: Date) -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd" // Choose your desired date format
+        return formatter.string(from: date)
+    }
     
     var body: some View {
-        VStack {
-            ZStack {
-                RoundedRectangle(cornerRadius: 28)
-                    .fill(LinearGradient(
-                        gradient: Gradient(colors: [Color.customBlue.opacity(0.5), Color.customBlue.opacity(1)]),
-                        startPoint: .leading,
-                        endPoint: .trailing))
-                    .frame(width: 361, height: 180)
-                    .shadow(color: Color.black.opacity(0.15), radius: 20)
-                
-                HStack {
-                    VStack(alignment: .leading, spacing: 10) {
-                        Text(doctor.name)
-                            .font(.title.bold())
-                            .foregroundColor(.white)
-                            .frame(maxWidth: .infinity, alignment: .leading)
+        NavigationView {
+            VStack {
+                ZStack {
+                    RoundedRectangle(cornerRadius: 28)
+                        .fill(LinearGradient(
+                            gradient: Gradient(colors: [Color.customBlue.opacity(0.5), Color.customBlue.opacity(1)]),
+                            startPoint: .leading,
+                            endPoint: .trailing))
+                        .frame(width: 361, height: 180)
+                        .shadow(color: Color.black.opacity(0.15), radius: 20)
+                    
+                    HStack {
+                        VStack(alignment: .leading, spacing: 10) {
+                            Text(doctor.name)
+                                .font(.title.bold())
+                                .foregroundColor(.white)
+                                .frame(maxWidth: .infinity, alignment: .leading)
                             
-                            .frame(alignment: .top)
-                        
-                        Text(doctor.specialisation)
-                            .font(.title3)
+                            Text(doctor.specialisation)
+                                .font(.title3)
+                                .foregroundColor(.white)
+                            
+                            Text(doctor.degree)
+                                .font(.title3)
+                                .foregroundColor(.white)
+                            Text("Experience: \(doctor.experience) years")
+                                .font(.title3)
+                                .foregroundColor(.white)
+                        }
+                        Image(systemName: "person.circle.fill")
                             .foregroundColor(.white)
-                        
-                        Text(doctor.degree)
-                            .font(.title3)
-                            .foregroundColor(.white)
-                        Text("Experience: \(doctor.experience) years")
-                            .font(.title3)
-                            .foregroundColor(.white)
+                            .font(.system(size: 60))
+                            .padding(.trailing, 40)
                     }
-                    Image(systemName: "person.circle.fill")
-                        .foregroundColor(.white)
-                        .font(.system(size: 60))
-                        .padding(.trailing, 40)
+                    .padding(.leading, 30)
+                    Spacer()
                 }
-                .padding(.leading, 30)
-                Spacer()
-            }
-            .frame(width: 380, height: 200)
-            Text("Appointment Date")
-                .font(.headline)
-            
-            ZStack {
-                RoundedRectangle(cornerRadius: 11)
-                    .fill(Color(hex: "f5f5f5"))
-                    .frame(width: 360, height: 70)
+                .frame(width: 380, height: 200)
                 
-                HStack {
-                       Text("Select a date")
-                           .foregroundColor(.black) // Set text color
-                           .font(.headline) // Set font style
-                           .padding(.leading, 25) // Adjust leading padding
-                       
-                       Spacer() // Add spacer to push DatePicker to the right
-                       
-                       DatePicker("", selection: $selectedDate, displayedComponents: .date)
-                           .datePickerStyle(CompactDatePickerStyle())
-                           .labelsHidden() // Hide default label to reduce spacing
-                           .padding(.trailing, 25) // Adjust trailing padding
-                   }
+                Text("Appointment Date")
+                    .font(.headline)
                 
-                
-            }
-            
-            Text("Select a Slot")
-                .font(.headline)
-            
-            ZStack {
-                RoundedRectangle(cornerRadius: 11)
-                    .fill(Color(hex: "f5f5f5"))
-                    .frame(width: 360, height: 200)
-                
-                LazyVGrid(columns: gridItems, spacing: 10) {
-                    ForEach(times, id: \.self) { time in
-                        TimeButton(time: time, bookedSlots: bookedSlots, selectedSlot: $selectedSlot)
+                ZStack {
+                    RoundedRectangle(cornerRadius: 11)
+                        .fill(Color(hex: "f5f5f5"))
+                        .frame(width: 360, height: 70)
+                    
+                    HStack {
+                        Text("Select a date")
+                            .foregroundColor(.black) // Set text color
+                            .font(.headline) // Set font style
+                            .padding(.leading, 25) // Adjust leading padding
+                        
+                        Spacer() // Add spacer to push DatePicker to the right
+                        
+                        DatePicker("", selection: $selectedDate, displayedComponents: .date)
+                            .datePickerStyle(CompactDatePickerStyle())
+                            .labelsHidden() // Hide default label to reduce spacing
+                            .padding(.trailing, 25) // Adjust trailing padding
                     }
-                }                .padding()
-            }
-            NavigationLink(destination: EmptyView()){
+                }
+                
+                Text("Select a Slot")
+                    .font(.headline)
+                
+                ZStack {
+                    RoundedRectangle(cornerRadius: 11)
+                        .fill(Color(hex: "f5f5f5"))
+                        .frame(width: 360, height: 200)
+                    
+                    LazyVGrid(columns: gridItems, spacing: 10) {
+                        ForEach(times, id: \.self) { time in
+                            TimeButton(time: time, bookedSlots: bookedSlots, selectedSlot: $selectedSlot)
+                        }
+                    }
+                    .padding()
+                }
+                
                 Button(action: {
-                    // Action to perform when the button is tapped
+                    // Action to perform when the book button is tapped
                     print(selectedDate.formatted(date: .numeric, time: .omitted) , selectedSlot!)
                     
                     guard let slot = selectedSlot else { return }
                     
-                    createBooking(for: doctor, on: selectedDate, at: slot)
+                     createBooking(for: doctor, on: selectedDate, at: slot)
                     
+                    // Set the flag to navigate to the PaymentConfirmationPage
+                    paymentConfirmationActive = true
                 }) {
                     // Button label
                     Text("Book Slot")
@@ -157,17 +153,22 @@ struct SlotBookView: View {
                         .frame(width: 200,height: 100)
                 }
                 .disabled(selectedSlot == nil)
+                .padding(.top)
+                
+                NavigationLink(destination: PaymentConfirmationPage(doctorName: doctor.name, selectedDate: formattedDate(selectedDate), selectedSlot: selectedSlot ?? ""), isActive: $paymentConfirmationActive) {
+                    EmptyView()
+                }
+                .hidden()
             }
-        }
-        
-        .onAppear {
-            fetchAppointments()
-        }
-        .onChange(of: selectedDate) { _ in
-            fetchAppointments()
+            .onAppear {
+                fetchAppointments()
+            }
+            .onChange(of: selectedDate) { _ in
+                fetchAppointments()
+            }
+            .navigationBarTitle("Book Appointment", displayMode: .inline)
         }
     }
-    
     
     func fetchAppointments() {
         let db = Firestore.firestore()
@@ -193,28 +194,27 @@ struct SlotBookView: View {
     }
     
     func createBooking(for doctor: DoctorModel, on date: Date, at slot: String) {
-            let db = Firestore.firestore()
-            let appointmentsRef = db.collection("appointments")
+        let db = Firestore.firestore()
+        let appointmentsRef = db.collection("appointments")
 
-            let appointmentData: [String: Any] = [
-                "Bill": 1000,
-                "Date": date.formatted(date: .numeric, time: .omitted),
-                "DocID": doctor.employeeID,
-                "PatID": userTypeManager.userID,
-                "TimeSlot": slot,
-                "isComplete": false,
-                "reason": "Fever"
-            ]
+        let appointmentData: [String: Any] = [
+            "Bill": 1000,
+            "Date": date.formatted(date: .numeric, time: .omitted),
+            "DocID": doctor.employeeID,
+            "PatID": userTypeManager.userID,
+            "TimeSlot": slot,
+            "isComplete": false,
+            "reason": "Fever"
+        ]
 
-            appointmentsRef.addDocument(data: appointmentData) { error in
-                if let error = error {
-                    print("Error creating booking: \(error.localizedDescription)")
-                } else {
-                    print("Booking created successfully")
-                }
+        appointmentsRef.addDocument(data: appointmentData) { error in
+            if let error = error {
+                print("Error creating booking: \(error.localizedDescription)")
+            } else {
+                print("Booking created successfully")
             }
         }
-    
+    }
 }
 
 struct SlotBookView_Previews: PreviewProvider {
@@ -236,7 +236,6 @@ struct SlotBookView_Previews: PreviewProvider {
         SlotBookView(doctor: dummyDoctor)
     }
 }
-
 
 extension Color {
     static let customColor = Color(hex: "#002D62")

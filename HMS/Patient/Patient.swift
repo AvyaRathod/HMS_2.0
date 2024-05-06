@@ -52,11 +52,14 @@ struct Patient: View {
                     .tag(4)
             }
             .navigationBarHidden(true) // Hide the navigation bar
+            .navigationBarBackButtonHidden(true)
             
             .onAppear {
                 UITabBar.appearance().barTintColor = UIColor.white // Set tab bar color
             }
         }
+        .navigationBarBackButtonHidden(true)
+
     }
 }
 

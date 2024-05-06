@@ -1,15 +1,6 @@
-
-
-// Updated by Shashwat Singh
-
 import SwiftUI
 
-struct AppointmentDetails {
-    var doctor: String
-    var patient: String
-    var date: String
-    var time: String
-}
+
 
 struct WaveDivider: Shape {
     func path(in rect: CGRect) -> Path {
@@ -47,7 +38,10 @@ struct WaveDivider: Shape {
 }
 
 struct PaymentConfirmationPage: View {
-    var appointmentDetails: AppointmentDetails
+    
+    var doctorName: String
+    var selectedDate: String
+    var selectedSlot: String
     var body: some View {
         NavigationStack{
             VStack {
@@ -66,7 +60,7 @@ struct PaymentConfirmationPage: View {
                     .multilineTextAlignment(.center)
                     .padding(.top,-2)
                     
-                Text(appointmentDetails.doctor)
+                Text(doctorName)
                     .multilineTextAlignment(.center)
                     .padding()
                     .padding(.top,-10)
@@ -82,12 +76,12 @@ struct PaymentConfirmationPage: View {
                 HStack {
                     Image(systemName:"person.crop.circle")
                         .foregroundColor(.green)
-                    Text(appointmentDetails.patient)
+                    Text("patient")
                         .font(.headline)
                     Spacer()
                     Image(systemName:"clock.fill")
                         .foregroundColor(.green)
-                    Text(appointmentDetails.time)
+                    Text(selectedSlot)
                         .font(.headline)
                         .padding(.bottom, 5)
                 }
@@ -96,17 +90,10 @@ struct PaymentConfirmationPage: View {
                 HStack() {
                     Image(systemName:"calendar.circle.fill")
                         .foregroundColor(.green)
-                    Text(appointmentDetails.date)
+                    Text(selectedDate)
                         .font(.headline)
                         .padding(.bottom, 5)
                     Spacer()
-//                    Image(systemName:"number.circle.fill")
-//                        .foregroundColor(.green)
-//                        .padding(.horizontal,-55)
-//                    Text("12345")
-//                        .font(.headline)
-//                        .padding(.bottom, 5)
-//                        .padding(.leading,-10)
                 }
                 .padding(.horizontal)
                 
@@ -129,14 +116,18 @@ struct PaymentConfirmationPage: View {
                             .cornerRadius(10)
                     }
                     
-                    NavigationLink(destination: PatientHomeScreen()) {
-                        Text("Go to Home")
-                            .foregroundColor(.white)
-                            .padding()
-                            .frame(maxWidth: .infinity)
-                            .background(Color.green)
-                            .cornerRadius(10)
+                    NavigationView{
+                        NavigationLink(destination: Patient()) {
+                            Text("Go to Home")
+                                .foregroundColor(.white)
+                                .padding()
+                                .frame(maxWidth: .infinity)
+                                .background(Color.green)
+                                .cornerRadius(10)
+                        }
+                        
                     }
+                    .navigationBarBackButtonHidden(true)
                     
                 }
                 .padding()
@@ -144,13 +135,13 @@ struct PaymentConfirmationPage: View {
             }
             .padding()
         }
+        .navigationBarBackButtonHidden(true)
     }
 }
 
 
 struct PaymentConfirmationPage_Previews: PreviewProvider {
     static var previews: some View {
-        let appointment = AppointmentDetails(doctor: "Dr. Kenny Adeola", patient: "Madilyn Doe", date: "19 Nov, 2023", time: "8:30 AM")
-        return PaymentConfirmationPage(appointmentDetails: appointment)
+        return PaymentConfirmationPage(doctorName: "Dr. Kenny Adeola", selectedDate: "19 Nov, 2023", selectedSlot: "8:30 AM")
     }
 }
