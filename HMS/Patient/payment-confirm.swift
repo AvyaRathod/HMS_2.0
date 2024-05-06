@@ -129,7 +129,7 @@ struct PaymentConfirmationPage: View {
                             .cornerRadius(10)
                     }
                     
-                    NavigationLink(destination: PatientHomeScreen()) {
+                    NavigationLink(destination: HomeScreenView()) {
                         Text("Go to Home")
                             .foregroundColor(.white)
                             .padding()
