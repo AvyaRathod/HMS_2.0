@@ -10,11 +10,12 @@ import SwiftUI
 // Model to represent a health event
 struct HealthEventsView: View {
     @State private var showConfirmationAlert = false
-    var events: [HealthEvent]
+//    var events: [HealthEvent]
+    @StateObject var viewModel = EventsViewModel()
     
     var body: some View {
         NavigationView {
-            List(events, id: \.title) { event in
+            List(viewModel.events, id: \.title) { event in
                 VStack(alignment: .leading, spacing: 8) {
                     Image(event.imageName)
                         .resizable()
@@ -65,6 +66,10 @@ struct HealthEventsView: View {
             .alert(isPresented: $showConfirmationAlert) {
                 Alert(title: Text("Thank You!"), message: Text("You have confirmed attendance for this event."), dismissButton: .default(Text("OK")))
             }
+            .task {
+                try? await viewModel.getAllEvents()
+            }
+            
         }
     }
     
@@ -77,6 +82,6 @@ struct HealthEventsView: View {
 
 struct HealthEventsView_Previews: PreviewProvider {
     static var previews: some View {
-        HealthEventsView(events: sampleHealthEvents)
+        HealthEventsView()
     }
 }

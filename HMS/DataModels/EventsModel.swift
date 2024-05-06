@@ -6,23 +6,144 @@
 //
 
 import SwiftUI
+import Firebase
+import FirebaseFirestore
+import FirebaseFirestoreSwift
 
-struct HealthEvent: Identifiable {
-    var id = UUID()
+
+struct HealthEvent: Identifiable, Codable {
+    var id: String
     var title: String
     var description: String
     var date: String
     var time: String
     var venue: String
     var imageName: String // Image name for the event
+    
+    // Initialize from a Firestore document complete it
+    init(from document: DocumentSnapshot) throws {
+        guard let data = document.data() else {
+            throw NSError(domain: "Firestore", code: 0, userInfo: [NSLocalizedDescriptionKey: "Document data was empty."])
+        }
+        
+        guard let id = document.documentID as? String else {
+            throw NSError(domain: "Firestore", code: 0, userInfo: [NSLocalizedDescriptionKey: "Document ID couldn't be cast to String."])
+        }
+        
+        self.id = id
+        self.title = data["title"] as? String ?? ""
+        self.description = data["description"] as? String ?? ""
+        self.date = data["date"] as? String ?? ""
+        self.time = data["time"] as? String ?? ""
+        self.venue = data["venue"] as? String ?? ""
+        self.imageName = data["imageName"] as? String ?? ""
+    }
+
+    
+    
+    init(id: String, title: String, description: String, date: String, time: String, venue: String, imageName: String) {
+        self.id = id
+        self.title = title
+        self.description = description
+        self.date = date
+        self.time = time
+        self.venue = venue
+        self.imageName = imageName
+    }
+    
+    init(from decoder: any Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.id = try container.decode(String.self, forKey: .id)
+        self.title = try container.decode(String.self, forKey: .title)
+        self.description = try container.decode(String.self, forKey: .description)
+        self.date = try container.decode(String.self, forKey: .date)
+        self.time = try container.decode(String.self, forKey: .time)
+        self.venue = try container.decode(String.self, forKey: .venue)
+        self.imageName = try container.decode(String.self, forKey: .imageName)
+    }
+    
 }
 
-// Sample data for demonstration
-let sampleHealthEvents: [HealthEvent] = [
-    HealthEvent(title: "Fitness Workshop", description: "Join us for an exciting fitness workshop where you'll learn about the latest trends in fitness and wellness.", date: "May 10, 2024", time: "10:00 AM", venue: "Fitness Center", imageName: "fitness"),
-    HealthEvent(title: "Nutrition Seminar", description: "Learn about healthy eating habits and nutritional tips in this informative seminar.", date: "May 15, 2024", time: "2:00 PM - 4:00 PM", venue: "Conference Room", imageName: "nutrition_seminar"),
-    HealthEvent(title: "Mental Health Awareness Session", description: "Join us for an insightful session on mental health awareness and strategies for better mental well-being.", date: "May 20, 2024", time: "3:00 PM - 5:00 PM", venue: "Auditorium", imageName: "mental_health_session"),
-    HealthEvent(title: "Yoga Retreat", description: "Relax and rejuvenate with a serene yoga retreat in the beautiful outdoor park.", date: "May 25, 2024", time: "8:00 AM - 10:00 AM", venue: "Outdoor Park", imageName: "yoga_retreat"),
-    HealthEvent(title: "Blood Donation", description: "Join us for an exciting fitness workshop where you'll learn about the latest trends in fitness and wellness.", date: "May 10, 2024", time: "10:00 AM - 12:00 PM", venue: "Fitness Center", imageName: "fitness_"),
-]
 
+final class HealthEventsManager {
+    static let shared = HealthEventsManager()
+    private init() {}
+    
+    private let healthEvents = Firestore.firestore().collection("HealthEvents")
+    
+    private func healthDocument(id: String) -> DocumentReference {
+        healthEvents.document(id)
+    }
+    
+    func addHealthEvent(_ event: HealthEvent) {
+        do {
+            _ = try healthDocument(id: event.id).setData(from: event, merge: false)
+        } catch {
+            print("Error adding health event to Firestore: \(error)")
+        }
+    }
+    
+    func getAllHealthEvents(completion: @escaping ([HealthEvent]?) -> Void) {
+        healthEvents.getDocuments { snapshot, error in
+            if let error = error {
+                print("Error getting health events: \(error)")
+                completion(nil)
+                return
+            }
+            
+            guard let documents = snapshot?.documents else {
+                print("No documents")
+                completion(nil)
+                return
+            }
+            
+            let events = documents.compactMap { document -> HealthEvent? in
+                do {
+                    let event = try document.data(as: HealthEvent.self)
+                    return event
+                } catch {
+                    print("Error decoding health event: \(error)")
+                    return nil
+                }
+            }
+            
+            completion(events)
+        }
+    }
+    
+    
+    
+    func deleteParticularEvent(eventId: String) {
+        healthEvents.document(eventId).delete() { error in
+            if let error = error {
+                print("Error deleting event: \(error)")
+            } else {
+                print("Event successfully deleted!")
+                print(eventId)
+            }
+        }
+    }
+    
+}
+
+@MainActor
+final class EventsViewModel: ObservableObject {
+    @Published private(set) var events: [HealthEvent] = []
+    
+    func getAllEvents(){
+        HealthEventsManager.shared.getAllHealthEvents { [weak self] fetchedEvents in
+            if let fetchedEvents = fetchedEvents {
+                // Update the events array on the main thread
+                DispatchQueue.main.async {
+                    self?.events = fetchedEvents
+                }
+            }
+        }
+    }
+    
+    
+    func deleteEvent(eventId: String){
+        HealthEventsManager.shared.deleteParticularEvent(eventId: eventId)
+    }
+    
+}

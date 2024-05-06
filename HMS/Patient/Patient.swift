@@ -43,6 +43,13 @@ struct Patient: View {
                         Text("Account")
                     }
                     .tag(4)
+                
+                HealthEventsView()
+                    .tabItem {
+                        Image(systemName: "heart.text.square.fill")
+                        Text("Health Events")
+                    }
+                    .tag(4)
             }
             .navigationBarHidden(true) // Hide the navigation bar
             

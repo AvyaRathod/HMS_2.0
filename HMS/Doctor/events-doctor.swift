@@ -9,11 +9,12 @@ import SwiftUI
 
 struct DoctorHealthEventsView: View {
     @State private var showConfirmationAlert = false
-    var events: [HealthEvent] // Using HealthEvent model instead of DoctorHealthEvent
+//    var events: [HealthEvent]  Using HealthEvent model instead of DoctorHealthEvent
+    @StateObject var viewModel = EventsViewModel()
     
     var body: some View {
         NavigationView {
-            List(events, id: \.title) { event in
+            List(viewModel.events , id: \.id) { event in
                 VStack(alignment: .leading, spacing: 8) {
                     Image(event.imageName)
                         .resizable()
@@ -64,6 +65,12 @@ struct DoctorHealthEventsView: View {
             .alert(isPresented: $showConfirmationAlert) {
                 Alert(title: Text("Thank You!"), message: Text("You have confirmed attendance for this event."), dismissButton: .default(Text("OK")))
             }
+            .task {
+                try? await viewModel.getAllEvents()
+            }
+            .refreshable {
+                try? await viewModel.getAllEvents()
+            }
         }
     }
     
@@ -76,6 +83,6 @@ struct DoctorHealthEventsView: View {
 
 struct DoctorHealthEventsView_Previews: PreviewProvider {
     static var previews: some View {
-        DoctorHealthEventsView(events: sampleHealthEvents)
+        DoctorHealthEventsView()
     }
 }
