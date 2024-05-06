@@ -73,7 +73,9 @@ struct HMSApp: App {
             if splashIsActive{
                 if isOnboardingCompleted {
                     if userTypeManager.userType == .unknown {
-                        LoginView(userTypeManager: userTypeManager)
+                        LoginView()
+                            .environmentObject(userTypeManager)
+
                     } else {
                         MainTabs()
                             .environmentObject(userTypeManager)
