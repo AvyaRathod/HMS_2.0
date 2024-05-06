@@ -7,10 +7,11 @@
 
 import SwiftUI
 import Firebase
-
+import FirebaseStorage
 struct DAddView: View {
-    @State private var image: Image?
-    @State private var isImagePickerPresented: Bool = false
+    @State var isPickerShowing = false
+    @State var selectedImage: UIImage?
+
     @State private var dname: String = ""
     @State private var demp: String = ""
     @State private var demail: String = ""
@@ -28,6 +29,9 @@ struct DAddView: View {
     let yearsOfExperience: [Int] = Array(0...50)
     @State private var dexperienceIndex = 0
     
+    
+    
+    
     let specializations: [DoctorModel.Specialization] = [
         .Cardiologist, .Orthopedic, .Endocrinologist,
         .Gastroenterology, .Hematologist, .Neurologist,
@@ -36,19 +40,49 @@ struct DAddView: View {
         .Urologist, .Ophthalmologist, .Gynecologist
     ]
     
+
+    
     var body: some View {
         ScrollView {
             VStack {
                 
-                HStack{
-                    imageView
-                        .onTapGesture {
-                            self.isImagePickerPresented.toggle()
+
+                VStack(spacing: 20) {
+                        if let selectedImage = selectedImage {
+                            Image(uiImage: selectedImage)
+                                .resizable()
+                                .aspectRatio(contentMode: .fill)
+                                .frame(width: 200, height: 200)
+                                .clipShape(Circle())
+                                .overlay(Circle().stroke(Color.white, lineWidth: 4))
+                                .shadow(radius: 5)
+                                .onTapGesture {
+                                    isPickerShowing = true
+                                }
+                        } else {
+                            ZStack {
+                                Circle()
+                                    .fill(Color.gray)
+                                    .frame(width: 120, height: 120)
+                                    .overlay(Image(systemName: "camera")
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fit)
+                                        .frame(width: 80, height: 80)
+                                        .foregroundColor(.white))
+                                    .shadow(radius: 5)
+                                
+                                Text("Tap to select")
+                                    .foregroundColor(.white)
+                                    .font(.none)
+                            }
+                            .onTapGesture {
+                                isPickerShowing = true
+                            }
                         }
-                        .sheet(isPresented: $isImagePickerPresented) {
-                            ImagePickerView(image: self.$image)
-                        }.padding(.top, 10).padding(.bottom,10).padding()
-                }
+                    }
+                    .padding()
+                
+                
                 
                 InputFieldView(data: $dname, title: "Name")
                 InputFieldView(data: $demp, title: "Employee Id")
@@ -85,6 +119,7 @@ struct DAddView: View {
                 }
                 .padding(4)
                 
+               
                 
                 InputFieldView(data: $dcontact, title: "Contact")
                 InputFieldView(data: $dexperience, title: "Experience")
@@ -95,21 +130,7 @@ struct DAddView: View {
                 
                 
                 Button(action: {
-                    let doctorData: [String: Any] = [
-                                "name": dname,
-                                "DocID": demp,
-                                "email": demail,
-                                "department": ddepartment,
-                                "specialisation": specializations[dspecialisationIndex].rawValue,
-                                "contact": dcontact,
-                                "experience": dexperience,
-                                "degree": ddegree,
-                                "cabin": dcabin,
-                                "image": dimage
-                            ]
-
-                            registerDoctor(doctorData: doctorData)
-                    
+                    uploadPhoto()
                 }) {
                     Text("Save")
                         .frame(maxWidth: .infinity)
@@ -121,30 +142,52 @@ struct DAddView: View {
                 }
             }
             .padding(.top, -50)
+            .sheet(isPresented: $isPickerShowing, onDismiss: nil){
+                ImagePickerDoc(selectedImage: $selectedImage, isPickerShowing: $isPickerShowing)
+            }
             
             
         }
     }
     
-    var imageView: some View {
-        ZStack {
-            if let selectedImage = image {
-                selectedImage
-                    .resizable()
-                    .scaledToFill()
-                    .frame(width: 125, height: 125)
-                    .clipShape(Circle())
-                    .overlay(Circle().stroke(Color.white, lineWidth: 4))
+    
+    func uploadPhoto(){
+        guard selectedImage != nil else{
+            return
+        }
+        let storageRef = Storage.storage().reference()
+        let imageData = selectedImage!.jpegData(compressionQuality: 0.8)
+        guard imageData != nil else {
+            return
+        }
+        let path = "Doctor/\(UUID().uuidString).jpg"
+        let fileRef = storageRef.child("Doctor/\(UUID().uuidString).jpg")
+        let uploadTask = fileRef.putData(imageData!, metadata: nil){ metadata, error in
+            if let error = error {
+                print("Error adding photo: \(error.localizedDescription)")
             } else {
-                Circle()
-                    .fill(Color.gray)
-                    .frame(width: 125, height: 125)
-                    .overlay(Image(systemName: "person.circle.fill")
-                        .foregroundColor(.white))
+                print("image added successfully")
+                dimage = path
+                setDoctorData()
             }
         }
     }
     
+    func setDoctorData(){
+        let doctorData: [String: Any] = [
+                    "name": dname,
+                    "DocID": demp,
+                    "email": demail,
+                    "department": ddepartment,
+                    "specialisation": specializations[dspecialisationIndex].rawValue,
+                    "contact": dcontact,
+                    "experience": dexperience,
+                    "degree": ddegree,
+                    "cabin": dcabin,
+                    "image": dimage
+                ]
+        registerDoctor(doctorData: doctorData)
+    }
     
     func registerDoctor(doctorData: [String: Any]) {
             guard let email = doctorData["email"] as? String,
@@ -204,36 +247,42 @@ struct DAddView: View {
 }
 
 
-struct ImagePickerView: UIViewControllerRepresentable {
-    @Binding var image: Image?
+struct ImagePickerDoc: UIViewControllerRepresentable {
+    @Binding var selectedImage: UIImage?
+    @Binding var isPickerShowing: Bool
     
     class Coordinator: NSObject, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-        @Binding var image: Image?
+        var parent: ImagePickerDoc
         
-        init(image: Binding<Image?>) {
-            _image = image
+        init(parent: ImagePickerDoc) {
+            self.parent = parent
         }
         
-        func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
+        func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
             if let uiImage = info[.originalImage] as? UIImage {
-                image = Image(uiImage: uiImage)
+                parent.selectedImage = uiImage
             }
-            picker.dismiss(animated: true, completion: nil)
+            parent.isPickerShowing = false
+        }
+        
+        func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+            parent.isPickerShowing = false
         }
     }
     
     func makeCoordinator() -> Coordinator {
-        return Coordinator(image: $image)
+        return Coordinator(parent: self)
     }
     
     func makeUIViewController(context: Context) -> UIImagePickerController {
-        let imagePicker = UIImagePickerController()
-        imagePicker.delegate = context.coordinator
-        return imagePicker
+        let picker = UIImagePickerController()
+        picker.delegate = context.coordinator
+        return picker
     }
     
-    func updateUIViewController(_ uiViewController: UIImagePickerController, context: Context) {}
-    
+    func updateUIViewController(_ uiViewController: UIImagePickerController, context: Context) {
+        // No need to update anything here
+    }
 }
 
 #Preview {
