@@ -9,7 +9,7 @@ struct Patient: View {
     var body: some View {
         NavigationView {
             TabView(selection: $selectedTab) {
-                PatientHomeScreen()
+                HomeScreenView()
                     .tabItem {
                         Image(systemName: "house")
                         Text("Home")
