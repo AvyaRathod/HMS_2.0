@@ -9,15 +9,17 @@ import SwiftUI
 import Firebase
 
 struct SignUpView: View {
+    @State private var navigateToDetails = false
+
     @State var PatientData = PatientModel()
     @State private var fullName = ""
     @State private var email = ""
     @State private var password = ""
     @State private var confirmPassword = ""
     @State private var contactNo = ""
-    @State private var showAlert = false // State variable to control alert presentation
+    @State private var showAlert = false
     @State private var userType: UserType = .patient
-    @ObservedObject var userTypeManager: UserTypeManager
+    @EnvironmentObject var userTypeManager: UserTypeManager
     
     var body: some View {
         NavigationStack {
@@ -76,11 +78,7 @@ struct SignUpView: View {
                     .padding(.leading, 18)
                     .offset(CGSize(width: 0, height: -25))
                 }.padding(.top, 4)
-                NavigationLink(destination: PdetailView(patientData: PatientModel(
-                                    name: fullName,
-                                    contact: contactNo,
-                                    email: email
-                ))) {
+                
                     Button(action: register) {
                         Text("Sign Up")
                             .fontWeight(.heavy)
@@ -98,16 +96,14 @@ struct SignUpView: View {
                             dismissButton: .default(Text("OK"))
                         )
                     }
-                }
+                
+                NavigationLink(destination: PdetailView(patientData: PatientModel(name: fullName, contact: contactNo, email: email)), isActive: $navigateToDetails) { EmptyView() }
                 
                 HStack {
                     Text("Already have an account?")
-                    Button(action: {}, label: {
-                        Text("Log In").fontWeight(.light)
-                            .foregroundColor(Color.blue)
-                            .underline()
-                    })
-                    
+                    NavigationLink("Log In", destination: LoginView())
+                        .foregroundColor(.blue)
+                        .underline()
                 }
             }
             .padding()
@@ -135,10 +131,9 @@ struct SignUpView: View {
                     let userUID = result.user.uid
                     let userType = "patient"
                     addUserType(userUID: userUID, userType: userType)
-                    userTypeManager.userType = .patient
                     userTypeManager.userID = userUID
                     print("user created")
-                    addUserData(userUID: userUID)
+                    navigateToDetails = true
                 }
             }
         }
@@ -157,14 +152,5 @@ struct SignUpView: View {
                 print("User type \(userType) added for UID: \(userUID)")
             }
         }
-    }
-    
-    func addUserData(userUID: String) {
-        let PatientData = [
-            "userUID": userUID,
-            "Name": fullName,
-            "Email": email,
-            "Contact": contactNo,
-        ]
     }
 }

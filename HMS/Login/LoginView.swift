@@ -5,8 +5,8 @@ struct LoginView: View {
     @State var usernameTitle : String = "Username"
     @State var passwordTitle : String = "Password"
     
-    @ObservedObject var userTypeManager: UserTypeManager
-    
+    @EnvironmentObject var userTypeManager: UserTypeManager
+
     @State var username : String = ""
     @State var password : String = ""
     
@@ -40,6 +40,7 @@ struct LoginView: View {
                             .offset(CGSize(width: 0, height: -25))
                         }.padding(.top, 1)
                     }.padding(.bottom,25)
+                    
                     Button(action: {
                         login() // Call login method when button is tapped
                     }) {
@@ -64,7 +65,7 @@ struct LoginView: View {
                     Image("Line or").padding(.leading,-6)
                     
                     NavigationLink{
-                        SignUpView(userTypeManager: userTypeManager)
+                        SignUpView()
                     } label: {
                         Text("Sign In")
                             .fontWeight(.heavy)
