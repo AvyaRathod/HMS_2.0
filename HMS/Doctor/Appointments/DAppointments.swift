@@ -253,6 +253,8 @@ struct DAppointments: View {
 
             }
             .hLeading()
+            
+            Button("Leave", action: {})
         }
         .padding()
         .padding(.top, getSafeArea().top)

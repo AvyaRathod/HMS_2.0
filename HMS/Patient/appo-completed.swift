@@ -6,61 +6,98 @@
 //
 
 import SwiftUI
+import Firebase
 
-struct CompletedAppointment: Identifiable {
-    let id = UUID()
-    var date: Date
-    var doctorName: String
-    var doctorType: String
-    var bookingID: String
-    var doctorImage: Image
-}
 
 struct CompletedAppointmentView: View {
-    let appointment: CompletedAppointment
-
+    var appointment: AppointmentModel
+    @Binding var appointments: [AppointmentModel]
+    @State private var doctorName: String = "Loading..."
+    @State private var specialisation: String = "Loading..."
+    
     var body: some View {
-        VStack(spacing: 16) {
-            HStack {
-                appointment.doctorImage
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(width: 120, height: 120)
-                    .clipShape(Circle())
-                    .padding(.trailing, 8)
-                VStack(alignment: .leading, spacing: 4) {
-                    Text(appointment.date, style: .date)
+        ZStack{
+            HStack{
+                
+                Rectangle()
+                    .fill(Color.white)
+                    .frame(width: 100, height: 130)
+                    .cornerRadius(30)
+                    .padding(.leading, 60)
+                    .overlay(
+                        Image("DrPriyaPhoto") // Use the actual image here
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .foregroundColor(.white)
+                    )
+                VStack(alignment: .leading) {
+                    Text(doctorName)
+                        .font(.title2)
+                        .fontWeight(.bold)
+                        .foregroundColor(.black)
+                    Text(specialisation)
                         .font(.headline)
-                    Text("Dr. \(appointment.doctorName)")
+                        .foregroundColor(.black)
+                    
+                    Text("Date: \(appointment.formattedDate)")
                         .font(.subheadline)
-                    Text(appointment.doctorType)
+                    Text("Time: \(appointment.timeSlot)")
                         .font(.subheadline)
-                        .foregroundColor(.gray)
-                    Text("Booking ID: \(appointment.bookingID)")
-                        .font(.footnote)
+                    Button(action: {
+//                        cancelAppointment()
+                    }) {
+                        Text("View Prescription")
+                            .fontWeight(.bold)
+                            .foregroundColor(.white)
+                            .padding(.vertical, 8)
+                            .padding(.horizontal, 16)
+                            .background(Color.customBlue)
+                            .cornerRadius(8)
+                    }
                 }
             }
-
-            Rectangle()
-                .fill(Color.blue)
-                .frame(width: 100, height: 50)
+                .padding()
+                .background(Color.white)
                 .cornerRadius(8)
-                .overlay(
-                    Button(action: {
-                        // Cancel action
-                    }) {
-                        HStack {
-                            Text("Cancel")
-                                .foregroundColor(.white)
-                        }
-                        .padding()
-                    }
-                )
+                .shadow(radius: 4)
+                .padding(.bottom)
+                .padding(.leading)
+                .padding(.trailing)
+            }
+        .onAppear {
+            fetchDoctorDetails()
         }
-        .padding()
-        .background(Color.white)
-        .cornerRadius(8)
-        .shadow(radius: 4)
+
+        }
+    
+    private func fetchDoctorDetails() {
+        let db = Firestore.firestore()
+        let doctorsRef = db.collection("doctors")
+        
+        doctorsRef.whereField("DocID", isEqualTo: appointment.doctorID).getDocuments { (querySnapshot, error) in
+            if let error = error {
+                print("Error fetching doctor details: \(error.localizedDescription)")
+                self.doctorName = "Doctor details could not be loaded."
+                self.specialisation = "Please try again later."
+            } else if let querySnapshot = querySnapshot, !querySnapshot.isEmpty {
+                guard let data = querySnapshot.documents.first?.data() else {
+                    self.doctorName = "Doctor not found."
+                    self.specialisation = "Specialisation unknown."
+                    return
+                }
+                
+                self.doctorName = data["name"] as? String ?? "No name available"
+                self.specialisation = data["specialisation"] as? String ?? "No specialisation available"
+            } else {
+                print("No matching document found for DocID \(self.appointment.doctorID)")
+                self.doctorName = "Doctor not found."
+                self.specialisation = "Specialisation unknown."
+            }
+        }
     }
 }
-
+//    .onAppear {
+//        PrescriptionManager.shared.fetchPrescription(patientId: appointment.patientID) { fetchedPrescription in
+//            self.prescription = fetchedPrescription
+//        }
+//    }

@@ -245,8 +245,10 @@ struct AppointmentCardView: View {
                         .font(.subheadline)
                     Text("Time: \(appointment.timeSlot)")
                         .font(.subheadline)
-                    Button(action: {}) {
-                        Text("View Appointment")
+                    Button(action: {
+                        cancelAppointment()
+                    }) {
+                        Text("Cancel")
                             .fontWeight(.bold)
                             .foregroundColor(.white)
                             .padding(.vertical, 8)
