@@ -25,7 +25,7 @@ struct DoctorListView: View {
     }
 
     var body: some View {
-        NavigationStack {
+        NavigationView {
             VStack {
                 SearchBar(text: $searchText)
                     .padding(.horizontal)
