@@ -9,8 +9,8 @@ import SwiftUI
 
 struct DoctorHealthEventsView: View {
     @State private var showConfirmationAlert = false
-//    var events: [HealthEvent]  Using HealthEvent model instead of DoctorHealthEvent
     @StateObject var viewModel = EventsViewModel()
+    @State private var confirmedEvents: Set<String> = Set()
     
     var body: some View {
         NavigationView {
@@ -37,6 +37,9 @@ struct DoctorHealthEventsView: View {
                     Text("Venue: \(event.venue)")
                         .font(.subheadline)
                         .foregroundColor(.primary)
+                    Text("Attendees: \(event.attendees)")
+                        .font(.subheadline)
+                        .foregroundColor(.primary)
                 }
                 .contentShape(Rectangle()) // Set the content shape to rectangle to ensure the whole view is tappable
                 .onTapGesture {
@@ -50,8 +53,10 @@ struct DoctorHealthEventsView: View {
                     logEvent(event)
                     // Show confirmation alert
                     showConfirmationAlert.toggle()
+                    // Update the attendees count
+                    updateAttendeesCount(eventId: event.id)
                 }) {
-                    Text("Attend")
+                    Text(confirmedEvents.contains(event.id) ? "Confirmed" : "Attend") // Change button label based on confirmation
                         .font(.headline)
                         .padding(.vertical, 8)
                         .padding(.horizontal, 20)
@@ -60,6 +65,7 @@ struct DoctorHealthEventsView: View {
                         .cornerRadius(10)
                         .padding(.top, 8)
                 }
+                .disabled(confirmedEvents.contains(event.id) || event.attendees > 150 )
             }
             .navigationTitle("Health Events")
             .alert(isPresented: $showConfirmationAlert) {
@@ -78,6 +84,19 @@ struct DoctorHealthEventsView: View {
     func logEvent(_ event: HealthEvent) {
         print("Attending \(event.title)")
         // Add your logic to log the event here
+    }
+    
+    // Function to update the attendees count
+    func updateAttendeesCount(eventId: String) {
+        guard let eventIndex = viewModel.events.firstIndex(where: { $0.id == eventId }) else {
+            return
+        }
+        var eventToUpdate = viewModel.events[eventIndex]
+        eventToUpdate.attendees += 1
+        viewModel.events[eventIndex] = eventToUpdate
+        
+        HealthEventsManager.shared.updateAttendees(eventId: eventId, newAttendeesCount: eventToUpdate.attendees)
+        confirmedEvents.insert(eventId) // Mark the event as confirmed
     }
 }
 
