@@ -8,7 +8,7 @@
 import SwiftUI
 import Firebase
 import FirebaseStorage
-import FirebaseFirestore
+
 struct DAddView: View {
     @State var isPickerShowing = false
     @State var selectedImage: UIImage?
@@ -30,8 +30,8 @@ struct DAddView: View {
     let yearsOfExperience: [Int] = Array(0...50)
     @State private var dexperienceIndex = 0
     
-    
-    
+    @State private var showAlert = false // Control variable for showing alert
+    @Environment(\.presentationMode) var presentationMode // Environment variable for controlling presentation mode
     
     let specializations: [DoctorModel.Specialization] = [
         .Cardiologist, .Orthopedic, .Endocrinologist,
@@ -46,42 +46,40 @@ struct DAddView: View {
     var body: some View {
         ScrollView {
             VStack {
-                
-
                 VStack(spacing: 20) {
-                        if let selectedImage = selectedImage {
-                            Image(uiImage: selectedImage)
-                                .resizable()
-                                .aspectRatio(contentMode: .fill)
-                                .frame(width: 200, height: 200)
-                                .clipShape(Circle())
-                                .overlay(Circle().stroke(Color.white, lineWidth: 4))
-                                .shadow(radius: 5)
-                                .onTapGesture {
-                                    isPickerShowing = true
-                                }
-                        } else {
-                            ZStack {
-                                Circle()
-                                    .fill(Color.gray)
-                                    .frame(width: 120, height: 120)
-                                    .overlay(Image(systemName: "camera")
-                                        .resizable()
-                                        .aspectRatio(contentMode: .fit)
-                                        .frame(width: 80, height: 80)
-                                        .foregroundColor(.white))
-                                    .shadow(radius: 5)
-                                
-                                Text("Tap to select")
-                                    .foregroundColor(.white)
-                                    .font(.none)
-                            }
+                    if let selectedImage = selectedImage {
+                        Image(uiImage: selectedImage)
+                            .resizable()
+                            .aspectRatio(contentMode: .fill)
+                            .frame(width: 200, height: 200)
+                            .clipShape(Circle())
+                            .overlay(Circle().stroke(Color.white, lineWidth: 4))
+                            .shadow(radius: 5)
                             .onTapGesture {
                                 isPickerShowing = true
                             }
+                    } else {
+                        ZStack {
+                            Circle()
+                                .fill(Color.gray)
+                                .frame(width: 120, height: 120)
+                                .overlay(Image(systemName: "camera")
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(width: 80, height: 80)
+                                    .foregroundColor(.white))
+                                .shadow(radius: 5)
+                            
+                            Text("Tap to select")
+                                .foregroundColor(.white)
+                                .font(.none)
+                        }
+                        .onTapGesture {
+                            isPickerShowing = true
                         }
                     }
-                    .padding()
+                }
+                .padding()
                 
                 
                 
@@ -95,7 +93,6 @@ struct DAddView: View {
                     Picker("Specialisation", selection: $dspecialisationIndex) {
                         ForEach(0..<specializations.count) { index in
                             Text(specializations[index].rawValue)
-                            
                         }
                     }
                     .accentColor(.black)
@@ -120,15 +117,10 @@ struct DAddView: View {
                 }
                 .padding(4)
                 
-               
-                
                 InputFieldView(data: $dcontact, title: "Contact")
                 InputFieldView(data: $dexperience, title: "Experience")
-                
-                
                 InputFieldView(data: $ddegree, title: "Degree")
                 InputFieldView(data: $dcabin, title: "Cabin No.")
-                
                 
                 Button(action: {
                     uploadPhoto { urlString in
@@ -150,14 +142,22 @@ struct DAddView: View {
 
             }
             .padding(.top, -50)
-            .sheet(isPresented: $isPickerShowing, onDismiss: nil){
+            .sheet(isPresented: $isPickerShowing, onDismiss: nil) {
                 ImagePickerDoc(selectedImage: $selectedImage, isPickerShowing: $isPickerShowing)
             }
-            
-            
+            .alert(isPresented: $showAlert) {
+                Alert(
+                    title: Text("Success"),
+                    message: Text("Doctor added successfully"),
+                    dismissButton: .default(Text("OK")) {
+                        presentationMode.wrappedValue.dismiss() // Navigate back to StaffInfoView
+                    }
+                )
+            }
         }
     }
     
+
     func uploadPhoto(completion: @escaping (String?) -> Void){
             guard let selectedImage = selectedImage else {
                 return
@@ -191,50 +191,53 @@ struct DAddView: View {
                         }
                     }
                 }
-            }
-        }
+          }
+    }
     
 
     
-    func setDoctorData(){
+    func setDoctorData() {
         let doctorData: [String: Any] = [
-                    "name": dname,
-                    "DocID": demp,
-                    "email": demail,
-                    "department": ddepartment,
-                    "specialisation": specializations[dspecialisationIndex].rawValue,
-                    "contact": dcontact,
-                    "experience": dexperience,
-                    "degree": ddegree,
-                    "cabin": dcabin,
-                    "image": dimage
-                ]
+            "name": dname,
+            "DocID": demp,
+            "email": demail,
+            "department": ddepartment,
+            "specialisation": specializations[dspecialisationIndex].rawValue,
+            "contact": dcontact,
+            "experience": dexperience,
+            "degree": ddegree,
+            "cabin": dcabin,
+            "image": dimage
+        ]
         registerDoctor(doctorData: doctorData)
     }
     
     func registerDoctor(doctorData: [String: Any]) {
-            guard let email = doctorData["email"] as? String,
-                  let password = dpass as? String else {  // Use the password from the form
-                print("Invalid email or password")
-                return
-            }
-
-            Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
-                if let error = error {
-                    print("Error registering doctor \(email): \(error.localizedDescription)")
-                } else if let authResult = authResult {
-                    let userUID = authResult.user.uid
-                    let userType = "doctor"
-                    // Set the user type
-                    addUserType(userUID: userUID, userType: userType)
-                    // Add doctor profile details, omitting the password for security reasons
-                    var profileData = doctorData
-                    profileData["authID"] = userUID  // Add the UID to the profile data
-                    addDoctorProfile(userUID: userUID, doctorData: profileData)
-                    print("Doctor registered and data added for \(email)")
-                }
+        guard let email = doctorData["email"] as? String,
+              let password = dpass as? String else {  // Use the password from the form
+            print("Invalid email or password")
+            return
+        }
+        
+        Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
+            if let error = error {
+                print("Error registering doctor \(email): \(error.localizedDescription)")
+            } else if let authResult = authResult {
+                let userUID = authResult.user.uid
+                let userType = "doctor"
+                // Set the user type
+                addUserType(userUID: userUID, userType: userType)
+                // Add doctor profile details, omitting the password for security reasons
+                var profileData = doctorData
+                profileData["authID"] = userUID  // Add the UID to the profile data
+                addDoctorProfile(userUID: userUID, doctorData: profileData)
+                print("Doctor registered and data added for \(email)")
+                
+                // Show success alert after doctor registration
+                showAlert = true
             }
         }
+    }
     
     func addUserType(userUID: String, userType: String) {
         let db = Firestore.firestore()
@@ -254,10 +257,10 @@ struct DAddView: View {
     func addDoctorProfile(userUID: String, doctorData: [String: Any]) {
         var newDoctorData = doctorData
         newDoctorData["authID"] = userUID // Ensure the doctorData includes the authID
-
+        
         let db = Firestore.firestore()
         db.collection("doctors").document() // Leave .document() empty for autoID
-           .setData(newDoctorData) { error in
+            .setData(newDoctorData) { error in
                 if let error = error {
                     print("Error adding doctor profile: \(error.localizedDescription)")
                 } else {
@@ -265,10 +268,7 @@ struct DAddView: View {
                 }
             }
     }
-    
-    
 }
-
 
 struct ImagePickerDoc: UIViewControllerRepresentable {
     @Binding var selectedImage: UIImage?
@@ -308,6 +308,8 @@ struct ImagePickerDoc: UIViewControllerRepresentable {
     }
 }
 
-#Preview {
-    DAddView()
+struct DAddView_Previews: PreviewProvider {
+    static var previews: some View {
+        DAddView()
+    }
 }
