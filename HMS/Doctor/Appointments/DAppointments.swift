@@ -250,11 +250,12 @@ struct DAppointments: View {
                 
                 Text("Today")
                     .font(.largeTitle.bold())
-
+                
             }
             .hLeading()
-            
-            Button("Leave", action: {})
+            NavigationLink(destination: DLeaveAppView()){
+                Text("Leave")
+            }
         }
         .padding()
         .padding(.top, getSafeArea().top)
