@@ -14,26 +14,26 @@ struct AdminEventsView: View {
     @State private var showAddEventSheet = false
     @StateObject private var viewModel = EventsViewModel()
     
-    
-    
     var body: some View {
         NavigationView {
             List(viewModel.events) { event in
-                NavigationLink(destination: EmptyView()) {
-                    VStack(alignment: .leading) {
-                        Image(systemName: "photo") // Placeholder image until you resolve the issue
-                            .resizable()
-                            .aspectRatio(contentMode: .fill)
-                            .frame(height: 150)
-                            .clipped()
-                            .cornerRadius(10)
-                        
-                        Text(event.title)
-                            .font(.headline)
-                        Text("\(event.date) - \(event.time)")
-                            .font(.subheadline)
-                            .foregroundColor(.secondary)
-                    }
+                VStack(alignment: .leading) {
+                    Image(systemName: "photo") // Placeholder image until you resolve the issue
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                        .frame(height: 150)
+                        .clipped()
+                        .cornerRadius(10)
+                    
+                    Text(event.title)
+                        .font(.headline)
+                    Text("\(event.date) - \(event.time)")
+                        .font(.subheadline)
+                        .foregroundColor(.secondary)
+                    
+                    Text("Attendees: \(event.attendees)")
+                        .font(.subheadline)
+                        .foregroundColor(.secondary)
                 }
                 .swipeActions {
                     Button(role: .destructive) {
@@ -64,6 +64,7 @@ struct AdminEventsView: View {
     }
 }
 
+
 struct AddEventView: View {
     @State private var title = ""
     @State private var description = ""
@@ -75,6 +76,12 @@ struct AddEventView: View {
     
     @State var isPickerShowing = false
     @State var selectedImage: UIImage?
+    @Environment(\.presentationMode) var presentationMode
+    @State private var showAlert = false
+    
+    var isFormComplete: Bool {
+        !title.isEmpty && !description.isEmpty && !venue.isEmpty && selectedImage != nil
+    }
     
     var body: some View {
         NavigationView {
@@ -83,9 +90,9 @@ struct AddEventView: View {
                     TextField("Title", text: $title)
                     TextField("Description", text: $description)
                     TextField("Venue", text: $venue)
-                    DatePicker("Date and Time", selection: $startTime, displayedComponents: [.date, .hourAndMinute])
+                    DatePicker("Date and Time", selection: $startTime, in: Date()..., displayedComponents: [.date, .hourAndMinute])
                 }
-                
+
                 Section(header: Text("Add Picture")) {
                     Button(action: {
                         self.isShowingImagePicker = true
@@ -96,15 +103,10 @@ struct AddEventView: View {
                         Image(uiImage: selectedImage)
                             .resizable()
                             .aspectRatio(contentMode: .fill)
-                            
-                                                        
                             .shadow(radius: 5)
-                            .onTapGesture {
-                                isPickerShowing = true
-                            }
                     }
                 }
-                
+
                 Section {
                     Button(action: {
                         let dateFormatter = DateFormatter()
@@ -117,58 +119,65 @@ struct AddEventView: View {
                         uploadEventPhoto()
                         
                         DispatchQueue.main.asyncAfter(deadline: .now() + 2) { // Add a delay to ensure the image is uploaded
-                                let newEvent = HealthEvent(
-                                    id: UUID().uuidString,
-                                    title: title,
-                                    description: description,
-                                    date: dateFormatter.string(from: startTime),
-                                    time: timeFormatter.string(from: startTime),
-                                    venue: venue,
-                                    imageName: eventImage // Use eventImage here
-                                )
-                                healthEventsManager.addHealthEvent(newEvent)
-                            }
-                        
-                        
-                        // Call the function here addHeathEvents
+                            let newEvent = HealthEvent(
+                                id: UUID().uuidString,
+                                title: title,
+                                description: description,
+                                date: dateFormatter.string(from: startTime),
+                                time: timeFormatter.string(from: startTime),
+                                venue: venue,
+                                imageName: eventImage // Use eventImage here
+                            )
+                            healthEventsManager.addHealthEvent(newEvent)
+                            showAlert = true // Show the alert after adding the event
+                        }
                     }) {
                         Text("Add Event")
                     }
+                    .disabled(!isFormComplete)
                 }
             }
             .navigationTitle("Add Health Event")
             .sheet(isPresented: $isShowingImagePicker) {
                 ImagePicker(image: self.$selectedImage)
             }
-        }
-    }
-    
-    
-    func uploadEventPhoto(){
-        guard selectedImage != nil else{
-            return
-        }
-        let storageRef = Storage.storage().reference()
-        let imageData = selectedImage!.jpegData(compressionQuality: 0.8)
-        guard imageData != nil else {
-            return
-        }
-        let path = "Events/\(UUID().uuidString).jpg"
-        let fileRef = storageRef.child("Events/\(UUID().uuidString).jpg")
-        let uploadTask = fileRef.putData(imageData!, metadata: nil){ metadata, error in
-            if let error = error {
-                print("Error adding photo: \(error.localizedDescription)")
-            } else {
-                print("image added successfully")
-                eventImage = path
-                
+            .alert(isPresented: $showAlert) {
+                Alert(
+                    title: Text("Success"),
+                    message: Text("Event added successfully"),
+                    dismissButton: .default(Text("OK")) {
+                        presentationMode.wrappedValue.dismiss()// Navigate back to AddEventView
+                        // You can use NavigationLink or popToRoot
+                    }
+                )
             }
         }
     }
     
     
-    
+    func uploadEventPhoto() {
+        guard let selectedImage = selectedImage else {
+            return
+        }
+        let storageRef = Storage.storage().reference()
+        guard let imageData = selectedImage.jpegData(compressionQuality: 0.8) else {
+            return
+        }
+        let path = "Events/\(UUID().uuidString).jpg"
+        let fileRef = storageRef.child(path)
+        let uploadTask = fileRef.putData(imageData, metadata: nil) { metadata, error in
+            if let error = error {
+                print("Error adding photo: \(error.localizedDescription)")
+            } else {
+                print("image added successfully")
+                eventImage = path
+            }
+        }
+    }
 }
+
+
+
 
 #Preview {
     AdminEventsView()

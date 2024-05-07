@@ -6,16 +6,14 @@
 //
 import SwiftUI
 
-
-// Model to represent a health event
 struct HealthEventsView: View {
     @State private var showConfirmationAlert = false
-//    var events: [HealthEvent]
     @StateObject var viewModel = EventsViewModel()
+    @State private var attendedEvents: Set<String> = Set()
     
     var body: some View {
         NavigationView {
-            List(viewModel.events, id: \.title) { event in
+            List(viewModel.events, id: \.id) { event in
                 VStack(alignment: .leading, spacing: 8) {
                     Image(event.imageName)
                         .resizable()
@@ -38,21 +36,22 @@ struct HealthEventsView: View {
                     Text("Venue: \(event.venue)")
                         .font(.subheadline)
                         .foregroundColor(.primary)
+                    Text("Attendees: \(event.attendees)")
+                        .font(.subheadline)
+                        .foregroundColor(.primary)
                 }
-                .contentShape(Rectangle()) // Set the content shape to rectangle to ensure the whole view is tappable
+                .contentShape(Rectangle())
                 .onTapGesture {
                     // Handle tapping on event details
-                    // You can add any custom action here if needed
                 }
                 
-                // Attend Button
                 Button(action: {
-                    // Log the event when the "Attend" button is clicked
                     logEvent(event)
-                    // Show confirmation alert
+                    attendedEvents.insert(event.id) // Mark the event as attended
                     showConfirmationAlert.toggle()
+                    updateAttendeesCount(eventId: event.id)
                 }) {
-                    Text("Attend")
+                    Text(attendedEvents.contains(event.id) ? "Attended" : "Attend") // Change button label based on attendance
                         .font(.headline)
                         .padding(.vertical, 8)
                         .padding(.horizontal, 20)
@@ -61,6 +60,7 @@ struct HealthEventsView: View {
                         .cornerRadius(10)
                         .padding(.top, 8)
                 }
+                .disabled(attendedEvents.contains(event.id) || event.attendees > 150 )
             }
             .navigationTitle("Health Events")
             .alert(isPresented: $showConfirmationAlert) {
@@ -73,10 +73,20 @@ struct HealthEventsView: View {
         }
     }
     
-    // Function to log the event
     func logEvent(_ event: HealthEvent) {
         print("Attending \(event.title)")
         // Add your logic to log the event here
+    }
+    
+    func updateAttendeesCount(eventId: String) {
+        guard let eventIndex = viewModel.events.firstIndex(where: { $0.id == eventId }) else {
+            return
+        }
+        var eventToUpdate = viewModel.events[eventIndex]
+        eventToUpdate.attendees += 1
+        viewModel.events[eventIndex] = eventToUpdate
+        
+        HealthEventsManager.shared.updateAttendees(eventId: eventId, newAttendeesCount: eventToUpdate.attendees)
     }
 }
 

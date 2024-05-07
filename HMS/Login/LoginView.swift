@@ -67,7 +67,7 @@ struct LoginView: View {
                     NavigationLink{
                         SignUpView()
                     } label: {
-                        Text("Sign In")
+                        Text("Sign Up")
                             .fontWeight(.heavy)
                             .font(.title3)
                             .frame(width:300)
