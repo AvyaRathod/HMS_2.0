@@ -5,6 +5,7 @@ struct DoctorListView: View {
     @State private var isFiltering = false
     @State private var searchText = ""
     @State private var experienceFilter = 0
+    @State private var selectedExperience: ClosedRange<Int>? = nil
     
     @State var doctors: [DoctorModel] = []
 
@@ -17,15 +18,16 @@ struct DoctorListView: View {
         }
         
         // Apply experience filter
-        if experienceFilter > 0 {
-            filtered = filtered.filter { Int($0.experience) ?? 0 >= experienceFilter }
-        }
+        if let experienceRange = selectedExperience {
+                    filtered = filtered.filter { Int($0.experience) ?? 0 >= experienceRange.lowerBound && Int($0.experience) ?? 0 <= experienceRange.upperBound }
+                }
         
         return filtered
+        
     }
 
     var body: some View {
-        NavigationView {
+        NavigationStack {
             VStack {
                 SearchBar(text: $searchText)
                     .padding(.horizontal)
@@ -40,25 +42,40 @@ struct DoctorListView: View {
                 }
             }
             .navigationTitle("All Doctors")
-            .navigationBarItems(trailing:
+            .navigationBarItems(leading:
+               
                 Button(action: {
                     isFiltering = true // Show the filtering modal sheet when button is clicked
                 }) {
                     Image(systemName: "line.horizontal.3.decrease.circle")
                         .imageScale(.large)
+                        .foregroundColor(.customBlue)
+                }
+                                )
+           
+            .navigationBarItems(trailing:
+                Button(action: {
+                    // Clear all filters
+                    searchText = ""
+                    selectedExperience = nil
+                }) {
+                    Text("Clear Filters")
+                        .foregroundColor(.customBlue)
                 }
             )
             .sheet(isPresented: $isFiltering) {
-                // Modal sheet for filtering based on experience
-                FilterExperienceView(isFiltering: $isFiltering, selectedExperience: $experienceFilter)
-            }
+                            // Modal sheet for filtering based on experience
+                FilterExperienceView(isFiltering: $isFiltering, selectedExperience: $selectedExperience)
+                        }
         }
         .onAppear {
             Task {
                 doctors = await fetchAllDoctors()
             }
         }
+        
     }
+    
 
     func fetchAllDoctors() async -> [DoctorModel] {
         let db = Firestore.firestore()
@@ -87,11 +104,12 @@ struct DoctorCardView: View {
         VStack(alignment: .leading, spacing: 10) {
             HStack{
                 // Replace this with an actual image view if your DoctorModel includes image URLs
-                Image(systemName: "person.circle.fill")
+                Image(systemName: "person.fill")
                     .resizable()
                     .aspectRatio(contentMode: .fill)
-                    .frame(width: 110, height: 150, alignment: .leading)
+                    .frame(width: 100, height: 120, alignment: .leading)
                     .cornerRadius(10)
+                    .foregroundColor(.blueShade)
                 
                 VStack(alignment: .leading) {
                     HStack {
@@ -109,27 +127,28 @@ struct DoctorCardView: View {
                     }
                     
                     Text(doctor.specialisation)
-                        .font(.system(size: 15))
+                        .font(.system(size: 16))
                         .foregroundColor(.gray)
                     
                     Text("\(doctor.experience) Years")
-                        .font(.system(size: 14, weight: .semibold))
-                    
-                    Spacer()
-                    NavigationLink(destination: SlotBookView(doctor:doctor)) {
-                        Text("Book")
-                            .foregroundColor(.white)
-                            .padding(.horizontal, 20)
-                            .padding(.vertical, 10)
-                            .background(Color.blue)
-                            .cornerRadius(30)
+                        .font(.system(size: 15))
+                    HStack{
+                        Spacer()
+                        NavigationLink(destination: SlotBookView(doctor:doctor)) {
+                            Text("Book")
+                                .foregroundColor(.white)
+                                .padding(.horizontal, 20)
+                                .padding(.vertical, 10)
+                                .background(Color.customBlue)
+                                .cornerRadius(11)
+                        }
                     }
                 }
             }
         }
         .frame(maxWidth: .infinity)
         .padding()
-        .background(Color.gray.opacity(0.1))
+        .background(Color.blueShade.opacity(0.1))
         .cornerRadius(10)
 //        .shadow(radius: 5)
     }
@@ -158,32 +177,82 @@ struct SearchBar: View {
 
 struct FilterExperienceView: View {
     @Binding var isFiltering: Bool
-    @Binding var selectedExperience: Int
+    @Binding var selectedExperience: ClosedRange<Int>?
+    @State private var isExperienceExpanded = false
 
+    
+    let experienceRanges: [ClosedRange<Int>] = [
+        0...5,
+        6...10,
+        11...15,
+        16...Int.max
+    ]
     var body: some View {
         NavigationView {
             VStack {
                 Text("Filter Based on Experience")
                     .font(.headline)
                     .padding()
-                Stepper(value: $selectedExperience, in: 0...50, step: 1) {
-                    Text("Years of Experience: \(selectedExperience)")
+                VStack {
+                    Button(action: {
+                        isExperienceExpanded.toggle()
+                    }) {
+                        HStack {
+                            Text("Experience")
+                                .foregroundColor(.customBlue)
+                            Spacer()
+                            Image(systemName: isExperienceExpanded ? "chevron.up" : "chevron.down")
+                                .foregroundColor(.customBlue)
+                        }
+                        .padding()
+                        .foregroundColor(.blue)
+                        .background(Color.gray.opacity(0.1))
+                        .cornerRadius(10)
+                    }
+                    if isExperienceExpanded {
+                        Picker("Experience", selection: Binding<Int>(
+                            get: {
+                                if let selectedRange = selectedExperience {
+                                    return experienceRanges.firstIndex(where: { $0 == selectedRange }) ?? 0
+                                } else {
+                                    return 0
+                                }
+                            },
+                            set: { index in
+                                if index == experienceRanges.count - 1 {
+                                    selectedExperience = nil // For "20+ years" option
+                                } else {
+                                    selectedExperience = experienceRanges[index]
+                                }
+                            }
+                        )) {
+                            ForEach(experienceRanges.indices, id: \.self) { index in
+                                let range = experienceRanges[index]
+                                if range.upperBound == Int.max {
+                                    Text("15+ Years").tag(index)
+                                } else {
+                                    Text("\(range.lowerBound)-\(range.upperBound) Years").tag(index)
+                                }
+                            }
+                        }
+                        .pickerStyle(SegmentedPickerStyle())
+                        .padding()
+
+                    }
                 }
-                .padding()
-
+                
+                
                 Spacer()
-
+                
                 Button(action: {
-                    // Apply filtering based on selected years of experience
-                    // Here you can filter the doctors based on selectedExperience
-                    // For demonstration, we just dismiss the modal sheet
+                    // Apply filtering
                     isFiltering = false
                 }) {
                     Text("Apply Filter")
                         .padding()
                         .foregroundColor(.white)
-                        .background(Color.blue)
-                        .cornerRadius(10)
+                        .background(Color.customBlue)
+                        .cornerRadius(11)
                 }
                 .padding()
             }
@@ -192,6 +261,7 @@ struct FilterExperienceView: View {
                 Button("Close") {
                     isFiltering = false // Close the modal sheet
                 }
+                .foregroundColor(.customBlue)
             )
         }
     }
