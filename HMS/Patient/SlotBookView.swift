@@ -155,7 +155,7 @@ struct SlotBookView: View {
                 .disabled(selectedSlot == nil)
                 .padding(.top)
                 
-                NavigationLink(destination: PaymentConfirmationPage(doctorName: doctor.name, selectedDate: formattedDate(selectedDate), selectedSlot: selectedSlot ?? ""), isActive: $paymentConfirmationActive) {
+                NavigationLink(destination: CheckoutView(doctorName: doctor.name, selectedDate: formattedDate(selectedDate), selectedSlot: selectedSlot ?? ""), isActive: $paymentConfirmationActive) {
                     EmptyView()
                 }
                 .hidden()

@@ -42,6 +42,7 @@ struct PaymentConfirmationPage: View {
     var doctorName: String
     var selectedDate: String
     var selectedSlot: String
+    
     var body: some View {
         NavigationStack{
             VStack {
@@ -125,6 +126,7 @@ struct PaymentConfirmationPage: View {
                                 .background(Color.green)
                                 .cornerRadius(10)
                         }
+                        
                         
                     }
                     .navigationBarBackButtonHidden(true)
