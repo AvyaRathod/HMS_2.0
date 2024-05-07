@@ -101,9 +101,9 @@ struct WelcomeHeaderView: View {
             Spacer()
             NavigationLink(destination:PatientProfileView()) {
                 VStack(alignment: .trailing){
-                    Image("profilePic")
+                    Image(systemName: "person.fill")
                         .resizable()
-                        .frame(width: 55, height: 60) // Adjust the size of the profile pic here
+                        .frame(width: 40, height: 40) // Adjust the size of the profile pic here
                         .clipShape(Circle()) // Make the profile pic round
                 }
             }

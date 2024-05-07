@@ -103,13 +103,25 @@ struct DoctorCardView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
             HStack{
-                // Replace this with an actual image view if your DoctorModel includes image URLs
-                Image(systemName: "person.fill")
-                    .resizable()
+                if let url = URL(string: doctor.image) {
+                    AsyncImage(url: url) { image in
+                        image.resizable().clipShape(Circle()).frame(width: 120, height: 120)
+                                            .foregroundColor(.blueShade)
+                    } placeholder: {
+                        ProgressView()
+                    }
                     .aspectRatio(contentMode: .fill)
-                    .frame(width: 100, height: 120, alignment: .leading)
+                    .frame(height: 150)
+                    .clipped()
                     .cornerRadius(10)
-                    .foregroundColor(.blueShade)
+                }
+
+//                Image(systemName: "person.fill")
+//                    .resizable()
+//                    .aspectRatio(contentMode: .fill)
+//                    .frame(width: 100, height: 120, alignment: .leading)
+//                    .cornerRadius(10)
+//                    .foregroundColor(.blueShade)
                 
                 VStack(alignment: .leading) {
                     HStack {

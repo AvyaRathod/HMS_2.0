@@ -1,5 +1,6 @@
 import SwiftUI
 import Firebase
+import FirebaseStorage
 
 struct StaffInfoView: View {
     @State private var searchText = ""
@@ -23,9 +24,19 @@ struct StaffInfoView: View {
                     ForEach(filteredStaff) { staff in
                         NavigationLink(destination: DoctorProfileView(doctor: staff)) {
                             HStack {
-                                Image(systemName: "person.circle.fill")
-                                    .font(.largeTitle)
-                                    .padding(.trailing)
+
+                                if let url = URL(string: staff.image) {
+                                    AsyncImage(url: url) { image in
+                                        image.resizable().clipShape(Circle()).frame(width: 100, height: 100)
+                                    } placeholder: {
+                                        ProgressView()
+                                    }
+                                    .aspectRatio(contentMode: .fill)
+                                    .frame(height: 150)
+                                    .clipped()
+                                    .cornerRadius(10)
+                                }
+                                
                                 VStack(alignment: .leading) {
                                     Text(staff.name)
                                         .fontWeight(.bold)

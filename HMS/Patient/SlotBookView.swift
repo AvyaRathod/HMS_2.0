@@ -105,12 +105,22 @@ struct SlotBookView: View {
                                 .font(.title3)
                                 .foregroundColor(.white)
                         }
-                        Image(systemName: "person.circle.fill")
-                            .foregroundColor(.white)
-                            .font(.system(size: 60))
-                            .padding(.trailing, 40)
+
+                        if let url = URL(string: doctor.image) {
+                            AsyncImage(url: url) { image in
+                                image.resizable().clipShape(RoundedRectangle(cornerRadius: 11.0 )).frame(width: 100, height: 120)
+                                    
+                            } placeholder: {
+                                ProgressView()
+                            }
+                            .aspectRatio(contentMode: .fill)
+                            .frame(height: 150)
+                            .clipped()
+                            .cornerRadius(10)
+                        }
                     }
                     .padding(.leading, 30)
+                    .padding(.trailing, 20)
                     Spacer()
                 }
                 .frame(width: 380, height: 200)
@@ -227,7 +237,7 @@ struct SlotBookView_Previews: PreviewProvider {
             contact: "1234567890",
             experience: "10",
             employeeID: "D0001",
-            image: nil,
+            image: "",
             specialisation: "Cardiologist",
             degree: "MD",
             cabinNumber: "101"
