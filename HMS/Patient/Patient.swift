@@ -4,7 +4,7 @@ struct Patient: View {
     @State private var selectedTab: Int = 0 // Track the selected tab index
     
     var body: some View {
-        NavigationView {
+//        NavigationView {
             TabView(selection: $selectedTab) {
                 HomeScreenView()
                     .tabItem {
@@ -47,8 +47,8 @@ struct Patient: View {
             .onAppear {
                 UITabBar.appearance().barTintColor = UIColor.white // Set tab bar color
             }
-        }
-        .navigationBarBackButtonHidden(true)
+//        }
+//        .navigationBarBackButtonHidden(true)
 
     }
 }

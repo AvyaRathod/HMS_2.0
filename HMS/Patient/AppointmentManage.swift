@@ -59,7 +59,7 @@ struct AppointmentsView: View {
                 ScrollView {
                     VStack(spacing: 16) {
                         ForEach(upcomingAppointments, id: \.id) { appointment in
-                            DoctorInfoAppointmentTab(appointments: $appointments, appointment: appointment, backgroundColor: .blue)
+                            AppointmentCardView(appointment: appointment, appointments: $appointments)
 
                         }
                     }
@@ -69,7 +69,7 @@ struct AppointmentsView: View {
                 ScrollView {
                     VStack(spacing: 16) {
                         ForEach(completedAppointments, id: \.id) { appointment in
-                            DoctorInfoAppointmentTab(appointments: $appointments, appointment: appointment, backgroundColor: .blue)
+                            CompletedAppointmentView(appointment: appointment, appointments: $appointments)
 
                         }
                     }
@@ -88,10 +88,9 @@ struct AppointmentsView: View {
     private func fetchAppointments() {
         let db = Firestore.firestore()
         let appointmentsRef = db.collection("appointments")
-        let today = Date()
+        let now = Date()
         appointmentsRef
             .whereField("PatID", isEqualTo: userTypeManager.userID)
-            .whereField("Date", isGreaterThanOrEqualTo: DateFormatter.appointmentDateFormatter.string(from: today))
             .getDocuments { (querySnapshot, error) in
                 if let error = error {
                     print("Error getting appointments: \(error.localizedDescription)")
@@ -101,12 +100,16 @@ struct AppointmentsView: View {
                     var upcomingAppointments: [AppointmentModel] = []
                     for document in querySnapshot.documents {
                         if let appointment = AppointmentModel(document: document.data(), id: document.documentID) {
-                            fetchedAppointments.append(appointment)
-                            if appointment.isComplete {
+                            let dateFormatter = DateFormatter()
+                            dateFormatter.dateFormat = "HH:mm"
+                            let time = dateFormatter.date(from: appointment.timeSlot)!
+                            let appointmentDateTime = Calendar.current.date(bySettingHour: Calendar.current.component(.hour, from: time), minute: Calendar.current.component(.minute, from: time), second: 0, of: appointment.date)!
+                            if appointmentDateTime < now {
                                 completedAppointments.append(appointment)
                             } else {
                                 upcomingAppointments.append(appointment)
                             }
+                            fetchedAppointments.append(appointment)
                         }
                     }
                     // Sort fetched appointments by date and time
@@ -121,6 +124,8 @@ struct AppointmentsView: View {
                 }
             }
     }
+
+
 
 }
 
