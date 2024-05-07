@@ -12,25 +12,47 @@ import Firebase
 struct HomeScreenView: View {
     @State private var appointments: [AppointmentModel] = []
     @EnvironmentObject var userTypeManager: UserTypeManager
+    
+    @State private var pName: String = "Loading..."
+
     var body: some View {
         NavigationView {
-            
-            VStack(alignment: .leading) {
-                    WelcomeHeaderView(userName: "Johnson")
+            ScrollView{
+                VStack(alignment: .leading) {
+                    WelcomeHeaderView(userName: pName)
                     HealthVitalsView()
                     BookView()
                     UpcomingAppointmentCardView(appointments: appointments)
                 }
+            }
                 
             
             .background(Color(.systemGroupedBackground))
             .onAppear {
-                // Fetch appointments when the view appears
+                fetchPName()
                 fetchAppointments()
             }
         }
+        .ignoresSafeArea(.container, edges: .top)
     }
-    // Function to fetch appointments (you need to implement actual fetching logic)
+
+    private func fetchPName() {
+        let db = Firestore.firestore()
+        let documentID = userTypeManager.userID
+        db.collection("Patients").document(documentID).getDocument { (document, error) in
+            if let document = document, document.exists {
+                let data = document.data()
+                if let patientName = data?["name"] as? String {
+                    print("Patient Name: \(patientName)")
+                    pName=patientName
+                } else {
+                    print("Patient name not found in the document.")
+                }
+            } else {
+                print("Document does not exist or error: \(error?.localizedDescription ?? "Unknown error")")
+            }
+        }
+    }
     
     private func fetchAppointments() {
         let db = Firestore.firestore()
@@ -77,13 +99,14 @@ struct WelcomeHeaderView: View {
                     .foregroundColor(.secondary)
             }
             Spacer()
-            VStack(alignment: .trailing){
-                Image("profilePic")
-                    .resizable()
-                    .frame(width: 55, height: 60) // Adjust the size of the profile pic here
-                    .clipShape(Circle()) // Make the profile pic round
+            NavigationLink(destination:PatientProfileView()) {
+                VStack(alignment: .trailing){
+                    Image("profilePic")
+                        .resizable()
+                        .frame(width: 55, height: 60) // Adjust the size of the profile pic here
+                        .clipShape(Circle()) // Make the profile pic round
+                }
             }
-            
         }
         .padding()
     }
@@ -210,27 +233,6 @@ struct AppointmentCardView: View {
                             .foregroundColor(.white)
                     )
                 VStack(alignment: .leading) {
-//                    if let doctorName = appointment.doctorName {
-//                        Text(doctorName)
-//                            .font(.title3)
-//                            .fontWeight(.semibold)
-//                    } else {
-//                        Text("Unknown Doctor")
-//                            .font(.title3)
-//                            .fontWeight(.semibold)
-//                    }
-//                    HStack{
-//                        if let doctorSpecialisation = appointment.doctorSpecialisation {
-//                            Text(doctorSpecialisation)
-//                                .font(.subheadline)
-//                                .foregroundColor(.secondary)
-//                        } else {
-//                            Text("Unknown Specialisation")
-//                                .font(.subheadline)
-//                                .foregroundColor(.secondary)
-//                        }
-//                 
-//                    }
                     Text(doctorName)
                         .font(.title2)
                         .fontWeight(.bold)
@@ -253,8 +255,6 @@ struct AppointmentCardView: View {
                             .cornerRadius(8)
                     }
                 }
-                
-                
             }
                 .padding()
                 .background(Color.white)
