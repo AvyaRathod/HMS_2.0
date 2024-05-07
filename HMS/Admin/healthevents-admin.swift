@@ -8,11 +8,13 @@
 
 import SwiftUI
 
-
+import FirebaseStorage
 
 struct AdminEventsView: View {
     @State private var showAddEventSheet = false
     @StateObject private var viewModel = EventsViewModel()
+    
+    
     
     var body: some View {
         NavigationView {
@@ -67,9 +69,12 @@ struct AddEventView: View {
     @State private var description = ""
     @State private var startTime = Date()
     @State private var venue = ""
-    @State private var selectedImage: UIImage? = nil
+    @State private var eventImage: String = ""
     @State private var isShowingImagePicker = false
     let healthEventsManager = HealthEventsManager.shared
+    
+    @State var isPickerShowing = false
+    @State var selectedImage: UIImage?
     
     var body: some View {
         NavigationView {
@@ -87,10 +92,16 @@ struct AddEventView: View {
                     }) {
                         Text("Choose Picture")
                     }
-                    if let image = selectedImage {
-                        Image(uiImage: image)
+                    if let selectedImage = selectedImage {
+                        Image(uiImage: selectedImage)
                             .resizable()
-                            .aspectRatio(contentMode: .fit)
+                            .aspectRatio(contentMode: .fill)
+                            
+                                                        
+                            .shadow(radius: 5)
+                            .onTapGesture {
+                                isPickerShowing = true
+                            }
                     }
                 }
                 
@@ -103,8 +114,21 @@ struct AddEventView: View {
                         let timeFormatter = DateFormatter()
                         timeFormatter.timeStyle = .short
                         
-                        let newEvent = HealthEvent(id: UUID().uuidString, title: title, description: description, date: dateFormatter.string(from: startTime), time: timeFormatter.string(from: startTime), venue: venue, imageName: "") // Provide a placeholder value for imageName
-                        healthEventsManager.addHealthEvent(newEvent)
+                        uploadEventPhoto()
+                        
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 2) { // Add a delay to ensure the image is uploaded
+                                let newEvent = HealthEvent(
+                                    id: UUID().uuidString,
+                                    title: title,
+                                    description: description,
+                                    date: dateFormatter.string(from: startTime),
+                                    time: timeFormatter.string(from: startTime),
+                                    venue: venue,
+                                    imageName: eventImage // Use eventImage here
+                                )
+                                healthEventsManager.addHealthEvent(newEvent)
+                            }
+                        
                         
                         // Call the function here addHeathEvents
                     }) {
@@ -118,6 +142,32 @@ struct AddEventView: View {
             }
         }
     }
+    
+    
+    func uploadEventPhoto(){
+        guard selectedImage != nil else{
+            return
+        }
+        let storageRef = Storage.storage().reference()
+        let imageData = selectedImage!.jpegData(compressionQuality: 0.8)
+        guard imageData != nil else {
+            return
+        }
+        let path = "Events/\(UUID().uuidString).jpg"
+        let fileRef = storageRef.child("Events/\(UUID().uuidString).jpg")
+        let uploadTask = fileRef.putData(imageData!, metadata: nil){ metadata, error in
+            if let error = error {
+                print("Error adding photo: \(error.localizedDescription)")
+            } else {
+                print("image added successfully")
+                eventImage = path
+                
+            }
+        }
+    }
+    
+    
+    
 }
 
 #Preview {

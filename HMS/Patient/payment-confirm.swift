@@ -117,6 +117,7 @@ struct PaymentConfirmationPage: View {
                             .cornerRadius(10)
                     }
                     
+
                     NavigationView{
                         NavigationLink(destination: Patient()) {
                             Text("Go to Home")
@@ -126,8 +127,7 @@ struct PaymentConfirmationPage: View {
                                 .background(Color.green)
                                 .cornerRadius(10)
                         }
-                        
-                        
+
                     }
                     .navigationBarBackButtonHidden(true)
                     
