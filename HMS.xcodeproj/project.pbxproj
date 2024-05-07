@@ -19,7 +19,8 @@
 		2700B43B2BE102C70089F26D /* AddPrescriptionForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2700B43A2BE102C70089F26D /* AddPrescriptionForm.swift */; };
 		2700B43D2BE102E60089F26D /* PrescriptionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2700B43C2BE102E60089F26D /* PrescriptionModel.swift */; };
 		2D7D49E32BE0E2E000C84B9A /* DAppointments.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D7D49E22BE0E2E000C84B9A /* DAppointments.swift */; };
-		2D7D49F72BE8A9D000C84B9A /* AppointmentManage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D7D49F62BE8A9D000C84B9A /* AppointmentManage.swift */; };
+		2D7D49F12BE895B200C84B9A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2D7D49F02BE895B200C84B9A /* GoogleService-Info.plist */; };
+		2D7D49F32BE8962B00C84B9A /* AppointmnetManage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D7D49F22BE8962B00C84B9A /* AppointmnetManage.swift */; };
 		2DAC00532BD78B180080098C /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DAC00522BD78B180080098C /* LoginView.swift */; };
 		2DAC00552BD78B450080098C /* InputFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DAC00542BD78B450080098C /* InputFieldView.swift */; };
 		2DAC00572BD78B6E0080098C /* phoneVerificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DAC00562BD78B6E0080098C /* phoneVerificationView.swift */; };
@@ -96,7 +97,8 @@
 		2700B43C2BE102E60089F26D /* PrescriptionModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrescriptionModel.swift; sourceTree = "<group>"; };
 		2723C01B2BDA18D90069BB71 /* StaffInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaffInfoView.swift; sourceTree = "<group>"; };
 		2D7D49E22BE0E2E000C84B9A /* DAppointments.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DAppointments.swift; sourceTree = "<group>"; };
-		2D7D49F62BE8A9D000C84B9A /* AppointmentManage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppointmentManage.swift; sourceTree = "<group>"; };
+		2D7D49F02BE895B200C84B9A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		2D7D49F22BE8962B00C84B9A /* AppointmnetManage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppointmnetManage.swift; path = ../../../../Documents/AppointmnetManage.swift; sourceTree = "<group>"; };
 		2DAC00522BD78B180080098C /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		2DAC00542BD78B450080098C /* InputFieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputFieldView.swift; sourceTree = "<group>"; };
 		2DAC00562BD78B6E0080098C /* phoneVerificationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = phoneVerificationView.swift; sourceTree = "<group>"; };
@@ -283,6 +285,7 @@
 			children = (
 				84BC649D2BE8D7BD001D369B /* GoogleService-Info.plist */,
 				F5A456272BD90AC80068A069 /* HMS.entitlements */,
+				2D7D49F02BE895B200C84B9A /* GoogleService-Info.plist */,
 				41149EFA2BD634AD00E32FD7 /* Doctor */,
 				41149EF92BD634A700E32FD7 /* Login */,
 				41149EF82BD6349F00E32FD7 /* Patient */,
@@ -461,6 +464,7 @@
 				F5A456262BD90AA00068A069 /* vitals.swift in Sources */,
 				2700B43B2BE102C70089F26D /* AddPrescriptionForm.swift in Sources */,
 				F5B406622BDF666600569CDF /* payment-confirm.swift in Sources */,
+				2D7D49F32BE8962B00C84B9A /* AppointmnetManage.swift in Sources */,
 				164571B32BDA0CD000855DDF /* DoctorHome.swift in Sources */,
 				F5A456642BD97DFB0068A069 /* appo-completed.swift in Sources */,
 				F57FCC402BE4BFC800D53B42 /* profile-doctor.swift in Sources */,

@@ -91,7 +91,6 @@ struct AppointmentsView: View {
         let today = Date()
         appointmentsRef
             .whereField("PatID", isEqualTo: userTypeManager.userID)
-            .whereField("Date", isGreaterThanOrEqualTo: DateFormatter.appointmentDateFormatter.string(from: today))
             .getDocuments { (querySnapshot, error) in
                 if let error = error {
                     print("Error getting appointments: \(error.localizedDescription)")
@@ -102,7 +101,7 @@ struct AppointmentsView: View {
                     for document in querySnapshot.documents {
                         if let appointment = AppointmentModel(document: document.data(), id: document.documentID) {
                             fetchedAppointments.append(appointment)
-                            if appointment.isComplete {
+                            if appointment.isComplete || appointment.date < today {
                                 completedAppointments.append(appointment)
                             } else {
                                 upcomingAppointments.append(appointment)
@@ -121,6 +120,7 @@ struct AppointmentsView: View {
                 }
             }
     }
+
 
 }
 
