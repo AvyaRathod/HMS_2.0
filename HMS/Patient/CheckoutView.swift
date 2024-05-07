@@ -9,12 +9,18 @@ import SwiftUI
 
 struct CheckoutView: View {
     
-    @Binding var startDate: Date
-    @Binding var endDate: Date
-    @Binding var startTime: Date
-    @Binding var endTime: Date
-    @Binding var selectedPets: Set<String>
-    @Binding var selectedService: String
+    var doctorName: String
+    var selectedDate: String
+    var selectedSlot: String
+    
+    
+    
+//    @Binding var startDate: Date
+//    @Binding var endDate: Date
+//    @Binding var startTime: Date
+//    @Binding var endTime: Date
+//    @Binding var selectedPets: Set<String>
+//    @Binding var selectedService: String
     
     @State private var selectedPaymentMethod: String?
     
@@ -29,7 +35,7 @@ struct CheckoutView: View {
                     // Booking Details
                     VStack{
                         VStack(alignment: .leading) {
-                            Text("Doctor.name")
+                            Text(doctorName)
                                 .font(.title)
                                 .fontWeight(.bold)
                         }
@@ -40,9 +46,9 @@ struct CheckoutView: View {
                         HStack {
                             VStack(alignment: .leading) {
                                 Text("From")
-                                Text(startDate, style: .date)
+                                Text(selectedDate)
                                     .fontWeight(.bold)
-                                Text(startTime, style: .time)
+                                Text(selectedSlot)
                                     .fontWeight(.bold)
                             }
                             Spacer()
@@ -51,9 +57,9 @@ struct CheckoutView: View {
                             Spacer()
                             VStack(alignment: .leading) {
                                 Text("To")
-                                Text(endDate, style: .date)
+                                Text(selectedDate)
                                     .fontWeight(.bold)
-                                Text(endTime, style: .time)
+                                Text(selectedSlot)
                                     .fontWeight(.bold)
                             }
                         }
@@ -96,28 +102,31 @@ struct CheckoutView: View {
                             .padding(.bottom, 5)
                         
                         ForEach(PrefPaymentOpt, id: \.self) { paymentOption in
-                                            PaymentMethodView(methodName: paymentOption, selectedPaymentMethod: $selectedPaymentMethod,
-                                                              startDate: $startDate,
-                                                              endDate: $endDate,
-                                                              startTime: $startTime,
-                                                              endTime: $endTime,
-                                                              selectedPets:$selectedPets,
-                                                              selectedService:$selectedService)
-                                        }
+                            PaymentMethodView(
+                                methodName: paymentOption,
+                                doctorName: self.doctorName,
+                                selectedDate: self.selectedDate,
+                                selectedSlot: self.selectedSlot,
+                                selectedPaymentMethod: $selectedPaymentMethod
+                            )
+                        }
+
                         
                         Text("Pay by any UPI App")
                             .font(.headline)
                             .padding(.top)
                         
                         VStack {
-                            ForEach(otherPaymentOpt, id: \.self) { paymentOption in
-                                                PaymentMethodView(methodName: paymentOption, selectedPaymentMethod: $selectedPaymentMethod,                                                      startDate: $startDate,
-                                                                  endDate: $endDate,
-                                                                  startTime: $startTime,
-                                                                  endTime: $endTime,
-                                                                  selectedPets:$selectedPets,
-                                                                  selectedService:$selectedService)
-                                            }
+                            ForEach(PrefPaymentOpt, id: \.self) { paymentOption in
+                                PaymentMethodView(
+                                    methodName: paymentOption,
+                                    doctorName: self.doctorName,
+                                    selectedDate: self.selectedDate,
+                                    selectedSlot: self.selectedSlot,
+                                    selectedPaymentMethod: $selectedPaymentMethod
+                                )
+                            }
+
                             
                             Button("Add New UPI ID") {
                                 // Implement the Add New UPI action
@@ -130,15 +139,7 @@ struct CheckoutView: View {
                     
                 }
             }
-//            VStack(alignment: .leading) {
-//                Divider()
-//                HStack {
-//                    Text(results.cost)
-//                        .font(.title)
-//                        .fontWeight(.bold)
-//                }
-//                .padding([.leading, .trailing, .top])
-//            }
+
         }
         .navigationTitle("Final Step")
         .navigationBarTitleDisplayMode(.inline)
@@ -147,16 +148,10 @@ struct CheckoutView: View {
 
 struct PaymentMethodView: View {
     var methodName: String
+    var doctorName: String
+    var selectedDate: String
+    var selectedSlot: String
     @Binding var selectedPaymentMethod: String?
-    
-    @Binding var startDate: Date
-    @Binding var endDate: Date
-    @Binding var startTime: Date
-    @Binding var endTime: Date
-    @Binding var selectedPets: Set<String>
-    @Binding var selectedService: String
-
-    @State private var navigateToConfirmation = false
 
     var body: some View {
         VStack {
@@ -169,14 +164,7 @@ struct PaymentMethodView: View {
             }
 
             if selectedPaymentMethod == methodName {
-                Button(action: {
-                    if methodName == "Pay on Delivery (Cash/UPI)" {
-                        
-                    } else {
-                        
-                    }
-                    navigateToConfirmation = true
-                }) {
+                NavigationLink(destination: PaymentConfirmationPage(doctorName: doctorName, selectedDate: selectedDate, selectedSlot: selectedSlot)) {
                     Text("Pay via \(methodName)")
                         .foregroundColor(.white)
                         .frame(maxWidth: .infinity)
@@ -192,11 +180,10 @@ struct PaymentMethodView: View {
         .onTapGesture {
             self.selectedPaymentMethod = methodName
         }
-        .navigationDestination(isPresented: $navigateToConfirmation) {
-            EmptyView()
-        }
     }
 }
+
+
 
 
 struct CheckoutView_Previews: PreviewProvider {
@@ -205,12 +192,11 @@ struct CheckoutView_Previews: PreviewProvider {
     @State static var mockEndDate: Date = Date()
     @State static var selectedService = "walking"
     @State static var selectedPets:Set<String> = ["Tuffy", "Jerry", "Max", "Buddy"]
+  
     
     static var previews: some View {
         NavigationView {
-            CheckoutView(startDate: $mockStartDate, endDate: $mockEndDate, startTime: $mockStartDate, endTime: $mockEndDate,
-                         selectedPets:$selectedPets,
-                         selectedService:$selectedService)
+            CheckoutView(doctorName: "Dr. Kenny Adeola", selectedDate: "19 Nov, 2023", selectedSlot: "8:30 AM")
         }
     }
 }
