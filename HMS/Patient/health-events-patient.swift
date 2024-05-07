@@ -15,12 +15,17 @@ struct HealthEventsView: View {
         NavigationView {
             List(viewModel.events, id: \.id) { event in
                 VStack(alignment: .leading, spacing: 8) {
-                    Image(event.imageName)
-                        .resizable()
+                    if let url = URL(string: event.imageName) {
+                        AsyncImage(url: url) { image in
+                            image.resizable()
+                        } placeholder: {
+                            ProgressView()
+                        }
                         .aspectRatio(contentMode: .fill)
                         .frame(height: 150)
                         .clipped()
                         .cornerRadius(10)
+                    }
                     
                     Text(event.title)
                         .font(.headline)

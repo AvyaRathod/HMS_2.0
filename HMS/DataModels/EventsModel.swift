@@ -49,6 +49,21 @@ struct HealthEvent: Identifiable, Codable {
         self.imageName = imageName
         self.attendees = attendees
     }
+    
+    
+//    init(from decoder: any Decoder) throws {
+//           let container = try decoder.container(keyedBy: CodingKeys.self)
+//           self.id = try container.decode(String.self, forKey: .id)
+//           self.title = try container.decode(String.self, forKey: .title)
+//           self.description = try container.decode(String.self, forKey: .description)
+//           self.date = try container.decode(String.self, forKey: .date)
+//           self.time = try container.decode(String.self, forKey: .time)
+//           self.venue = try container.decode(String.self, forKey: .venue)
+//           self.imageName = try container.decode(String.self, forKey: .imageName)
+//        self.attendees = try container.decode(Int.self, forKey: .attendees)
+//       }
+    
+    
 }
 
 final class HealthEventsManager {

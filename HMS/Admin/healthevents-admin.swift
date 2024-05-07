@@ -18,12 +18,17 @@ struct AdminEventsView: View {
         NavigationView {
             List(viewModel.events) { event in
                 VStack(alignment: .leading) {
-                    Image(systemName: "photo") // Placeholder image until you resolve the issue
-                        .resizable()
+                    if let url = URL(string: event.imageName) {
+                        AsyncImage(url: url) { image in
+                            image.resizable()
+                        } placeholder: {
+                            ProgressView()
+                        }
                         .aspectRatio(contentMode: .fill)
                         .frame(height: 150)
                         .clipped()
                         .cornerRadius(10)
+                    }
                     
                     Text(event.title)
                         .font(.headline)
@@ -63,6 +68,7 @@ struct AdminEventsView: View {
         }
     }
 }
+
 
 
 struct AddEventView: View {
@@ -116,9 +122,12 @@ struct AddEventView: View {
                         let timeFormatter = DateFormatter()
                         timeFormatter.timeStyle = .short
                         
-                        uploadEventPhoto()
-                        
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 2) { // Add a delay to ensure the image is uploaded
+                        uploadEventPhoto() { eventImage in
+                            guard let eventImage = eventImage else {
+                                print("Failed to upload image")
+                                return
+                            }
+                            
                             let newEvent = HealthEvent(
                                 id: UUID().uuidString,
                                 title: title,
@@ -155,25 +164,40 @@ struct AddEventView: View {
     }
     
     
-    func uploadEventPhoto() {
-        guard let selectedImage = selectedImage else {
-            return
-        }
-        let storageRef = Storage.storage().reference()
-        guard let imageData = selectedImage.jpegData(compressionQuality: 0.8) else {
-            return
-        }
-        let path = "Events/\(UUID().uuidString).jpg"
-        let fileRef = storageRef.child(path)
-        let uploadTask = fileRef.putData(imageData, metadata: nil) { metadata, error in
-            if let error = error {
-                print("Error adding photo: \(error.localizedDescription)")
-            } else {
-                print("image added successfully")
-                eventImage = path
+    func uploadEventPhoto(completion: @escaping (String?) -> Void){
+            guard let selectedImage = selectedImage else {
+                return
+            }
+            
+            let storageRef = Storage.storage().reference()
+            let imageData = selectedImage.jpegData(compressionQuality: 0.8)
+            
+            guard let imageData = imageData else {
+                return
+            }
+            
+            let path = "Events/\(UUID().uuidString).jpg"
+            let fileRef = storageRef.child(path)
+            
+            let uploadTask = fileRef.putData(imageData, metadata: nil) { metadata, error in
+                if let error = error {
+                    print("Error adding photo: \(error.localizedDescription)")
+                    completion(nil)
+                } else {
+                    print("Image added successfully")
+                    fileRef.downloadURL { url, error in
+                        if let downloadURL = url {
+                           eventImage = downloadURL.absoluteString
+                            print("Download URL: \(eventImage)")
+                            completion(eventImage)
+                        } else {
+                            print("Error retrieving download URL: \(error?.localizedDescription ?? "Unknown error")")
+                            completion(nil)
+                        }
+                    }
+                }
             }
         }
-    }
 }
 
 
