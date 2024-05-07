@@ -98,22 +98,6 @@ final class PrescriptionManager {
         }
     }
     
-    func fetchPrescription(patientId: String, completion: @escaping (PrescriptionModel?) -> Void) {
-        prescriptionCollection.document(patientId).getDocument { (document, error) in
-            if let document = document, document.exists, let data = document.data() {
-                do {
-                    let prescription = try Firestore.Decoder().decode(PrescriptionModel.self, from: data)
-                    completion(prescription)
-                } catch {
-                    print("Error decoding prescription data: \(error)")
-                    completion(nil)
-                }
-            } else {
-                print("Document does not exist")
-                completion(nil)
-            }
-        }
-    }
-
+    
     
 }

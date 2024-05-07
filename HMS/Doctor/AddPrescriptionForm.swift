@@ -6,11 +6,9 @@ import FirebaseAuth
 final class PrescriptionViewModel: ObservableObject {
     
     @Published var currentUser: User?
-    @Published var prescriptionData: PrescriptionModel?
         
     init() {
         fetchCurrentUser()
-        fetchPrescriptionData()
     }
     
     func fetchCurrentUser() {
@@ -21,34 +19,6 @@ final class PrescriptionViewModel: ObservableObject {
             print("No user is signed in.")
         }
     }
-    
-    func fetchPrescriptionData() {
-        guard let currentUserID = currentUser?.uid else {
-            return
-        }
-        
-        // Assuming you have a Firestore collection named "prescriptions" containing prescription data
-        let db = Firestore.firestore()
-        db.collection("prescriptions").document(currentUserID).getDocument { document, error in
-            if let error = error {
-                print("Error fetching prescription data: \(error.localizedDescription)")
-                return
-            }
-            
-            if let document = document, document.exists {
-                if let data = document.data() {
-                    do {
-                        self.prescriptionData = try PrescriptionModel(from: data as! Decoder) // Initialize PrescriptionModel from Firestore data
-                    } catch {
-                        print("Error decoding prescription data: \(error.localizedDescription)")
-                    }
-                }
-            } else {
-                print("Prescription data not found.")
-            }
-        }
-    }
-
     
     func addPatientRecord(id: String, prescriptionData: PrescriptionModel) {
         PrescriptionManager.shared.addPatientRecord(id: id, prescriptionData: prescriptionData)

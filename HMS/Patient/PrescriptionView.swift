@@ -18,7 +18,7 @@ struct PrescriptionView: View {
                     VStack(alignment: .leading, spacing: 20) {
                         Text("Description:")
                             .font(.headline)
-                        Text("prescription.description")
+                        Text(prescription.description)
                             .font(.body)
                         
                         
@@ -26,7 +26,7 @@ struct PrescriptionView: View {
                         
                         Text("Prescribed Medicine:")
                             .font(.headline)
-                        Text("prescription.prescribedMedicine")
+                        Text(prescription.prescribedMedicine)
                         
                         
                         
@@ -34,14 +34,14 @@ struct PrescriptionView: View {
                         
                         Text("Prescribed Tests:")
                             .font(.headline)
-                        Text("prescription.prescribedTests")
+                        Text(prescription.prescribedTests)
                             .font(.body)
                         
                         Divider()
                         
                         Text("Prescribed Treatment:")
                             .font(.headline)
-                        Text("prescription.prescribedTreatment")
+                        Text(prescription.prescribedTreatment)
                             .font(.body)
                         Spacer()
                     }
