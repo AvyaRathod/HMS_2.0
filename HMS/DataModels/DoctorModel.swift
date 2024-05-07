@@ -16,7 +16,7 @@ struct DoctorModel: Hashable, Codable, Identifiable {
     var contact: String
     var experience: String
     var employeeID: String
-    var image: String?
+    var image: String
     var specialisation: String
     var degree: String
     var cabinNumber: String
@@ -53,7 +53,7 @@ struct DoctorModel: Hashable, Codable, Identifiable {
         case Gynecologist = "Gynecologist"
     }
     
-    init(id: String? = nil, name: String, department: String, email: String, contact: String, experience: String, employeeID: String, image: String? = nil, specialisation: String, degree: String, cabinNumber: String) {
+    init(id: String? = nil, name: String, department: String, email: String, contact: String, experience: String, employeeID: String, image: String, specialisation: String, degree: String, cabinNumber: String) {
         self.id = id
         self.name = name
         self.department = department
@@ -76,7 +76,7 @@ struct DoctorModel: Hashable, Codable, Identifiable {
         self.contact = dictionary["contact"] as? String ?? ""
         self.experience = dictionary["experience"] as? String ?? ""
         self.employeeID = dictionary["DocID"] as? String ?? ""
-        self.image = dictionary["image"] as? String
+        self.image = dictionary["image"] as? String ?? ""
         self.specialisation = dictionary["specialisation"] as? String ?? ""
         self.degree = dictionary["degree"] as? String ?? ""
         self.cabinNumber = dictionary["cabin"] as? String ?? ""

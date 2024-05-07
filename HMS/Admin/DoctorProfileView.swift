@@ -10,12 +10,18 @@ struct DoctorProfileView: View {
             Text("Doctor")
                 .font(.title)
                 .padding()
-            
-            Image(doctor.image!)
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-                .frame(width: 250, height: 100)
-                .clipShape(Circle())
+            if let url = URL(string: doctor.image) {
+                AsyncImage(url: url) { image in
+                    image.resizable().clipShape(Circle()).frame(width: 150, height: 150)
+                } placeholder: {
+                    ProgressView()
+                }
+                .aspectRatio(contentMode: .fill)
+                .frame(height: 150)
+                .clipped()
+                .cornerRadius(10)
+            }
+
             
             Text(doctor.name)
                 .font(.title)

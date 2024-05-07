@@ -123,7 +123,13 @@ struct DAddView: View {
                 InputFieldView(data: $dcabin, title: "Cabin No.")
                 
                 Button(action: {
-                    uploadPhoto()
+                    uploadPhoto { urlString in
+                        if let urlString = urlString {
+                            print("Image uploaded successfully with URL: \(urlString)")
+                        } else {
+                            print("Failed to upload image")
+                        }
+                    }
                 }) {
                     Text("Save")
                         .frame(maxWidth: .infinity)
@@ -133,6 +139,7 @@ struct DAddView: View {
                         .cornerRadius(10)
                         .padding(.horizontal)
                 }
+
             }
             .padding(.top, -50)
             .sheet(isPresented: $isPickerShowing, onDismiss: nil) {
@@ -150,27 +157,44 @@ struct DAddView: View {
         }
     }
     
-    func uploadPhoto() {
-        guard selectedImage != nil else {
-            return
-        }
-        let storageRef = Storage.storage().reference()
-        let imageData = selectedImage!.jpegData(compressionQuality: 0.8)
-        guard imageData != nil else {
-            return
-        }
-        let path = "Doctor/\(UUID().uuidString).jpg"
-        let fileRef = storageRef.child("Doctor/\(UUID().uuidString).jpg")
-        let uploadTask = fileRef.putData(imageData!, metadata: nil) { metadata, error in
-            if let error = error {
-                print("Error adding photo: \(error.localizedDescription)")
-            } else {
-                print("Image added successfully")
-                dimage = path
-                setDoctorData()
+
+    func uploadPhoto(completion: @escaping (String?) -> Void){
+            guard let selectedImage = selectedImage else {
+                return
             }
-        }
+            
+            let storageRef = Storage.storage().reference()
+            let imageData = selectedImage.jpegData(compressionQuality: 0.8)
+            
+            guard let imageData = imageData else {
+                return
+            }
+            
+            let path = "Doctor/\(UUID().uuidString).jpg"
+            let fileRef = storageRef.child(path)
+            
+            let uploadTask = fileRef.putData(imageData, metadata: nil) { metadata, error in
+                if let error = error {
+                    print("Error adding photo: \(error.localizedDescription)")
+                    completion(nil)
+                } else {
+                    print("Image added successfully")
+                    fileRef.downloadURL { url, error in
+                        if let downloadURL = url {
+                           dimage = downloadURL.absoluteString
+                            setDoctorData()
+                            print("Download URL: \(dimage)")
+                            completion(dimage)
+                        } else {
+                            print("Error retrieving download URL: \(error?.localizedDescription ?? "Unknown error")")
+                            completion(nil)
+                        }
+                    }
+                }
+          }
     }
+    
+
     
     func setDoctorData() {
         let doctorData: [String: Any] = [
