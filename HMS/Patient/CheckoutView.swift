@@ -6,26 +6,29 @@
 //
 
 import SwiftUI
+import Firebase
 
 struct CheckoutView: View {
     
     var doctorName: String
     var selectedDate: String
     var selectedSlot: String
-    
-    
-    
-//    @Binding var startDate: Date
-//    @Binding var endDate: Date
-//    @Binding var startTime: Date
-//    @Binding var endTime: Date
-//    @Binding var selectedPets: Set<String>
-//    @Binding var selectedService: String
+    var Bill: Int
+    var DocID: String
+    var PatID: String
+    var reason: String
     
     @State private var selectedPaymentMethod: String?
     
     var PrefPaymentOpt = ["Paytm UPI", "Google Pay" , "Pay at the end(Cash/UPI)"]
     var otherPaymentOpt = ["asdf@okhdfcbank", "omvin@aubank"]
+    
+    let timeFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "HH:mm"
+        return formatter
+    }()
+
 
     var body: some View {
         VStack{
@@ -51,6 +54,7 @@ struct CheckoutView: View {
                                 Text(selectedSlot)
                                     .fontWeight(.bold)
                             }
+
                             Spacer()
                             Divider()
                                 .frame(height: 50.0)
@@ -59,8 +63,12 @@ struct CheckoutView: View {
                                 Text("To")
                                 Text(selectedDate)
                                     .fontWeight(.bold)
-                                Text(selectedSlot)
-                                    .fontWeight(.bold)
+                                if let selectedSlotDate = timeFormatter.date(from: selectedSlot) {
+                                    if let nextHourDate = Calendar.current.date(byAdding: .hour, value: 1, to: selectedSlotDate) {
+                                        Text(timeFormatter.string(from: nextHourDate))
+                                            .fontWeight(.bold)
+                                    }
+                                }
                             }
                         }
                         .padding([.leading, .trailing])
@@ -90,7 +98,7 @@ struct CheckoutView: View {
                     .padding()
                     .frame(width:360)
                     .background (.white)
-                    .clipShape (RoundedRectangle (cornerRadius: 12))
+                    .clipShape (RoundedRectangle (cornerRadius: 11))
                     .padding()
                     .shadow(radius: 10)
                     
@@ -104,9 +112,13 @@ struct CheckoutView: View {
                         ForEach(PrefPaymentOpt, id: \.self) { paymentOption in
                             PaymentMethodView(
                                 methodName: paymentOption,
-                                doctorName: self.doctorName,
-                                selectedDate: self.selectedDate,
-                                selectedSlot: self.selectedSlot,
+                                doctorName: doctorName,
+                                selectedDate: selectedDate,
+                                selectedSlot: selectedSlot,
+                                Bill: Bill,
+                                DocID: DocID,
+                                PatID: PatID,
+                                reason: reason,
                                 selectedPaymentMethod: $selectedPaymentMethod
                             )
                         }
@@ -117,12 +129,16 @@ struct CheckoutView: View {
                             .padding(.top)
                         
                         VStack {
-                            ForEach(PrefPaymentOpt, id: \.self) { paymentOption in
+                            ForEach(otherPaymentOpt, id: \.self) { paymentOption in
                                 PaymentMethodView(
                                     methodName: paymentOption,
-                                    doctorName: self.doctorName,
-                                    selectedDate: self.selectedDate,
-                                    selectedSlot: self.selectedSlot,
+                                    doctorName: doctorName,
+                                    selectedDate: selectedDate,
+                                    selectedSlot: selectedSlot,
+                                    Bill: Bill,
+                                    DocID: DocID,
+                                    PatID: PatID,
+                                    reason: reason,
                                     selectedPaymentMethod: $selectedPaymentMethod
                                 )
                             }
@@ -151,7 +167,13 @@ struct PaymentMethodView: View {
     var doctorName: String
     var selectedDate: String
     var selectedSlot: String
+    var Bill: Int
+    var DocID: String
+    var PatID: String
+    var reason: String
+    @State private var isBookingSuccessful = false
     @Binding var selectedPaymentMethod: String?
+    @Environment(\.presentationMode) var presentationMode
 
     var body: some View {
         VStack {
@@ -164,13 +186,19 @@ struct PaymentMethodView: View {
             }
 
             if selectedPaymentMethod == methodName {
-                NavigationLink(destination: PaymentConfirmationPage(doctorName: doctorName, selectedDate: selectedDate, selectedSlot: selectedSlot)) {
+                NavigationLink(destination: PaymentConfirmationPage(doctorName: doctorName, selectedDate: selectedDate, selectedSlot: selectedSlot), isActive: $isBookingSuccessful) {
+                    EmptyView()
+                }
+
+                Button(action: {
+                    createBooking()
+                }) {
                     Text("Pay via \(methodName)")
                         .foregroundColor(.white)
                         .frame(maxWidth: .infinity)
                         .padding()
-                        .background(Color.green)
-                        .cornerRadius(10)
+                        .background(Color.customBlue)
+                        .cornerRadius(11)
                 }
                 .padding(.horizontal)
             }
@@ -181,22 +209,41 @@ struct PaymentMethodView: View {
             self.selectedPaymentMethod = methodName
         }
     }
-}
-
-
-
-
-struct CheckoutView_Previews: PreviewProvider {
-    @State static var mockDestination: String = "Guduvancheri, India"
-    @State static var mockStartDate: Date = Date()
-    @State static var mockEndDate: Date = Date()
-    @State static var selectedService = "walking"
-    @State static var selectedPets:Set<String> = ["Tuffy", "Jerry", "Max", "Buddy"]
-  
     
-    static var previews: some View {
-        NavigationView {
-            CheckoutView(doctorName: "Dr. Kenny Adeola", selectedDate: "19 Nov, 2023", selectedSlot: "8:30 AM")
+    func createBooking() {
+        let db = Firestore.firestore()
+        let appointmentsRef = db.collection("appointments")
+
+        let appointmentData: [String: Any] = [
+            "Bill": Bill,
+            "Date": selectedDate,
+            "DocID": DocID,
+            "PatID": PatID,
+            "TimeSlot": selectedSlot,
+            "isComplete": false,
+            "reason": reason
+        ]
+
+        appointmentsRef.addDocument(data: appointmentData) { error in
+            if let error = error {
+                print("Error creating booking: \(error.localizedDescription)")
+            } else {
+                print("Booking created successfully")
+                self.isBookingSuccessful = true
+            }
         }
     }
 }
+
+
+
+
+
+//struct CheckoutView_Previews: PreviewProvider {
+//    
+//    static var previews: some View {
+//        NavigationView {
+//            CheckoutView(doctorName: "Dr. Kenny Adeola", selectedDate: "19 Nov, 2023", selectedSlot: "8:30 AM")
+//        }
+//    }
+//}

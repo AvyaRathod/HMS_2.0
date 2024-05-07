@@ -44,13 +44,13 @@ struct PaymentConfirmationPage: View {
     var selectedSlot: String
     
     var body: some View {
-        NavigationStack{
+        NavigationView{
             VStack {
                 Image(systemName: "checkmark.circle.fill")
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(width: 150, height: 150)
-                    .foregroundColor(.green.opacity(0.8))
+                    .foregroundColor(Color.customBlue)
                 
                 Text("Payment Successful")
                     .font(.system(size: 35))
@@ -69,19 +69,19 @@ struct PaymentConfirmationPage: View {
                     .font(.system(size: 20))
                 
                 Divider()
-                    .background(Color.green)
+                    .background(Color.customBlue)
                     .padding(.horizontal, 20)
                     .frame(height: 2)
                     .padding(.vertical, 20)
                 
                 HStack {
                     Image(systemName:"person.crop.circle")
-                        .foregroundColor(.green)
+                        .foregroundColor(Color.customBlue)
                     Text("patient")
                         .font(.headline)
                     Spacer()
                     Image(systemName:"clock.fill")
-                        .foregroundColor(.green)
+                        .foregroundColor(Color.customBlue)
                     Text(selectedSlot)
                         .font(.headline)
                         .padding(.bottom, 5)
@@ -90,7 +90,7 @@ struct PaymentConfirmationPage: View {
                 
                 HStack() {
                     Image(systemName:"calendar.circle.fill")
-                        .foregroundColor(.green)
+                        .foregroundColor(Color.customBlue)
                     Text(selectedDate)
                         .font(.headline)
                         .padding(.bottom, 5)
@@ -102,37 +102,27 @@ struct PaymentConfirmationPage: View {
                 
                 
                 WaveDivider()
-                    .stroke(Color.green, lineWidth: 2)
+                    .stroke(Color.customBlue, lineWidth: 2)
                     .frame(height: 2)
                     .padding(.horizontal, 20)
                     .padding(.vertical, 20)
                 
-                VStack(spacing: 20) {
-                    NavigationLink(destination: EmptyView()) {
-                        Text("View Appointment")
-                            .foregroundColor(.white)
-                            .padding()
-                            .frame(maxWidth: .infinity)
-                            .background(Color.green)
-                            .cornerRadius(10)
-                    }
-                    
-
+                
+                
                     NavigationView{
                         NavigationLink(destination: Patient()) {
                             Text("Go to Home")
                                 .foregroundColor(.white)
                                 .padding()
                                 .frame(maxWidth: .infinity)
-                                .background(Color.green)
-                                .cornerRadius(10)
+                                .background(Color.customBlue)
+                                .cornerRadius(11)
                         }
 
                     }
                     .navigationBarBackButtonHidden(true)
                     
-                }
-                .padding()
+               
                 
             }
             .padding()

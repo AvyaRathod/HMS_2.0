@@ -158,55 +158,55 @@ struct UpcomingAppointmentCardView: View {
 struct BookView: View {
     var body: some View {
         ZStack{
-            VStack{
-                HStack{
-                    VStack(alignment: .leading) {
-                        Text("Feeling Unwell?")
-                            .font(.title2)
-                            .fontWeight(.semibold)
+            NavigationView {
+                VStack {
+                    HStack {
+                        VStack(alignment: .leading) {
+                            Text("Feeling Unwell?")
+                                .font(.title2)
+                                .fontWeight(.semibold)
                             
-                        Text("Get Expert")
-                            . font(. system(size: 18))
-                            .multilineTextAlignment(.leading)
-                        Text("Consultation from our ")
-                            . font(. system(size: 18))
-                            .multilineTextAlignment(.leading)
-                        Text("Renowned Doctors!")
-                            . font(. system(size: 18))
-                            .multilineTextAlignment(.leading)
+                            Text("Get Expert")
+                                .font(.system(size: 18))
+                                .multilineTextAlignment(.leading)
+                            Text("Consultation from our ")
+                                .font(.system(size: 18))
+                                .multilineTextAlignment(.leading)
+                            Text("Renowned Doctors!")
+                                .font(.system(size: 18))
+                                .multilineTextAlignment(.leading)
+                        }
+                        
+                        Rectangle()
+                            .fill(Color.white)
+                            .frame(width:70, height: 200)
+                            .cornerRadius(30)
+                            .padding(.leading, 60)
+                            .overlay(
+                                Image("HomeDoc")
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fill)
+                                    .foregroundColor(.white)
+                            )
                     }
-                   
                     
-                    
-                    
-                    Rectangle()
-                        .fill(Color.white)
-                        .frame(width:70, height: 100)
-                        .cornerRadius(30)
-                        .padding(.leading, 60)
-                        .overlay(
-                            Image("HomeDoc")
-                                .resizable()
-                                .aspectRatio(contentMode: .fill)
-                                .foregroundColor(.white)
-                        )
+                    NavigationLink(destination: DoctorListView()) {
+                        Text("Book Now")
+                            .fontWeight(.bold)
+                            .foregroundColor(.white)
+                            .padding()
+                            .frame(maxWidth: .infinity)
+                            .background(Color.customBlue)
+                            .cornerRadius(11)
+                    }
                 }
-                
-                Button(action: {}) {
-                    Text("Book Now")
-                        .fontWeight(.bold)
-                        .foregroundColor(.white)
-                        .padding()
-                        .frame(maxWidth: .infinity)
-                        .background(Color.customBlue)
-                        .cornerRadius(8)
-                }
+                .padding()
+                .background(Color.white)
+                .cornerRadius(11)
+                .shadow(radius: 4)
+                .padding()
             }
-            .padding()
-            .background(Color.white)
-            .cornerRadius(8)
-            .shadow(radius: 4)
-            .padding()
+
         }
     }
 }
@@ -254,13 +254,13 @@ struct AppointmentCardView: View {
                             .padding(.vertical, 8)
                             .padding(.horizontal, 16)
                             .background(Color.customBlue)
-                            .cornerRadius(8)
+                            .cornerRadius(11)
                     }
                 }
             }
                 .padding()
                 .background(Color.white)
-                .cornerRadius(8)
+                .cornerRadius(11)
                 .shadow(radius: 4)
                 .padding(.bottom)
                 .padding(.leading)

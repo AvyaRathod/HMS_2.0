@@ -5,35 +5,57 @@ struct TimeButton: View {
     var time: String
     var bookedSlots: [String]
     @Binding var selectedSlot: String?
-   
+    
+    
+    let currentTime = Calendar.current.dateComponents([.hour, .minute], from: Date())
+    
     var body: some View {
         let isBooked = bookedSlots.contains(time)
         let isSelected = selectedSlot == time
-        let isSelectable = !isBooked
+        let isPastSlot = !isFutureTimeSlot(time)
+        let isSelectable = !isBooked && !isPastSlot
         
         Button(action: {
-            // Update selected time slot if it is selectable
             if isSelectable {
                 selectedSlot = time
             }
         }) {
-            RoundedRectangle(cornerRadius: 15)
-                .fill(isBooked ? Color.white : (isSelected ? Color.blue : Color.white)) // Fill color based on booking and selection status
+            RoundedRectangle(cornerRadius: 11)
+                .fill(isBooked ? Color.white : (isSelected ? Color.customBlue : (isPastSlot ? Color.white : Color.white)))
                 .overlay(
                     Text(time)
                         .font(.headline)
-                        .foregroundColor(isBooked ? .gray : (isSelected ? .white : .blue)) // Set text color based on selection and availability
+                        .foregroundColor(isBooked ? .gray : (isSelected ? .white :(isPastSlot ? Color.gray : Color.customBlue)))
                 )
                 .overlay(
-                    RoundedRectangle(cornerRadius: 15)
-                        .stroke(isBooked ? Color.gray : Color.blue, lineWidth: 1) // Set border color based on booking status
+                    RoundedRectangle(cornerRadius: 11)
+                        .stroke(isBooked ? Color.gray : Color.customBlue, lineWidth: 1)
                 )
-                .opacity(isBooked ? 0.5 : 1.0) // Reduce opacity if booked
-                .disabled(isBooked) // Disable button if booked
+                .opacity(isBooked ? 0.5 : 1.0)
+                .disabled(!isSelectable) // Disable button if slot is booked or in the past
         }
         .frame(width: 90, height: 50)
     }
+    
+    // Function to check if the time slot is in the future
+    func isFutureTimeSlot(_ time: String) -> Bool {
+        let slotComponents = time.components(separatedBy: ":")
+        guard let hour = Int(slotComponents[0]), let minute = Int(slotComponents[1]) else {
+            return false
+        }
+        
+        // Compare time slot with current time
+        if let currentHour = currentTime.hour, let currentMinute = currentTime.minute {
+            if hour > currentHour {
+                return true
+            } else if hour == currentHour && minute >= currentMinute {
+                return true
+            }
+        }
+        return false
+    }
 }
+
 
 struct SlotBookView: View {
     @EnvironmentObject var userTypeManager: UserTypeManager
@@ -57,7 +79,7 @@ struct SlotBookView: View {
         NavigationView {
             VStack {
                 ZStack {
-                    RoundedRectangle(cornerRadius: 28)
+                    RoundedRectangle(cornerRadius: 11)
                         .fill(LinearGradient(
                             gradient: Gradient(colors: [Color.customBlue.opacity(0.5), Color.customBlue.opacity(1)]),
                             startPoint: .leading,
@@ -109,10 +131,10 @@ struct SlotBookView: View {
                         
                         Spacer() // Add spacer to push DatePicker to the right
                         
-                        DatePicker("", selection: $selectedDate, displayedComponents: .date)
+                        DatePicker("", selection: $selectedDate, in: Date()..., displayedComponents: .date)
                             .datePickerStyle(CompactDatePickerStyle())
-                            .labelsHidden() // Hide default label to reduce spacing
-                            .padding(.trailing, 25) // Adjust trailing padding
+                            .labelsHidden()
+                            .padding(.trailing, 25)
                     }
                 }
                 
@@ -138,9 +160,6 @@ struct SlotBookView: View {
                     
                     guard let slot = selectedSlot else { return }
                     
-                     createBooking(for: doctor, on: selectedDate, at: slot)
-                    
-                    // Set the flag to navigate to the PaymentConfirmationPage
                     paymentConfirmationActive = true
                 }) {
                     // Button label
@@ -148,17 +167,20 @@ struct SlotBookView: View {
                         .font(.title3.bold())
                         .padding() // Add padding around the text
                         .foregroundColor(.white) // Set text color
-                        .background(Color.blue) // Set background color
-                        .cornerRadius(20) // Apply corner radius to create rounded corners
+                        .background(Color.customBlue) // Set background color
+                        .cornerRadius(11) // Apply corner radius to create rounded corners
                         .frame(width: 200,height: 100)
                 }
                 .disabled(selectedSlot == nil)
                 .padding(.top)
                 
-                NavigationLink(destination: CheckoutView(doctorName: doctor.name, selectedDate: formattedDate(selectedDate), selectedSlot: selectedSlot ?? ""), isActive: $paymentConfirmationActive) {
+                NavigationLink(destination: CheckoutView(doctorName: doctor.name,selectedDate: selectedDate.formatted(date: .numeric, time: .omitted), selectedSlot: selectedSlot ?? "",Bill: 1000,
+                                                         DocID: doctor.employeeID,
+                                                         PatID: userTypeManager.userID,
+                                                         reason: "Fever" ), isActive: $paymentConfirmationActive) {
                     EmptyView()
                 }
-                .hidden()
+                                                         .hidden()
             }
             .onAppear {
                 fetchAppointments()
@@ -166,7 +188,8 @@ struct SlotBookView: View {
             .onChange(of: selectedDate) { _ in
                 fetchAppointments()
             }
-            .navigationBarTitle("Book Appointment", displayMode: .inline)
+            .navigationBarTitle("Book Appointment", displayMode: .inline )
+            
         }
     }
     
@@ -191,29 +214,6 @@ struct SlotBookView: View {
                     }
                 }
             }
-    }
-    
-    func createBooking(for doctor: DoctorModel, on date: Date, at slot: String) {
-        let db = Firestore.firestore()
-        let appointmentsRef = db.collection("appointments")
-
-        let appointmentData: [String: Any] = [
-            "Bill": 1000,
-            "Date": date.formatted(date: .numeric, time: .omitted),
-            "DocID": doctor.employeeID,
-            "PatID": userTypeManager.userID,
-            "TimeSlot": slot,
-            "isComplete": false,
-            "reason": "Fever"
-        ]
-
-        appointmentsRef.addDocument(data: appointmentData) { error in
-            if let error = error {
-                print("Error creating booking: \(error.localizedDescription)")
-            } else {
-                print("Booking created successfully")
-            }
-        }
     }
 }
 
