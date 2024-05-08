@@ -14,22 +14,29 @@ struct CompletedAppointmentView: View {
     @Binding var appointments: [AppointmentModel]
     @State private var doctorName: String = "Loading..."
     @State private var specialisation: String = "Loading..."
+    @State private var doctorImageURL: String? = nil
     
     var body: some View {
         ZStack{
             HStack{
                 
-                Rectangle()
-                    .fill(Color.white)
-                    .frame(width: 100, height: 130)
-                    .cornerRadius(30)
-                    .padding(.leading, 60)
-                    .overlay(
-                        Image("DrPriyaPhoto") // Use the actual image here
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .foregroundColor(.white)
-                    )
+                if let urlStr = doctorImageURL, let url = URL(string: urlStr) {
+                                    AsyncImage(url: url) { image in
+                                        image.resizable().clipShape(RoundedRectangle(cornerRadius: 11.0)).frame(width: 100, height: 120)
+                                    } placeholder: {
+                                        ProgressView()
+                                    }
+                                    .aspectRatio(contentMode: .fill)
+                                    .frame(height: 150)
+                                    .clipped()
+                                    .cornerRadius(10)
+                                } else {
+                                    Rectangle()
+                                        .fill(Color.white)
+                                        .frame(width: 100, height: 130)
+                                        .cornerRadius(30)
+                                        .padding(.leading, 60)
+                                }
                 VStack(alignment: .leading) {
                     Text(doctorName)
                         .font(.title2)
@@ -88,6 +95,7 @@ struct CompletedAppointmentView: View {
                 
                 self.doctorName = data["name"] as? String ?? "No name available"
                 self.specialisation = data["specialisation"] as? String ?? "No specialisation available"
+                self.doctorImageURL = data["image"] as? String
             } else {
                 print("No matching document found for DocID \(self.appointment.doctorID)")
                 self.doctorName = "Doctor not found."
