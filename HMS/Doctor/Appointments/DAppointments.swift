@@ -344,7 +344,9 @@ struct AppointmentDetailsView: View {
 
       Text(appointment.timeSlot)
 
-        NavigationLink("Add Prescription", destination: AddPrescriptionForm(patientId: appointment.patientID, appointmentID: appointment.id))
+        NavigationLink("Add Prescription", destination:
+                        EmptyView()
+                        /*AddPrescriptionForm(patientId: appointment.patientID, appointmentID: appointment.id)*/)
       // Add more details as needed (e.g., location, attendees)
     }
     .padding()

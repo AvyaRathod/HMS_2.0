@@ -11,7 +11,7 @@ import FirebaseFirestoreSwift
 import FirebaseAuth
 
 struct PrescriptionModel: Codable, Identifiable {
-    var id =  UUID()
+    var id: String
     let doctorId: String
     let patentId: String
     var appointmentID: String
@@ -35,34 +35,8 @@ struct PrescriptionModel: Codable, Identifiable {
         case afternoon = "Afternoon"
         case night = "Night"
     }
-    
-    init(doctorId: String, patentId: String, appointmentID: String, prescription: String, patientStatus: String, description: String, referedDoctorId: String? = nil, prescribedMedicines: [String : MedicineDetails], prescribedTest: [String]? = nil, isAdmitted: Bool) {
-        self.doctorId = doctorId
-        self.patentId = patentId
-        self.appointmentID = appointmentID
-        self.prescription = prescription
-        self.patientStatus = patientStatus
-        self.description = description
-        self.referedDoctorId = referedDoctorId
-        self.prescribedMedicines = prescribedMedicines
-        self.prescribedTest = prescribedTest
-        self.isAdmitted=isAdmitted
-    }
-    
-//    init(from decoder: Decoder) throws {
-//        let container = try decoder.container(keyedBy: CodingKeys.self)
-//        
-//        self.doctorId = try container.decode(String.self, forKey: .doctorId)
-//        self.patentId = try container.decode(String.self, forKey: .patentId)
-//        self.appointmentID = try container.decode(String.self, forKey: .appointmentID)
-//        self.prescription = try container.decode(String.self, forKey: .prescription)
-//        self.patientStatus = try container.decode(String.self, forKey: .prescribedTest)
-//        self.description = try container.decode(String.self, forKey: .description)
-//        self.referedDoctorId = try container.decodeIfPresent(String.self, forKey: .referedDoctorId)
-//        self.prescribedMedicines = try container.decode([String: MedicineDetails].self, forKey: .prescribedMedicines)
-//        self.prescribedTest = try container.decodeIfPresent([String].self, forKey: .prescribedTest)
-//    }
-    
+
+    // Initializer to decode from Firestore dictionary
     init?(dictionary: [String: Any], id: String) {
         guard let doctorId = dictionary["doctorId"] as? String,
               let patentId = dictionary["patentId"] as? String,
@@ -70,45 +44,31 @@ struct PrescriptionModel: Codable, Identifiable {
               let prescription = dictionary["prescription"] as? String,
               let patientStatus = dictionary["patientStatus"] as? String,
               let description = dictionary["description"] as? String,
-              let prescribedMedicinesDict = dictionary["prescribedMedicines"] as? [String: Any],
-                let isAdmitted = dictionary["isAdmitted"] as? Bool
-        else {
-            // Return nil if any of the required properties are missing
+              let isAdmitted = dictionary["isAdmitted"] as? Bool,
+              let prescribedMedicinesDict = dictionary["prescribedMedicines"] as? [String: Any] else {
+            // Return nil if any required field is missing
             return nil
         }
-        
-        // Initialize prescribedMedicines dictionary
+
         var prescribedMedicines = [String: MedicineDetails]()
         for (medicineName, medicineDetailsDict) in prescribedMedicinesDict {
-            guard let medicineDetailsDict = medicineDetailsDict as? [String: Any],
-                  let dosage = medicineDetailsDict["dosage"] as? String,
-                  let intakePatternRawValue = medicineDetailsDict["intakePattern"] as? [String],
-                  let beforeFood = medicineDetailsDict["beforeFood"] as? Bool,
-                  let afterFood = medicineDetailsDict["afterFood"] as? Bool
-            else {
-                // Skip this medicine if any required detail is missing
+            guard let detailsDict = medicineDetailsDict as? [String: Any],
+                  let dosage = detailsDict["dosage"] as? String,
+                  let intakePatternRaw = detailsDict["intakePattern"] as? [String],
+                  let beforeFood = detailsDict["beforeFood"] as? Bool,
+                  let afterFood = detailsDict["afterFood"] as? Bool else {
                 continue
             }
-            
-            // Convert intakePattern strings to IntakeTime enum
-            let intakePattern: [IntakeTime] = intakePatternRawValue.compactMap { stringValue in
-                guard let intakeTime = IntakeTime(rawValue: stringValue) else {
-                    return nil
-                }
-                return intakeTime
-            }
-            
+
+            let intakePattern: [IntakeTime] = intakePatternRaw.compactMap { IntakeTime(rawValue: $0) }
             let medicineDetails = MedicineDetails(dosage: dosage, intakePattern: intakePattern, beforeFood: beforeFood, afterFood: afterFood)
             prescribedMedicines[medicineName] = medicineDetails
         }
-        
-        // Initialize prescribedTest array
+
         let prescribedTest = dictionary["prescribedTest"] as? [String]
-        
-        // Initialize optional properties
         let referedDoctorId = dictionary["referedDoctorId"] as? String
-        
-        // Assign values to properties
+
+        self.id = id
         self.doctorId = doctorId
         self.patentId = patentId
         self.appointmentID = appointmentID
@@ -120,8 +80,8 @@ struct PrescriptionModel: Codable, Identifiable {
         self.prescribedTest = prescribedTest
         self.isAdmitted = isAdmitted
     }
-
 }
+
 
 final class PrescriptionManager {
     static let shared = PrescriptionManager()
@@ -133,26 +93,26 @@ final class PrescriptionManager {
         prescriptionCollection.document(id)
     }
     
-    func addPatientRecord(patientId: String, doctorId: String, prescriptionData: PrescriptionModel) {
-        do {
-            
-            let id = UUID()
-            var prescriptionDataWithSameID = prescriptionData
-            prescriptionDataWithSameID.id = id
-            let data = try Firestore.Encoder().encode(prescriptionDataWithSameID)
-            let documentRef = prescriptionDocument(id: id.uuidString)
-            
-            documentRef.setData(data) { error in
-                if let error = error {
-                    print("Error adding document: \(error)")
-                } else {
-                    print("Document added successfully")
-                }
-            }
-        } catch {
-            print("Error encoding prescription data: \(error)")
-        }
-    }
+//    func addPatientRecord(patientId: String, doctorId: String, prescriptionData: PrescriptionModel) {
+//        do {
+//            
+//            let id = UUID()
+//            var prescriptionDataWithSameID = prescriptionData
+//            prescriptionDataWithSameID.id = id
+//            let data = try Firestore.Encoder().encode(prescriptionDataWithSameID)
+//            let documentRef = prescriptionDocument(id: id.uuidString)
+//            
+//            documentRef.setData(data) { error in
+//                if let error = error {
+//                    print("Error adding document: \(error)")
+//                } else {
+//                    print("Document added successfully")
+//                }
+//            }
+//        } catch {
+//            print("Error encoding prescription data: \(error)")
+//        }
+//    }
 
 
     
@@ -224,13 +184,13 @@ final class PrescriptionViewModel: ObservableObject {
         }
     }
     
-    func addPatientRecord(patientId: String, prescriptionData: PrescriptionModel) {
-        guard let currentUserID = currentUser?.uid else {
-            print("Current user ID not available.")
-            return
-        }
-        PrescriptionManager.shared.addPatientRecord(patientId: patientId, doctorId: currentUserID, prescriptionData: prescriptionData)
-    }
+//    func addPatientRecord(patientId: String, prescriptionData: PrescriptionModel) {
+//        guard let currentUserID = currentUser?.uid else {
+//            print("Current user ID not available.")
+//            return
+//        }
+//        PrescriptionManager.shared.addPatientRecord(patientId: patientId, doctorId: currentUserID, prescriptionData: prescriptionData)
+//    }
     
 //    
 //    func fetchPrescriptionThroughAppointmentID(appointmentID: String) async {
