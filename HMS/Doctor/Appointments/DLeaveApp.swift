@@ -1,153 +1,178 @@
-//
-//  DLeaveApp.swift
-//  HMS
-//
-//  Created by Avya Rathod on 07/05/24.
-//
-
 import SwiftUI
 
-enum SearchOptions{
-    case dates
-    case reason
-    case timeslots
-}
-
 struct DLeaveAppView: View {
-    @State private var selectedOption: SearchOptions = .dates
     @State private var startDate = Date()
     @State private var endDate = Date()
-    @State private var startTime = Date()
-    @State private var endTime = Date()
-    
+    @State private var reason = ""
+    @State private var selectedSlots: [String] = []
+    let gridItems = Array(repeating: GridItem(.flexible()), count: 3)
+    let times = ["9:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00"]
+    let bookedSlots: [String] = []
+
     var body: some View {
-        //search menu
-        VStack{
-            Spacer()
+        ScrollView{
             Text("Leave Application")
-                .font(.title)
-                .fontWeight (.semibold)
-            Spacer()
-            VStack(alignment: .leading) {
-                if selectedOption == .dates {
-                    Text("When do you want to take a leave?")
-                        .font (.title2)
-                        .fontWeight (.semibold)
-                    VStack {
-                        HStack {
-                            DatePicker ("From", selection: $startDate, displayedComponents:.date)
-                        }
-                        Divider()
-                        HStack{
-                            DatePicker("To", selection: $endDate, displayedComponents: .date)
-                        }
-                    }
-                }else{
-                    CollapsedPickerView(title: "When", description: "Add dates")
-                }
-            }
-            .padding()
-            .frame(height: selectedOption == .dates ? 160 : 64)
-            .background (.white)
-            .clipShape (RoundedRectangle (cornerRadius: 12))
-            .padding()
-            .shadow(radius: 10)
-            .onTapGesture {
-                withAnimation(.snappy) { selectedOption = .dates }
-            }
-            
-            VStack(alignment: .leading) {
-                if selectedOption == .timeslots {
-                    Text("When do you want to take a leave?")
-                        .font (.title2)
-                        .fontWeight (.semibold)
-                    VStack {
-                        HStack {
-                            DatePicker ("From", selection: $startDate, displayedComponents:.date)
-                            DatePicker ("From-time", selection: $startTime, displayedComponents:.hourAndMinute).labelsHidden()
-                        }
-                        Divider()
-                        HStack{
-                            DatePicker("To", selection: $endDate, displayedComponents: .date)
-                            DatePicker ("From-time", selection: $endTime, displayedComponents:.hourAndMinute).labelsHidden()
-                        }
-                    }
-                }else{
-                    CollapsedPickerView(title: "When", description: "Add dates")
-                }
-            }
-            .padding()
-            .frame(height: selectedOption == .timeslots ? 160 : 64)
-            .background (.white)
-            .clipShape (RoundedRectangle (cornerRadius: 12))
-            .padding()
-            .shadow(radius: 10)
-            .onTapGesture {
-                withAnimation(.snappy) { selectedOption = .timeslots }
-            }
-            
-            VStack(alignment: .leading) {
-                if selectedOption == .reason {
-                    Text("Why are you taking a leave?")
-                        .font (.title2)
-                        .fontWeight (.semibold)
+                .font(.largeTitle)
+               
+            VStack {
+                ZStack{
+                    RoundedRectangle(cornerRadius: 11)
+                        .foregroundColor(Color.blueShade.opacity(0.1))
+                        .shadow(radius: 5)
+                        .frame(width: 400, height: 150)
                     
-                    
+                    VStack{
+                        HStack {
+                            Text("Start date")
+                                .foregroundColor(.black)
+                                .font(.headline)
+                                .padding(.leading, 25)
+                            
+                            Spacer()
+                            
+                            DatePicker("", selection: $startDate, in: Date()..., displayedComponents: .date)
+                                .datePickerStyle(CompactDatePickerStyle())
+                                .labelsHidden()
+                                .padding(.trailing, 25)
+                                .onChange(of: startDate) { newStartDate in
+                                    if newStartDate > endDate {
+                                        endDate = newStartDate
+                                    }
+                                }
+                        }
+                        
+                        HStack {
+                            Text("End date")
+                                .foregroundColor(.black)
+                                .font(.headline)
+                                .padding(.leading, 25)
+                            
+                            Spacer()
+                            
+                            DatePicker("", selection: $endDate, in: Date()..., displayedComponents: .date)
+                                .datePickerStyle(CompactDatePickerStyle())
+                                .labelsHidden()
+                                .padding(.trailing, 25)
+                                .onChange(of: endDate) { newEndDate in
+                                    if newEndDate < startDate {
+                                        startDate = newEndDate
+                                    }
+                                }
+                        }
                     }
-                else{
-                    CollapsedPickerView(title: "Reason?", description: "Add reason")
+                }
+                
+                Text("Why are you taking a leave?")
+                    .font (.title3)
+                    .fontWeight (.semibold)
+                
+                ZStack{
+                    RoundedRectangle(cornerRadius: 11)
+                        .foregroundColor(Color.blueShade.opacity(0.1))
+                        .shadow(radius: 5)
+                        .frame(width: 400, height: 55)
+                    
+                    TextField("  reason", text: $reason)
+                        .frame(height: 40)
+                        .padding()
+                        .cornerRadius(11)
+                }
+                
+                if Calendar.current.isDate(startDate, inSameDayAs: endDate) {
+                    ZStack {
+                        RoundedRectangle(cornerRadius: 11)
+                            .fill(Color(hex: "f5f5f5"))
+                            .frame(width: 360, height: 200)
+                        
+                        LazyVGrid(columns: gridItems, spacing: 10) {
+                            ForEach(times, id: \.self) { time in
+                                LeaveButton(time: time, bookedSlots: bookedSlots, selectedDate: startDate, selectedSlots: $selectedSlots)
+                                    .onTapGesture {
+                                        if let index = selectedSlots.firstIndex(of: time) {
+                                            selectedSlots.remove(at: index)
+                                        } else {
+                                            selectedSlots.append(time)
+                                        }
+                                    }
+                            }
+                        }
+                        .padding()
+                    }
+                }
+                
+                Button(action: {
+                    // Handle the submission of the leave application
+                }) {
+                    Text("Submit")
+                        .font(.title3.bold())
+                        .padding() // Add padding around the text
+                        .foregroundColor(.white) // Set text color
+                        .background(Color.customBlue) // Set background color
+                        .cornerRadius(11) // Apply corner radius to create rounded corners
+                        .frame(width: 200,height: 100)
                 }
             }
             .padding()
-            .frame(height: selectedOption == .reason ? 270 : 64)
-            .background (.white)
-            .clipShape (RoundedRectangle (cornerRadius: 12))
-            .padding()
-            .shadow(radius: 10)
-            .onTapGesture {
-                withAnimation(.snappy) { selectedOption = .reason }
-            }
-            
-            Spacer()
         }
-        .offset(y:-60)
     }
 }
 
-struct ServiceIconView: View {
-    var serviceName: String
-    var imageName: String
-
-    var body: some View {
-        VStack {
-            // Service Image Placeholder
-            RoundedRectangle(cornerRadius: 8)
-                .frame(width: 70, height: 70)
-                .foregroundColor(.gray)
-            
-            Text(serviceName)
-                .font(.subheadline)
-                .foregroundColor(.white)
-        }
-        .padding(10.0)
-        .buttonStyle(PlainButtonStyle())
-    }
-}
-
-struct CollapsedPickerView: View{
-    let title: String
-    let description: String
+struct LeaveButton: View {
+    var time: String
+    var bookedSlots: [String]
+    var selectedDate: Date
+    @Binding var selectedSlots: [String] // Change this to selectedSlots
+    
+    let currentTime = Calendar.current.dateComponents([.hour, .minute], from: Date())
     
     var body: some View {
-        VStack {
-            HStack {
-                Text(title)
-                    .foregroundStyle(.gray)
-                Spacer ()
-                Text (description)
+        let isBooked = bookedSlots.contains(time)
+        let isSelected = selectedSlots.contains(time) // Change this line
+        let isPastSlot = !isFutureTimeSlot(time)
+        let isSelectable = !isBooked && !isPastSlot
+        
+        Button(action: {
+            if isSelectable {
+                if let index = selectedSlots.firstIndex(of: time) {
+                    selectedSlots.remove(at: index)
+                } else {
+                    selectedSlots.append(time)
+                }
             }
-                    .fontWeight(.semibold)
-                    .font (.subheadline)
+        }) {
+            RoundedRectangle(cornerRadius: 11)
+                .fill(isBooked ? Color.white : (isSelected ? Color.customBlue : (isPastSlot ? Color.white : Color.white)))
+                .overlay(
+                    Text(time)
+                        .font(.headline)
+                        .foregroundColor(isBooked ? .gray : (isSelected ? .white :(isPastSlot ? Color.gray : Color.customBlue)))
+                )
+                .overlay(
+                    RoundedRectangle(cornerRadius: 11)
+                        .stroke(isBooked ? Color.gray : Color.customBlue, lineWidth: 1)
+                )
+                .opacity(isBooked ? 0.5 : 1.0)
+                .disabled(!isSelectable)
         }
+        .frame(width: 90, height: 50)
+    }
+    
+    func isFutureTimeSlot(_ time: String) -> Bool {
+        let slotComponents = time.components(separatedBy: ":")
+        guard let hour = Int(slotComponents[0]), let minute = Int(slotComponents[1]) else {
+            return false
+        }
+        
+        let calendar = Calendar.current
+        let slotDate = calendar.date(bySettingHour: hour, minute: minute, second: 0, of: selectedDate)!
+        
+        return slotDate > Date()
+    }
+}
+
+
+struct LeaveApplicationView_Previews: PreviewProvider {
+    static var previews: some View {
+        DLeaveAppView()
     }
 }
