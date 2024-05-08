@@ -145,6 +145,14 @@ struct DoctorCardView: View {
                     Text("\(doctor.experience) Years")
                         .font(.system(size: 15))
                     HStack{
+                        NavigationLink(destination: DoctorProfileView(doctor:doctor)) {
+                            Text("Details")
+                                .foregroundColor(.white)
+                                .padding(.horizontal, 20)
+                                .padding(.vertical, 10)
+                                .background(Color.customBlue)
+                                .cornerRadius(11)
+                        }
                         Spacer()
                         NavigationLink(destination: SlotBookView(doctor:doctor)) {
                             Text("Book")

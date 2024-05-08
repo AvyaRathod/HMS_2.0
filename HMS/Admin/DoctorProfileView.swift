@@ -1,132 +1,228 @@
-
-
 import SwiftUI
 
 struct DoctorProfileView: View {
     var doctor: DoctorModel
     
     var body: some View {
-        VStack {
-            Text("Doctor")
-                .font(.title)
-                .padding()
-            if let url = URL(string: doctor.image) {
-                AsyncImage(url: url) { image in
-                    image.resizable().clipShape(Circle()).frame(width: 150, height: 150)
-                } placeholder: {
-                    ProgressView()
+        NavigationView {
+            ScrollView {
+                VStack(spacing: 20) {
+                    ProfileHeader(doctor: doctor)
+                    BadgeView(doctor: doctor)
+                    CommunicationView(doctor: doctor)
                 }
-                .aspectRatio(contentMode: .fill)
-                .frame(height: 150)
-                .clipped()
-                .cornerRadius(10)
+                .padding()
             }
-
+            .background(
+                GeometryReader { geometry in
+                    LinearGradient(
+                        gradient: Gradient(colors: [Color.customBlue.opacity(0.5), Color.customBlue.opacity(1)]),
+                                           startPoint: .top,
+                                           endPoint: .bottom
+                                       )
+                                       .frame(height: geometry.size.height / 4)
+                                       .edgesIgnoringSafeArea(.top)
+                    Color.white
+                        .frame(height: 2 * geometry.size.height / 3)
+                        .offset(y: geometry.size.height / 3)
+                        .edgesIgnoringSafeArea(.all)
+                }
+            )
             
+                        
+        }
+        
+
+    }
+}
+
+struct ProfileHeader: View {
+    var doctor: DoctorModel
+    
+    var body: some View {
+        VStack {
+            ZStack(alignment: .bottomTrailing) {
+                Spacer()
+                Image("profilePic")
+                    .resizable()
+                    .scaledToFill()
+                    .frame(width: 150, height: 150)
+                    .clipShape(Circle())
+                    .overlay(Circle().stroke(Color.white, lineWidth: 4))
+            }
             Text(doctor.name)
                 .font(.title)
-            
-            Text(doctor.specialisation)
-                .font(.subheadline)
-                .foregroundColor(.gray)
-            
+                .fontWeight(.bold)
+                .foregroundColor(.black)
             Text(doctor.degree)
                 .font(.subheadline)
-                .foregroundColor(.gray)
-            Spacer()
-            
-            HStack(alignment: .top, spacing: 20) {
-                      VStack {
-                          ZStack{
-                              Image("People")
-                                  .resizable()
-                                  .frame(width: 50, height: 50)
-                          }
-                          .background(Color.blue.opacity(0.1))
-                         
-                          Text("")
-                              .font(.system(size: 20, weight: .bold))
-                              .foregroundColor(.blue)
-                          Text("Appointments")
-                              .font(.system(size: 14))
-                      }
-                      .frame(minWidth: 0, maxWidth: .infinity)
-                      .padding(.bottom)
-                      .background(Color.white)
-                      .cornerRadius(10)
-                      .shadow(radius: 5)
-                      VStack {
-                          ZStack{
-                              Image("Badge")
-                                  .resizable()
-                                  .foregroundColor(.blue)
-                                  .frame(width: 50, height: 50)
-                          }
-                          .background(Color.red.opacity(0.2))
-                          Text("10 Yrs")
-                              .font(.system(size: 20, weight: .bold))
-                              .foregroundColor(.blue)
-                          Text("Experience")
-                              .foregroundColor(.black)
-                              .font(.system(size: 14))
-                      }
-                      .frame(minWidth: 0, maxWidth: .infinity)
-                      .padding(.bottom)
-                      .background(Color.white)
-                      .cornerRadius(10)
-                      .shadow(radius: 5)
-                      
-                  }
+                .foregroundColor(.black)
+        }
+        .padding(.bottom)
+    }
+}
 
-         
-                
-              Spacer()
-
-                          
-        VStack(alignment: .leading){
+struct BadgeView: View {
+    var doctor: DoctorModel
+    
+    var body: some View {
+        let departmentImage: Image
         
-                Text("Communication")
-                    .font(.system(size: 20, weight: .bold))
-                     
-                HStack{
-                    ZStack{
-                        Image("Phone")
-                            .resizable()
-                            .frame(width: 40, height: 40)
-                            
-                    }
-                    .background(Color.blue.opacity(0.2))
-                    .cornerRadius(10)
-                    VStack(alignment: .leading){
-                        Text("Phone")
-                            .font(.system(size: 16, weight: .semibold))
-                        Text(doctor.contact)
-                        
-                    }
+        switch doctor.department {
+        case "Cardiology":
+            departmentImage = Image("cardiologyIcon")
+        case "Neurology":
+            departmentImage = Image("neurologyIcon")
+        case "Oncology":
+            departmentImage = Image("oncologyIcon")
+        case "Orthopedics":
+            departmentImage = Image("orthopedicsIcon")
+        case "Endocrinilogy":
+            departmentImage = Image("endocrinilogyIcon")
+        case "Gastroenterology":
+            departmentImage = Image("gastroenterologyIcon")
+        case "Hematology":
+            departmentImage = Image("hematologyIcon")
+        case "Pediatrics":
+            departmentImage = Image("pediatricsIcon")
+        case "Psychiatry":
+            departmentImage = Image("psychiatryIcon")
+        case "Pulmonology":
+            departmentImage = Image("pulmonologyIcon")
+        case "Rheumatology":
+            departmentImage = Image("rheumatologyIcon")
+        case "Urology":
+            departmentImage = Image("urologyIcon")
+        case "Ophthamology":
+            departmentImage = Image("ophthamologyIcon")
+        
+        
+        default:
+            departmentImage = Image(systemName: "questionmark")
+        }
+        
+        return HStack(alignment: .top, spacing: 20) {
+            VStack {
+                ZStack{
+                    departmentImage
+                        .resizable()
+                        .frame(width: 50, height: 50)
                 }
+                .padding()
+                .background(Color.blue.opacity(0.1))
+                Text(doctor.department)
+                    .font(.system(size: 20, weight: .bold))
+                    .foregroundColor(.customBlue)
+                Text("Department")
+                    .foregroundColor(.black)
+                    .font(.system(size: 14))
+
+            }
+            .frame(minWidth: 0, maxWidth: .infinity)
+            .padding(.bottom)
+            .background(Color.white)
+            .cornerRadius(10)
+            .shadow(radius: 2)
+            VStack {
+                ZStack{
+                    Image("experienceIcon")
+                        .resizable()
+                        .foregroundColor(.blue)
+                        .frame(width: 50, height: 50)
+                }
+                .padding()
+                .background(Color.blue.opacity(0.1))
+                Text(doctor.experience)
+                    .font(.system(size: 20, weight: .bold))
+                    .foregroundColor(.customBlue)
+                Text("Experience")
+                    .foregroundColor(.black)
+                    .font(.system(size: 14))
+            }
+            .frame(minWidth: 0, maxWidth: .infinity)
+            .padding(.bottom)
+            .background(Color.white)
+            .cornerRadius(10)
+            .shadow(radius: 5)
+        }
+    }
+}
+
+
+struct CommunicationView: View {
+    var doctor: DoctorModel
+    
+    var body: some View {
+        VStack(alignment: .leading){
+            Text("Communication")
+                .font(.title2)
+                .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
             HStack{
                 ZStack{
-                    Image("Mail")
+                    Image("phoneIcon")
                         .resizable()
                         .frame(width: 40, height: 40)
-                        
                 }
-                .background(Color.red.opacity(0.2))
+
+                .cornerRadius(10)
+                VStack(alignment: .leading){
+                    Text("Phone")
+                        .font(.system(size: 16, weight: .semibold))
+                    Text(doctor.contact)
+                }
+            }
+            HStack{
+                ZStack{
+                    Image("mailIcon")
+                        .resizable()
+                        .frame(width: 40, height: 40)
+                }
                 .cornerRadius(10)
                 VStack(alignment: .leading){
                     Text("Email")
                         .font(.system(size: 16, weight: .semibold))
                     Text(doctor.email)
-                    
                 }
+                
             }
-          
+            HStack{
+                ZStack{
+                    Image("cabinIcon")
+                        .resizable()
+                        .frame(width: 40, height: 40)
+                }
+                .cornerRadius(10)
+                VStack(alignment: .leading){
+                    Text("Cabin Number")
+                        .font(.system(size: 16, weight: .semibold))
+                    Text(doctor.cabinNumber)
+                }
+                
             }
-            Spacer()
         }
-        
-        .padding()
-       
+        .padding(.leading,-90)
     }
 }
+
+struct DoctorProfileView_Previews: PreviewProvider {
+    static var previews: some View {
+        let sampleDoctor = DoctorModel(
+            id: "1",
+            name: "Dr. John Doe",
+            department: "Cardiology",
+            email: "john.doe@example.com",
+            contact: "+1234567890",
+            experience: "10 Years",
+            employeeID: "123456",
+            image: "doctor_image",
+            specialisation: "Cardiologist",
+            degree: "MBBS, MD",
+            cabinNumber: "A123"
+        )
+        return DoctorProfileView(doctor: sampleDoctor)
+    }
+}
+
+
+
 
