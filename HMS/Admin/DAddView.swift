@@ -9,6 +9,7 @@ import SwiftUI
 import Firebase
 import FirebaseStorage
 
+
 struct DAddView: View {
     @State var isPickerShowing = false
     @State var selectedImage: UIImage?
@@ -20,7 +21,7 @@ struct DAddView: View {
     @State private var dpass: String = ""
     @State private var dspecialisationIndex = 0
     @State private var dcontact: String = ""
-    @State private var dexperience: String = ""
+    @State private var dexperience: String = "1"
     @State private var ddegree: String = ""
     @State private var dcabin: String = ""
     @State private var dimage: String = ""
@@ -28,7 +29,8 @@ struct DAddView: View {
     @State private var selectedExperienceIndex = 0
     @State private var isExperiencePickerPresented = false
     let yearsOfExperience: [Int] = Array(0...50)
-    @State private var dexperienceIndex = 0
+    @State private var dexperienceIndex = 1
+    @State private var showPicker = false
     
     @State private var showAlert = false // Control variable for showing alert
     @Environment(\.presentationMode) var presentationMode // Environment variable for controlling presentation mode
@@ -118,7 +120,42 @@ struct DAddView: View {
                 .padding(4)
                 
                 InputFieldView(data: $dcontact, title: "Contact")
-                InputFieldView(data: $dexperience, title: "Experience")
+                
+                
+                ZStack {
+                    HStack {
+                        TextField("", text: $dexperience)
+                            .keyboardType(.decimalPad)
+                            .onChange(of: dexperience) { newValue in
+                                if dexperience.count > 2 {
+                                    dexperience = String(dexperience.prefix(2))
+                                }
+                            }
+                        Text("years")
+                    }
+                    .padding(.horizontal, 10)
+                    .frame(width: 360, height: 52)
+                    .overlay(
+                        RoundedRectangle(cornerSize: CGSize(width: 4, height: 4))
+                            .stroke(Color.gray, lineWidth: 1)
+                    )
+                    HStack {
+                        Text("Experience")
+                            .font(.headline)
+                            .fontWeight(.medium)
+                            .foregroundColor(Color.black)
+                            .multilineTextAlignment(.leading)
+                            .padding(.bottom,4)
+                            .background(Color(Color.white))
+                        Spacer()
+                    }
+                    .padding(.leading, 18)
+                    .offset(CGSize(width: 0, height: -25))
+                }.padding(4)
+
+                
+                
+//                InputFieldView(data: $dexperience, title: "Experience")
                 InputFieldView(data: $ddegree, title: "Degree")
                 InputFieldView(data: $dcabin, title: "Cabin No.")
                 
@@ -269,6 +306,7 @@ struct DAddView: View {
             }
     }
 }
+
 
 struct ImagePickerDoc: UIViewControllerRepresentable {
     @Binding var selectedImage: UIImage?
