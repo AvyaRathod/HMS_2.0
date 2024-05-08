@@ -11,7 +11,7 @@ struct StaffInfoView: View {
         NavigationStack {
             VStack {
                 HStack{
-                    SearchBar(text: $searchText) // Search bar inside VStack
+                    SearchBar(text: $searchText, placeHolder: "Search Doctor") // Search bar inside VStack
                                         .padding(.leading, 20)
                     NavigationLink(destination: DAddView(), label: {
                         Image(systemName: "plus")

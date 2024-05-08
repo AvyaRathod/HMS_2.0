@@ -41,6 +41,10 @@ struct Admin: View {
                     Image(systemName: "person.circle.fill")
                     Text("Profile")
                 }
+            
+            managePatient()
+                .tabItem { Image(systemName: "person.3.fill")
+                    Text("Manage Admissions") }
         }
     }
 }

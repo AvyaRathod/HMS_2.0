@@ -29,7 +29,7 @@ struct DoctorListView: View {
     var body: some View {
         NavigationStack {
             VStack {
-                SearchBar(text: $searchText)
+                SearchBar(text: $searchText, placeHolder: "Search Doctor")
                     .padding(.horizontal)
                 ScrollView {
                     VStack(spacing: 20) {
@@ -168,10 +168,11 @@ struct DoctorCardView: View {
 
 struct SearchBar: View {
     @Binding var text: String
-
+    var placeHolder:String
+    
     var body: some View {
         HStack {
-            TextField("Search a Doctor", text: $text)
+            TextField(placeHolder, text: $text)
                 .padding(.horizontal, 10)
                 .padding(.vertical, 8)
                 .background(Color.gray.opacity(0.1))
