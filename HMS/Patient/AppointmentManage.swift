@@ -69,7 +69,7 @@ struct AppointmentsView: View {
                 ScrollView {
                     VStack(spacing: 16) {
                         ForEach(completedAppointments, id: \.id) { appointment in
-                            CompletedAppointmentView(appointment: appointment, appointments: $appointments)
+                            CompletedAppointmentView(appointment: appointment)
 
                         }
                     }

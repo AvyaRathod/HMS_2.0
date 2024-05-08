@@ -11,7 +11,6 @@ import Firebase
 
 struct CompletedAppointmentView: View {
     var appointment: AppointmentModel
-    @Binding var appointments: [AppointmentModel]
     @State private var doctorName: String = "Loading..."
     @State private var specialisation: String = "Loading..."
     @State private var doctorImageURL: String? = nil
@@ -50,17 +49,27 @@ struct CompletedAppointmentView: View {
                         .font(.subheadline)
                     Text("Time: \(appointment.timeSlot)")
                         .font(.subheadline)
-                    Button(action: {
-//                        cancelAppointment()
-                    }) {
-                        Text("View Prescription")
-                            .fontWeight(.bold)
-                            .foregroundColor(.white)
-                            .padding(.vertical, 8)
-                            .padding(.horizontal, 16)
-                            .background(Color.customBlue)
-                            .cornerRadius(8)
-                    }
+                    Text("AppointmentID: \(appointment.id)")
+                        .font(.subheadline)
+//                    Button(action: {
+////                        cancelAppointment()
+//                    }) {
+//                        Text("View Prescription")
+//                            .fontWeight(.bold)
+//                            .foregroundColor(.white)
+//                            .padding(.vertical, 8)
+//                            .padding(.horizontal, 16)
+//                            .background(Color.customBlue)
+//                            .cornerRadius(8)
+//                    }
+                    NavigationLink("View Prescription", destination: PrescriptionView(appointment: appointment))
+                        .fontWeight(.bold)
+                        .foregroundColor(.white)
+                        .padding(.vertical, 8)
+                        .padding(.horizontal, 16)
+                        .background(Color.customBlue)
+                        .cornerRadius(8)
+
                 }
             }
                 .padding()

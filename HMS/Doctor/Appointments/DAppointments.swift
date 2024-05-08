@@ -18,7 +18,8 @@ struct DAppointments: View {
     @State var currentDay: Date = Date()
     @State var filteredAppointment: [AppointmentModel]?
     @State var DocID = ""
-    
+    @StateObject var prescriptionViewModel = PrescriptionViewModel()
+    @State private var showPrescriptionForm = false
     @Namespace var animation
     
     
@@ -155,8 +156,9 @@ struct DAppointments: View {
                 }
                 else{
                     ForEach(appointments){ appointment in
-                        NavigationLink {
-                            AddPrescriptionForm()
+                        NavigationLink { // Use NavigationLink for task details screen
+                            AppointmentDetailsView(appointment: appointment) // Pass selected task
+//                            AddPrescriptionForm()
                                     } label: {
                                         AppointmentCardView(appointment: appointment)
                                     }
@@ -176,70 +178,52 @@ struct DAppointments: View {
         }
     }
     
-    struct AppointmentCardView: View {
-        var appointment: AppointmentModel
-        @State private var pName: String = "Loading..."
-
-        var body: some View {
-            HStack(alignment: .top, spacing: 30) {
-                VStack(spacing: 10) {
-                    Circle()
-                        .fill(Color.black)
-                        .frame(width: 15, height: 15)
-                        .background(
-                            Circle()
-                                .stroke(Color.black, lineWidth: 1)
-                                .padding(-3)
-                        )
-                    Rectangle()
-                        .fill(Color.black)
-                        .frame(width: 3)
+    func AppointmentCardView(appointment: AppointmentModel) -> some View{
+        HStack(alignment: .top, spacing: 30){
+            VStack(spacing: 10){
+                Circle()
+                    .fill(.black)
+                    .frame(width: 15, height: 15)
+                    .background(
+                        
+                        Circle()
+                            .stroke(.black, lineWidth: 1)
+                            .padding(-3)
+                    )
+                Rectangle()
+                    .fill(.black)
+                    .frame(width: 3)
+            }
+            
+            VStack{
+                
+                HStack(alignment: .top, spacing: 10){
+                    VStack(alignment: .leading, spacing: 12){
+                        
+                        Text(appointment.patientID)
+                            .font(.title2.bold())
+                        
+                        Text(appointment.reason)
+                            .font(.title3)
+                            //.foregroundStyle(.secondary)
+                    }
+                    .hLeading()
+                    
+                    Text(appointment.timeSlot)
                 }
                 
-                VStack {
-                    HStack(alignment: .top, spacing: 10) {
-                        VStack(alignment: .leading, spacing: 12) {
-                            Text(pName)
-                                .font(.title2.bold())
-                            
-                            Text(appointment.reason)
-                                .font(.title3)
-                        }
-                        .hLeading()
-                        
-                        Text(appointment.timeSlot)
-                    }
-                }
-                .foregroundColor(.white)
-                .padding()
-                .hLeading()
-                .background(
-                    Color.black
-                        .cornerRadius(25)
-                )
+                
             }
-            .onAppear(perform: fetchPName)
+            .foregroundColor(.white)
+            .padding()
             .hLeading()
+            .background(
+                Color(.black)
+                    .cornerRadius(25)
+            )
         }
-
-        private func fetchPName() {
-            let db = Firestore.firestore()
-            let documentID = appointment.patientID
-            db.collection("Patients").document(documentID).getDocument { (document, error) in
-                if let document = document, document.exists {
-                    let data = document.data()
-                    if let patientName = data?["name"] as? String {
-                        pName = patientName
-                    } else {
-                        print("Patient name not found in the document.")
-                    }
-                } else {
-                    print("Document does not exist or error: \(error?.localizedDescription ?? "Unknown error")")
-                }
-            }
-        }
+        .hLeading()
     }
-
     
     func HeaderView() -> some View{
         HStack(spacing: 10){
@@ -256,6 +240,7 @@ struct DAppointments: View {
             NavigationLink(destination: DLeaveAppView()){
                 Text("Leave")
             }
+
         }
         .padding()
         .padding(.top, getSafeArea().top)
@@ -351,7 +336,7 @@ struct AppointmentDetailsView: View {
     
   var body: some View {
     VStack(alignment: .leading, spacing: 20) {
-      Text(appointment.patientName!)
+      Text(appointment.patientID)
         .font(.title2.bold())
 
       Text(appointment.reason)
@@ -359,10 +344,11 @@ struct AppointmentDetailsView: View {
 
       Text(appointment.timeSlot)
 
+        NavigationLink("Add Prescription", destination: AddPrescriptionForm(patientId: appointment.patientID, appointmentID: appointment.id))
       // Add more details as needed (e.g., location, attendees)
     }
     .padding()
-    .navigationTitle(appointment.patientName!) // Set navigation title using task title
+//    .navigationTitle(appointment.patientName!) // Set navigation title using task title
   }
 }
 
