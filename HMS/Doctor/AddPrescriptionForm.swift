@@ -41,6 +41,11 @@ struct AddPrescriptionForm: View {
                     
                     TextField("Description", text: $description)
                 }
+                Section{
+                    NavigationLink(destination: DRecordsView(patientId: patientId), label: {
+                        Text("Show records")
+                    })
+                }
                 Section(header: Text("Medicine")) {
                     ForEach(medicines.indices, id: \.self) { index in
                         MedicineRow(medicineDetail: $medicines[index]) {

@@ -152,10 +152,6 @@ struct DAddView: View {
                     .padding(.leading, 18)
                     .offset(CGSize(width: 0, height: -25))
                 }.padding(4)
-
-                
-                
-//                InputFieldView(data: $dexperience, title: "Experience")
                 InputFieldView(data: $ddegree, title: "Degree")
                 InputFieldView(data: $dcabin, title: "Cabin No.")
                 

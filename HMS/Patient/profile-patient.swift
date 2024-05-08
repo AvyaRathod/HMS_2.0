@@ -79,15 +79,19 @@ struct PatientProfileView: View {
                                     .cornerRadius(10)
                             }
                             
-                            Button(action: {
-                                isViewingRecords.toggle()
-                            }) {
-                                Text("View Records")
-                                    .padding()
-                                    .frame(maxWidth: .infinity)
-                                    .background(Color.blue.opacity(0.7))
-                                    .foregroundColor(.white)
-                                    .cornerRadius(10)
+                            NavigationView {
+                                Button(action: {
+                                    // action here
+                                }) {
+                                    NavigationLink(destination: HealthRecordAdd()) {
+                                        Text("View Records")
+                                            .padding()
+                                            .frame(maxWidth: .infinity)
+                                            .background(Color.blue.opacity(0.7))
+                                            .foregroundColor(.white)
+                                            .cornerRadius(10)
+                                    }
+                                }
                             }
                         }
                         .padding(.horizontal, 20)

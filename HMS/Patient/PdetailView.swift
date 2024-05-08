@@ -207,6 +207,4 @@ struct PdetailView: View {
     }
 }
 
-//#Preview {
-//  PdetailView()
-//}
+
