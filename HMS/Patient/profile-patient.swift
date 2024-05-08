@@ -105,9 +105,13 @@ struct PatientProfileView: View {
                     logout()
                 }, secondaryButton: .cancel())
             }
-            .onAppear{fetchPatientData() }
+            .onAppear{if !userTypeManager.userID.isEmpty {
+                fetchPatientData()
+            }
+            }
         }
     }
+    
     func fetchPatientData() {
             let db = Firestore.firestore()
         db.collection("Patients").document(userTypeManager.userID).getDocument { document, error in

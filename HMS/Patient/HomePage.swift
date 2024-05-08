@@ -28,9 +28,10 @@ struct HomeScreenView: View {
                 
             
             .background(Color(.systemGroupedBackground))
-            .onAppear {
+            .onAppear {if !userTypeManager.userID.isEmpty {
                 fetchPName()
                 fetchAppointments()
+            }
             }
         }
         .ignoresSafeArea(.container, edges: .top)

@@ -10,6 +10,12 @@ struct LoginView: View {
     @State var username : String = ""
     @State var password : String = ""
     
+    @State private var showForgotPasswordSheet = false
+    @State private var emailForReset = ""
+    @State private var showingResetPasswordAlert = false
+    @State private var resetPasswordAlertMessage = ""
+
+    
     var body: some View {
         NavigationStack {
             ZStack {
@@ -56,11 +62,34 @@ struct LoginView: View {
                     
                     HStack {
                         Spacer().frame(maxWidth: 160)
-                        Text("Forgot Password?")
-                            .fontWeight(.light)
-                            .foregroundColor(Color.blue)
-                            .underline()
-                    }.padding(.top, 15)
+                        Button("Forgot Password?") {
+                            self.showForgotPasswordSheet = true
+                        }
+                        .foregroundColor(Color.blue)
+                        .underline()
+                        .sheet(isPresented: $showForgotPasswordSheet) {
+                            VStack {
+                                Text("Reset Password")
+                                    .font(.headline)
+                                    .padding()
+                                Text("Enter your email to reset your password.")
+                                TextField("Email", text: $emailForReset)
+                                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                                    .padding()
+                                Button("Submit") {
+                                    self.resetPassword(email: self.emailForReset)
+                                    self.showForgotPasswordSheet = false // Close the sheet
+                                }
+                                .padding()
+                            }
+                            .padding()
+                        }
+                        .alert(isPresented: $showingResetPasswordAlert) {
+                            Alert(title: Text("Reset Password"), message: Text(resetPasswordAlertMessage), dismissButton: .default(Text("OK")))
+                        }
+                    }
+                    .padding(.top, 15)
+
                     
                     Image("Line or").padding(.leading,-6)
                     
@@ -146,6 +175,18 @@ struct LoginView: View {
             }
         }
     }
+    
+    func resetPassword(email: String) {
+        Auth.auth().sendPasswordReset(withEmail: email) { error in
+            if let error = error {
+                self.resetPasswordAlertMessage = error.localizedDescription
+            } else {
+                self.resetPasswordAlertMessage = "A link to reset your password has been sent to \(email)."
+            }
+            self.showingResetPasswordAlert = true // Show alert after the task completes
+        }
+    }
+
 }
 //#Preview {
 //  LoginView()

@@ -30,7 +30,7 @@ struct LogoutView: View {
     func logout() {
         do {
             try Auth.auth().signOut() // Sign out from Firebase authentication
-            
+
             // Reset user defaults
             UserDefaults.standard.removeObject(forKey: "userType")
             UserDefaults.standard.removeObject(forKey: "userID")
@@ -38,11 +38,14 @@ struct LogoutView: View {
             // Reset environment objects
             userTypeManager.userType = .unknown
             userTypeManager.userID = ""
+
             
         } catch let signOutError as NSError {
             print("Error signing out: %@", signOutError)
+            // Handle errors if necessary, e.g., show an alert
         }
     }
+
 }
 
 struct LogoutView_Previews: PreviewProvider {

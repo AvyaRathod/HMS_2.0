@@ -36,12 +36,10 @@ struct DLeaveAppView: View {
                     VStack {
                         HStack {
                             DatePicker ("From", selection: $startDate, displayedComponents:.date)
-                            DatePicker ("From-time", selection: $startTime, displayedComponents:.hourAndMinute).labelsHidden()
                         }
                         Divider()
                         HStack{
                             DatePicker("To", selection: $endDate, displayedComponents: .date)
-                            DatePicker ("From-time", selection: $endTime, displayedComponents:.hourAndMinute).labelsHidden()
                         }
                     }
                 }else{
@@ -56,6 +54,36 @@ struct DLeaveAppView: View {
             .shadow(radius: 10)
             .onTapGesture {
                 withAnimation(.snappy) { selectedOption = .dates }
+            }
+            
+            VStack(alignment: .leading) {
+                if selectedOption == .timeslots {
+                    Text("When do you want to take a leave?")
+                        .font (.title2)
+                        .fontWeight (.semibold)
+                    VStack {
+                        HStack {
+                            DatePicker ("From", selection: $startDate, displayedComponents:.date)
+                            DatePicker ("From-time", selection: $startTime, displayedComponents:.hourAndMinute).labelsHidden()
+                        }
+                        Divider()
+                        HStack{
+                            DatePicker("To", selection: $endDate, displayedComponents: .date)
+                            DatePicker ("From-time", selection: $endTime, displayedComponents:.hourAndMinute).labelsHidden()
+                        }
+                    }
+                }else{
+                    CollapsedPickerView(title: "When", description: "Add dates")
+                }
+            }
+            .padding()
+            .frame(height: selectedOption == .timeslots ? 160 : 64)
+            .background (.white)
+            .clipShape (RoundedRectangle (cornerRadius: 12))
+            .padding()
+            .shadow(radius: 10)
+            .onTapGesture {
+                withAnimation(.snappy) { selectedOption = .timeslots }
             }
             
             VStack(alignment: .leading) {
