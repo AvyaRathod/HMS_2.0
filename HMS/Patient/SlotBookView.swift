@@ -4,6 +4,7 @@ import Firebase
 struct TimeButton: View {
     var time: String
     var bookedSlots: [String]
+    var selectedDate: Date // Add selectedDate as a parameter
     @Binding var selectedSlot: String?
     
     
@@ -44,17 +45,13 @@ struct TimeButton: View {
             return false
         }
         
-        // Compare time slot with current time
-        if let currentHour = currentTime.hour, let currentMinute = currentTime.minute {
-            if hour > currentHour {
-                return true
-            } else if hour == currentHour && minute >= currentMinute {
-                return true
-            }
-        }
-        return false
+        let calendar = Calendar.current
+        let slotDate = calendar.date(bySettingHour: hour, minute: minute, second: 0, of: selectedDate)!
+        
+        return slotDate > Date() // Compare slot's date with current date
     }
 }
+
 
 
 struct SlotBookView: View {
@@ -158,7 +155,7 @@ struct SlotBookView: View {
                     
                     LazyVGrid(columns: gridItems, spacing: 10) {
                         ForEach(times, id: \.self) { time in
-                            TimeButton(time: time, bookedSlots: bookedSlots, selectedSlot: $selectedSlot)
+                            TimeButton(time: time, bookedSlots: bookedSlots, selectedDate: selectedDate, selectedSlot: $selectedSlot)
                         }
                     }
                     .padding()
