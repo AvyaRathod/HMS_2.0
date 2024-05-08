@@ -113,6 +113,29 @@ final class PrescriptionManager {
 //            print("Error encoding prescription data: \(error)")
 //        }
 //    }
+    
+
+    func addPatientRecord(patientId: String, doctorId: String, prescriptionData: PrescriptionModel) {
+        do {
+            let id = UUID().uuidString // Generate a UUID string
+            var prescriptionDataWithSameID = prescriptionData
+            prescriptionDataWithSameID.id = id
+            
+            let data = try Firestore.Encoder().encode(prescriptionDataWithSameID)
+            let documentRef = Firestore.firestore().collection("prescriptions").document(id) // Assuming "prescriptions" is your Firestore collection
+            
+            documentRef.setData(data) { error in
+                if let error = error {
+                    print("Error adding document: \(error)")
+                } else {
+                    print("Document added successfully")
+                }
+            }
+        } catch {
+            print("Error encoding prescription data: \(error)")
+        }
+    }
+
 
 
     
