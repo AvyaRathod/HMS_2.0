@@ -10,7 +10,7 @@ import SwiftUI
 struct Admin: View {
     var body: some View {
         TabView {
-            AdminHome()
+            AdminHomePage()
                 .tabItem {
                     Image(systemName: "house")
                     Text("Home")
@@ -36,11 +36,7 @@ struct Admin: View {
                     Image(systemName: "heart.text.square.fill")
                     Text("Health events")
                 }
-            AdminProfile(admin: AdminDetails(name: "Admin Name", email: "admin@example.com", contact: "123-456-7890")) // Add AdminProfile view as a tab item
-                .tabItem {
-                    Image(systemName: "person.circle.fill")
-                    Text("Profile")
-                }
+          
             
             managePatient()
                 .tabItem { Image(systemName: "person.3.fill")
