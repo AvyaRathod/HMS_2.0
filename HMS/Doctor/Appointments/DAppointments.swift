@@ -52,17 +52,17 @@ struct DAppointments: View {
                                             .opacity(isToday(date: day) ? 1 : 0)
                                         
                                     }
-                                    .foregroundColor(isToday(date: day) ? .white : .black)
+                                    .foregroundColor(isToday(date: day) ? .black : .customBlue)
                                     .frame(width: 45, height: 90)
-                                    .background(
-                                        ZStack{
-                                            if isToday(date: day){
-                                                Capsule()
-                                                    .fill(.black)
-                                                    .matchedGeometryEffect(id: "CURRENTDAY", in: animation)
-                                            }
-                                        }
-                                    )
+//                                    .background(
+//                                        ZStack{
+//                                            if isToday(date: day){
+//                                                Capsule()
+//                                                    .fill(.black)
+//                                                    .matchedGeometryEffect(id: "CURRENTDAY", in: animation)
+//                                            }
+//                                        }
+//                                    )
                                     .contentShape(Capsule())
                                     .onTapGesture {
                                         currentDay = day
@@ -221,7 +221,7 @@ struct DAppointments: View {
                 .padding()
                 .hLeading()
                 .background(
-                    Color.black
+                    Color.customBlue
                         .cornerRadius(25)
                 )
             }
@@ -263,6 +263,12 @@ struct DAppointments: View {
                 
                 NavigationLink(destination: DLeaveAppView(DocID: doctor?.employeeID ?? "")) {
                     Text("Leave")
+                        .fontWeight(.bold)
+                        .foregroundColor(.white)
+                        .padding(.vertical, 8)
+                        .padding(.horizontal, 30)
+                        .background(Color.customBlue)
+                        .cornerRadius(11)
                 }
             }
             .padding()

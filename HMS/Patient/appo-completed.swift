@@ -74,6 +74,7 @@ struct CompletedAppointmentView: View {
             }
                 .padding()
                 .background(Color.white)
+                .frame(width: 350,height: 200)
                 .cornerRadius(8)
                 .shadow(radius: 4)
                 .padding(.bottom)

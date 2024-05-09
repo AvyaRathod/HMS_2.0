@@ -78,9 +78,10 @@ struct AddPrescriptionForm: View {
                             }
                             .fontWeight(.bold)
                             .padding()
-                            .foregroundColor(.primary)
-                            .cornerRadius(3.0)
+                            .foregroundColor(.white)
+                            .cornerRadius(11)
                             .frame(width: 900 , height: 40)
+                            .background(Color.customBlue)
                             Spacer() // Add another spacer to center the button
                         NavigationLink(destination: Doc(),isActive:$formState){
                             EmptyView()
