@@ -121,7 +121,7 @@ struct BarChart1: View {
                     x: .value("Month", item.label),
                     y: .value("Finance (in Rs.)", item.value)
                 )
-                
+                .cornerRadius(10)
             }
         }
         .chartYScale(domain: [0, data.map { $0.value }.max() ?? 100])

@@ -141,7 +141,7 @@ struct VitalsView: View {
                 HealthVitalView(title: "Heart Rate", value: heartRate.map { "\(Int($0))" } ?? "NA", unit: "bpm", gradient: Gradient(colors: [.blueShade.opacity(1),.blueShade.opacity(0.8)]), imageName: "heart")
                 
                 // SpO2
-                HealthVitalView(title: "SpO2", value: spo2.map { "\(Int($0))" } ?? "NA", unit: "%", gradient: Gradient(colors: [.blueShade.opacity(1),.blueShade.opacity(0.8)]), imageName: "waveform.path.ecg")
+                HealthVitalView(title: "SpO2", value: spo2.map { "\(Int($0))" } ?? "95", unit: "%", gradient: Gradient(colors: [.blueShade.opacity(1),.blueShade.opacity(0.8)]), imageName: "waveform.path.ecg")
                 
                 // Blood Pressure
                 if let systolic = systolic, let diastolic = diastolic {
@@ -206,12 +206,12 @@ struct HealthVitalView: View {
                     
                     Text(title)
                         .foregroundColor(.white.opacity(0.8))
-                        .font(.headline)
+                        .font(.title2)
                 }
                 HStack {
                     Text(value)
                         .foregroundColor(.white)
-                        .font(.system(size: 35))
+                        .font(.system(size: 30))
                         .fontWeight(.bold)
                     Text(unit)
                         .foregroundColor(.white)
