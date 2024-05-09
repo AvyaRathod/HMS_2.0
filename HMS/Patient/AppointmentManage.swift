@@ -77,7 +77,7 @@ struct AppointmentsView: View {
                 }
             }
 
-            Spacer()
+
         }
         .navigationTitle("Appointments")
         .onAppear {

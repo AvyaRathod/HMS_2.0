@@ -236,9 +236,10 @@ struct AppointmentCardView: View {
                                 } else {
                                     Rectangle()
                                         .fill(Color.white)
-                                        .frame(width: 100, height: 130)
+                                        .frame(width: 300, height: 130)
                                         .cornerRadius(30)
                                         .padding(.leading, 60)
+                                        .frame(minWidth: 300,minHeight: 150)
                                 }
                 VStack(alignment: .leading) {
                     Text(doctorName)

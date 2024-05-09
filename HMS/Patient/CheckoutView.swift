@@ -81,7 +81,7 @@ struct CheckoutView: View {
                                 Text("Price")
                                     .font(.title2)
                                 Spacer()
-                                Text("1000")
+                                Text("$1000")
                                     .font(.title2)
                                     .fontWeight(.bold)
                             }
