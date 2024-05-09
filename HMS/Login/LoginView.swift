@@ -21,7 +21,7 @@ struct LoginView: View {
             ZStack {
                 Color.white.ignoresSafeArea()
                 VStack {
-                    Text("Welcome Back !").font(.largeTitle).fontWeight(.bold).padding(.bottom,42)
+                    Text("Welcome Back !").font(.largeTitle).fontWeight(.bold).padding(.bottom,42).foregroundColor(.customBlue)
                     VStack(spacing:16.0){
                         InputFieldView(data: $username, title: usernameTitle).autocorrectionDisabled()
                         ZStack {
@@ -30,13 +30,13 @@ struct LoginView: View {
                                 .frame(width: 360, height: 52)
                                 .overlay(
                                     RoundedRectangle(cornerSize: CGSize(width: 4, height: 4))
-                                        .stroke(Color.gray, lineWidth: 1)
+                                        .stroke(Color.customBlue, lineWidth: 1)
                                 )
                             HStack {
                                 Text("Password")
                                     .font(.headline)
                                     .fontWeight(.medium)
-                                    .foregroundColor(Color.black)
+                                    .foregroundColor(Color.customBlue)
                                     .multilineTextAlignment(.leading)
                                     .padding(.bottom, 2)
                                     .background(Color(Color.white))
@@ -56,8 +56,8 @@ struct LoginView: View {
                             .frame(width: 300)
                             .padding()
                             .foregroundColor(.white)
-                            .background(Color.black)
-                            .cornerRadius(40)
+                            .background(Color.customBlue)
+                            .cornerRadius(11)
                     }
                     
                     HStack {
@@ -102,12 +102,12 @@ struct LoginView: View {
                             .frame(width:300)
                             .padding()
                             .foregroundColor(.white)
-                            .background(Color(Color.black))
-                            .cornerRadius(40)
+                            .background(Color(Color.customBlue))
+                            .cornerRadius(11)
                     }.padding()
                     
                     
-                    Text(" or sign in with").font(.title3)
+                    Text(" or sign in with").font(.title2)
                     
                     
                     HStack{

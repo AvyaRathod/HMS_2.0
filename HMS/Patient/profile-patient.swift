@@ -14,29 +14,43 @@ struct PatientProfileView: View {
     @State private var patient = PatientModel()
 
     var body: some View {
-        NavigationView {
-            VStack {
-                ProfileHeaderView(patient: patient)
+    
+            NavigationView {
                 
-                SectionView(icon: Image("reportIcon"), title: "View Records", subtitle: "")
-                
-                Spacer() // Add spacer to push logout button to the bottom
-                
-//                LogoutButton(showAlert: $showAlert)
-                LogoutView()
+                VStack {            
+                    ProfileHeaderView(patient: patient)
+                    Spacer()
+                    
+                    
+                    
+                    NavigationLink(destination: HealthRecordAdd()) {
+                        Text("View Records")
+                            .padding()
+                            .frame(maxWidth: .infinity)
+                            .background(Color.customBlue)
+                            .foregroundColor(.white)
+                            .cornerRadius(11)
+                            .padding(.horizontal, 40)
+                    }
+                    
+                    Spacer() // Add spacer to push logout button to the bottom
+                    
+                    //                LogoutButton(showAlert: $showAlert)
+                    LogoutView()
+                }
+                .padding() // Add padding to the VStack
+                .background(Color(.systemGroupedBackground)) // Set background color
+                .navigationBarTitle("My Account")
+                .onAppear {
+                    fetchPatientData()
+                }
+                .alert(isPresented: $showAlert) {
+                    Alert(title: Text("Logout"), message: Text("Are you sure you want to logout?"), primaryButton: .default(Text("Yes")) {
+                        logout()
+                    }, secondaryButton: .cancel())
+                }
             }
-            .padding() // Add padding to the VStack
-            .background(Color(.systemGroupedBackground)) // Set background color
-            .navigationBarTitle("My Account")
-            .onAppear {
-                fetchPatientData()
-            }
-            .alert(isPresented: $showAlert) {
-                Alert(title: Text("Logout"), message: Text("Are you sure you want to logout?"), primaryButton: .default(Text("Yes")) {
-                    logout()
-                }, secondaryButton: .cancel())
-            }
-        }
+        
     }
     
     func fetchPatientData() {
@@ -74,6 +88,8 @@ struct PatientProfileView: View {
 
 struct ProfileHeaderView: View {
     var patient: PatientModel
+    
+    @State private var showEditSheet: Bool = false
 
     var body: some View {
         VStack(alignment: .leading) {
@@ -121,9 +137,14 @@ struct ProfileHeaderView: View {
                         .font(.title2)
                         .fontWeight(.bold)
                     Spacer()
+                    Button {
+                        showEditSheet.toggle()
+                    } label: {
                         Image(systemName: "pencil")
                         .foregroundColor(.black)
                         .padding()
+                    }
+                        
                 }
                 if let email = patient.email {
                     Text("Email: \(email)")
@@ -145,6 +166,11 @@ struct ProfileHeaderView: View {
             
         }
         .padding(.vertical) // Add vertical padding
+
+        .sheet(isPresented: $showEditSheet) {
+            editPatientDetails(patientData: patient, showEditSheet: $showEditSheet)
+        }
+
     }
 }
 
@@ -208,9 +234,9 @@ struct LogoutButton: View {
             Text("Logout")
                 .padding()
                 .frame(maxWidth: .infinity)
-                .background(Color.customBlue)
+                .background(Color.red)
                 .foregroundColor(.white)
-                .cornerRadius(10)
+                .cornerRadius(11)
         }
         .padding(.horizontal) // Add horizontal padding
         .padding(.bottom, 20) // Add bottom padding

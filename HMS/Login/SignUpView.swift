@@ -25,6 +25,7 @@ struct SignUpView: View {
         NavigationStack {
             VStack {
                 Text("Create Account")
+                    .foregroundColor(.customBlue)
                     .font(.largeTitle)
                     .padding(.bottom)
                     .bold()
@@ -41,13 +42,13 @@ struct SignUpView: View {
                         .frame(width: 360, height: 52)
                         .overlay(
                             RoundedRectangle(cornerSize: CGSize(width: 4, height: 4))
-                                .stroke(Color.gray, lineWidth: 1)
+                                .stroke(Color.customBlue, lineWidth: 1)
                         )
                     HStack {
                         Text("Password")
                             .font(.headline)
                             .fontWeight(.medium)
-                            .foregroundColor(Color.black)
+                            .foregroundColor(Color.customBlue)
                             .multilineTextAlignment(.leading)
                             .padding(.bottom, 2)
                             .background(Color(Color.white))
@@ -63,7 +64,7 @@ struct SignUpView: View {
                         .frame(width: 360, height: 52)
                         .overlay(
                             RoundedRectangle(cornerSize: CGSize(width: 4, height: 4))
-                                .stroke(Color.gray, lineWidth: 1)
+                                .stroke(Color.customBlue, lineWidth: 1)
                         )
                     HStack {
                         Text("Confirm Password")
@@ -86,7 +87,7 @@ struct SignUpView: View {
                             .frame(width: 300, height: 50)
                             .foregroundColor(.white)
                             .background(Color.customBlue)
-                            .cornerRadius(40)
+                            .cornerRadius(11)
                     }
                     .disabled(!isFormValid)
                     .alert(isPresented: $showAlert) {
@@ -102,7 +103,7 @@ struct SignUpView: View {
                 HStack {
                     Text("Already have an account?")
                     NavigationLink("Log In", destination: LoginView())
-                        .foregroundColor(.customBlue)
+                        .foregroundColor(.blue)
                         .underline()
                 }
             }

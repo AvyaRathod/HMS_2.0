@@ -21,13 +21,14 @@ struct Doc: View {
                     Image(systemName: "calendar")
                     Text("Events")
                 }
-            DoctorProfile(doctor: DoctorDetails(name: "Dr. John Smith", specialisation: "Cardiologist", employeeID: "DOC123", email: "johnsmith@example.com", contact: "555-1234"))
+            DoctorAccountView()
                 .tabItem {
                     Image(systemName: "person")
                     Text("Profile")
                 }
             
         }
+        .navigationBarBackButtonHidden()
     }
 }
 

@@ -3,6 +3,7 @@ import Firebase
 import FirebaseAuth
 
 struct AddPrescriptionForm: View {
+    @EnvironmentObject var userTypeManager: UserTypeManager
     
     @State private var patientId = ""
     @State private var patientStatus = ""
@@ -69,17 +70,18 @@ struct AddPrescriptionForm: View {
                 
                 Section {
                     HStack {
-                        Spacer() // Add spacer to push the button to the center
-                        Button("Add Prescription") {
-                            addPrescription()
+                        Spacer()
+                        
+                            Button("Add Prescription") {
+                                addPrescription()
+                            }
+                            .fontWeight(.bold)
+                            .padding()
+                            .foregroundColor(.primary)
+                            .cornerRadius(3.0)
+                            .frame(width: 900 , height: 40)
+                            Spacer() // Add another spacer to center the button
                         }
-                        .fontWeight(.bold)
-                        .padding()
-                        .foregroundColor(.primary)
-                        .cornerRadius(3.0)
-                        .frame(width: 900 , height: 40)
-                        Spacer() // Add another spacer to center the button
-                    }
                 }
             }
             .navigationTitle("Prescription")
@@ -165,6 +167,19 @@ struct AddPrescriptionForm: View {
         }
     }
 
+    func addToCompleteAppointment() {
+        // Update the appointment status to mark it as complete
+        let db = Firestore.firestore()
+        let appointmentRef = db.collection("appointments").document(appointmentID) // Assuming "appointments" is your collection name
+        
+        appointmentRef.updateData(["isComplete": true]) { error in
+            if let error = error {
+                print("Error updating appointment status: \(error)")
+            } else {
+                print("Appointment marked as complete.")
+            }
+        }
+    }
 
 
     func addPrescription() {
@@ -189,7 +204,7 @@ struct AddPrescriptionForm: View {
                 "doctorId": currentUserID,
                 "patentId": patientId,
                 "appointmentID": appointmentID,
-                "prescription": "",
+                "prescription": prescription,
                 "patientStatus": patientStatus,
                 "description": description,
                 "isAdmitted": isAdmitted,
@@ -207,6 +222,7 @@ struct AddPrescriptionForm: View {
 
         addPatientRecord(patientId: patientId, doctorId: currentUserID, prescriptionData: prescriptionData)
         admitPatient(isAdmitted: isAdmitted)
+        addToCompleteAppointment()
     }
     
 }
