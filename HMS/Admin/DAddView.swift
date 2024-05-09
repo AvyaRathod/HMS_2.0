@@ -20,6 +20,7 @@ struct DAddView: View {
     @State private var ddepartment: String = ""
     @State private var dpass: String = ""
     @State private var dspecialisationIndex = 0
+    @State private var ddepartmentIndex = 0
     @State private var dcontact: String = ""
     @State private var dexperience: String = "1"
     @State private var ddegree: String = ""
@@ -37,10 +38,13 @@ struct DAddView: View {
     
     let specializations: [DoctorModel.Specialization] = [
         .Cardiologist, .Orthopedic, .Endocrinologist,
-        .Gastroenterology, .Hematologist, .Neurologist,
+        .Gastroenterologist, .Hematologist, .Neurologist,
         .Oncologist, .Orthopedist, .Pediatrician,
         .Psychiatrist, .Pulmonologist, .Rheumatologist,
         .Urologist, .Ophthalmologist, .Gynecologist
+    ]
+    let departments: [String] = [
+        "Cardiology","Neurology","Oncology","Orthopedics","Endocrinilogy","Gastroenterology","Hematology","Pediatrics","Psychiatry","Pulmonology","Rheumatology","Urology","Ophthamology"
     ]
     
 
@@ -88,7 +92,40 @@ struct DAddView: View {
                 InputFieldView(data: $dname, title: "Name")
                 InputFieldView(data: $demp, title: "Employee Id")
                 InputFieldView(data: $demail, title: "Email")
-                InputFieldView(data: $ddepartment, title: "Department")
+                
+                
+                ZStack {
+                    Picker("Department", selection: $ddepartmentIndex) {
+                        ForEach(0..<departments.count) { index in
+                            Text(departments[index])
+                        }
+                    }
+                    .onChange(of: ddepartmentIndex) { newValue in
+                        ddepartment = departments[newValue]
+                    }
+                    .accentColor(.black)
+                    .pickerStyle(DefaultPickerStyle())
+                    .frame(width: 360, height: 52) // Set frame size to match InputFieldView
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 4)
+                            .stroke(Color.gray, lineWidth: 1)
+                    )
+                    HStack {
+                        Text("Department")
+                            .font(.headline)
+                            .fontWeight(.medium)
+                            .foregroundColor(Color.black)
+                            .multilineTextAlignment(.leading)
+                            .padding(.bottom, 4)
+                            .background(Color.white)
+                        Spacer()
+                    }
+                    .padding(.leading, 18)
+                    .offset(y: -25)
+                }
+                .padding(4)
+                
+                
                 InputFieldView(data: $dpass, title: "Set Password")
                 
                 ZStack {

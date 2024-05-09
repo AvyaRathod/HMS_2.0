@@ -16,7 +16,7 @@ struct DoctorProfileView: View {
             .background(
                 GeometryReader { geometry in
                     LinearGradient(
-                        gradient: Gradient(colors: [Color.customBlue.opacity(0.5), Color.customBlue.opacity(1)]),
+                        gradient: Gradient(colors: [Color.customBlue.opacity(0.1), Color.customBlue.opacity(1)]),
                                            startPoint: .top,
                                            endPoint: .bottom
                                        )
@@ -43,12 +43,20 @@ struct ProfileHeader: View {
         VStack {
             ZStack(alignment: .bottomTrailing) {
                 Spacer()
-                Image("profilePic")
-                    .resizable()
-                    .scaledToFill()
-                    .frame(width: 150, height: 150)
-                    .clipShape(Circle())
-                    .overlay(Circle().stroke(Color.white, lineWidth: 4))
+                if let url = URL(string: doctor.image) {
+                    AsyncImage(url: url) { image in
+                        image.resizable().scaledToFill()
+                            .frame(width: 150, height: 150)
+                            .clipShape(Circle())
+                            .overlay(Circle().stroke(Color.white, lineWidth: 4))
+                    } placeholder: {
+                        ProgressView()
+                    }
+                    .aspectRatio(contentMode: .fill)
+                    .frame(height: 150)
+                    .clipped()
+                    .cornerRadius(10)
+                }
             }
             Text(doctor.name)
                 .font(.title)
@@ -98,7 +106,7 @@ struct BadgeView: View {
         
         
         default:
-            departmentImage = Image(systemName: "questionmark")
+            departmentImage = Image(systemName: "building.2")
         }
         
         return HStack(alignment: .top, spacing: 20) {
