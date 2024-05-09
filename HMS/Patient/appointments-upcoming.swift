@@ -41,25 +41,20 @@ struct BookingView: View {
                 }
             }
             
-            Rectangle()
-                .fill(Color.blue)
-                .frame(width: 100, height: 50)
-                .cornerRadius(8)
-                .overlay(
+            
                     Button(action: {
-                        // Cancel action
                     }) {
                         HStack {
-                          //  Image(systemName: "xmark")
                             Text("Cancel")
                                 .foregroundColor(.white)
+                                .background(Color.customBlue)
                         }
                         .padding()
                     }
-                )
+                
         }
         .padding()
-        .background(Color.white)
+//        .background(Color.white)
         .cornerRadius(8)
         .shadow(radius: 4)
     }

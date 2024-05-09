@@ -45,7 +45,7 @@ struct Patient: View {
             .navigationBarBackButtonHidden(true)
             
             .onAppear {
-                UITabBar.appearance().barTintColor = UIColor.white // Set tab bar color
+                UITabBar.appearance().tintColor.customMirror // Set tab bar color
             }
 //        }
 //        .navigationBarBackButtonHidden(true)

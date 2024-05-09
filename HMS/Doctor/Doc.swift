@@ -28,7 +28,12 @@ struct Doc: View {
                 }
             
         }
-        .navigationBarBackButtonHidden()
+        .navigationBarHidden(true) // Hide the navigation bar
+        .navigationBarBackButtonHidden(true)
+        
+        .onAppear {
+            UITabBar.appearance().tintColor.customMirror // Set tab bar color
+        }
     }
 }
 

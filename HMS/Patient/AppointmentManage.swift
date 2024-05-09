@@ -149,7 +149,7 @@ struct AppointmentView: View {
         }
         .padding()
         .background(Color.white)
-        .cornerRadius(8)
+        .cornerRadius(11)
         .shadow(radius: 4)
     }
 }

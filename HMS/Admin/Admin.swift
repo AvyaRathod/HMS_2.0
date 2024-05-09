@@ -42,6 +42,12 @@ struct Admin: View {
                 .tabItem { Image(systemName: "person.3.fill")
                     Text("Manage Admissions") }
         }
+        .navigationBarHidden(true) // Hide the navigation bar
+        .navigationBarBackButtonHidden(true)
+        
+        .onAppear {
+            UITabBar.appearance().tintColor.customMirror // Set tab bar color
+        }
     }
 }
 
