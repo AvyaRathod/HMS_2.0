@@ -225,27 +225,25 @@ struct DAppointments: View {
         .hLeading()
     }
     
-    func HeaderView() -> some View{
-        HStack(spacing: 10){
-            VStack(alignment: .leading, spacing: 10){
+    func HeaderView() -> some View {
+            HStack(spacing: 10) {
+                VStack(alignment: .leading, spacing: 10) {
+                    Text(Date().formatted(date: .abbreviated, time: .omitted))
+                        .foregroundStyle(.gray)
+                    
+                    Text("Today")
+                        .font(.largeTitle.bold())
+                }
+                .hLeading()
                 
-                Text(Date().formatted(date: .abbreviated, time: .omitted))
-                    .foregroundStyle(.gray)
-                
-                Text("Today")
-                    .font(.largeTitle.bold())
-                
+                NavigationLink(destination: DLeaveAppView(DocID: doctor?.employeeID ?? "")) {
+                    Text("Leave")
+                }
             }
-            .hLeading()
-            NavigationLink(destination: DLeaveAppView()){
-                Text("Leave")
-            }
-
+            .padding()
+            .padding(.top, getSafeArea().top)
+            .background(Color.white)
         }
-        .padding()
-        .padding(.top, getSafeArea().top)
-        .background(Color.white)
-    }
     
     func filterTodayAppointments() {
         DispatchQueue.global(qos: .userInteractive).async {
