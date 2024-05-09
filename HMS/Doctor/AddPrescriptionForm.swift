@@ -145,7 +145,7 @@ struct AddPrescriptionForm: View {
             return
         }
 
-        let admissionData = Admit(id: UUID().uuidString, patientId: patientId, doctorId: doctorId, appointmentID: appointmentID)
+        let admissionData = Admit(id: UUID().uuidString, patientId: patientId, doctorId: userTypeManager.userID , appointmentID: appointmentID)
 
         let db = Firestore.firestore()
         let admitsCollection = db.collection("admits")
@@ -219,7 +219,7 @@ struct AddPrescriptionForm: View {
             id: UUID().uuidString
         ) else { return }
 
-        addPatientRecord(patientId: patientId, doctorId: userTypeManager.userID, prescriptionData: prescriptionData)
+        addPatientRecord(patientId: patientId, doctorId: userTypeManager.userID , prescriptionData: prescriptionData)
         admitPatient(isAdmitted: isAdmitted)
         addToCompleteAppointment()
     }
