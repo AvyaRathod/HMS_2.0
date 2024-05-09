@@ -126,7 +126,10 @@ struct ManagePatientDoc: View {
             let admitsRef = db.collection("admits")
             do {
                 // Find the admit document(s) to delete
-                let querySnapshot = try await admitsRef.whereField("patientId", isEqualTo: patientId).getDocuments()
+                let querySnapshot = try await admitsRef
+                    .whereField("patientId", isEqualTo: patientId)
+                    .whereField("doctorId", isEqualTo: userTypeManager.userID)
+                    .getDocuments()
                 for document in querySnapshot.documents {
                     try await admitsRef.document(document.documentID).delete()
                     print("Deleted admit document with ID: \(document.documentID)")
