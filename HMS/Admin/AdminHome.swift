@@ -11,7 +11,7 @@ struct AdminHomePage: View {
                             .fontWeight(.bold)
                             .padding(.leading)
                         
-                        NavigationLink(destination: AdminProfile(admin: AdminDetails(name: "Admin Name", email: "admin@example.com", contact: "123-456-7890"))) {
+                        NavigationLink(destination: AdminProfile(admin: AdminDetails(name: "Admin Name", email: "admin@admin.com", contact: "123-456-7890"))) {
                             Image(systemName: "person.circle")
                                 .font(.title)
                         }

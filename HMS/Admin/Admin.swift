@@ -40,7 +40,7 @@ struct Admin: View {
             
             ManagePatient()
                 .tabItem { Image(systemName: "person.3.fill")
-                    Text("Manage Admissions") }
+                    Text("Admissions") }
         }
         .navigationBarHidden(true) // Hide the navigation bar
         .navigationBarBackButtonHidden(true)
