@@ -192,16 +192,15 @@ struct AddPrescriptionForm: View {
             )
         }
         
-        guard let currentUserID = viewModel.currentUser?.uid else {
-            print("Current user ID not available.")
-            return
-        }
-        
+//        guard let currentUserID = userTypeManager.userID else {
+//            print("Current user ID not available.")
+//            return
+//        }
         
         
         guard let prescriptionData = PrescriptionModel(
             dictionary: [
-                "doctorId": currentUserID,
+                "doctorId": userTypeManager.userID,
                 "patentId": patientId,
                 "appointmentID": appointmentID,
                 "prescription": prescription,
@@ -220,7 +219,7 @@ struct AddPrescriptionForm: View {
             id: UUID().uuidString
         ) else { return }
 
-        addPatientRecord(patientId: patientId, doctorId: currentUserID, prescriptionData: prescriptionData)
+        addPatientRecord(patientId: patientId, doctorId: userTypeManager.userID, prescriptionData: prescriptionData)
         admitPatient(isAdmitted: isAdmitted)
         addToCompleteAppointment()
     }
