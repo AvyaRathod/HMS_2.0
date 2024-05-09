@@ -19,10 +19,7 @@ struct LogoutView: View {
                 .background(Color.red)
                 .foregroundColor(.white)
                 .cornerRadius(10)
-                .overlay(
-                    RoundedRectangle(cornerRadius: 10)
-                        .stroke(Color.red, lineWidth: 2)
-                )
+                
                 .padding(.horizontal, 40) // Add padding to increase the button width
         }
     }
