@@ -104,10 +104,10 @@ struct AppointmentsView: View {
                             dateFormatter.dateFormat = "HH:mm"
                             let time = dateFormatter.date(from: appointment.timeSlot)!
                             let appointmentDateTime = Calendar.current.date(bySettingHour: Calendar.current.component(.hour, from: time), minute: Calendar.current.component(.minute, from: time), second: 0, of: appointment.date)!
-                            if appointmentDateTime < now {
+                            if appointment.isComplete {
                                 completedAppointments.append(appointment)
                             } else {
-                                upcomingAppointments.append(appointment)
+                                    upcomingAppointments.append(appointment)
                             }
                             fetchedAppointments.append(appointment)
                         }

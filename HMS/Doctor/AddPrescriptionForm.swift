@@ -165,6 +165,19 @@ struct AddPrescriptionForm: View {
         }
     }
 
+    func addToCompleteAppointment() {
+        // Update the appointment status to mark it as complete
+        let db = Firestore.firestore()
+        let appointmentRef = db.collection("appointments").document(appointmentID) // Assuming "appointments" is your collection name
+        
+        appointmentRef.updateData(["isComplete": true]) { error in
+            if let error = error {
+                print("Error updating appointment status: \(error)")
+            } else {
+                print("Appointment marked as complete.")
+            }
+        }
+    }
 
 
     func addPrescription() {
@@ -189,7 +202,7 @@ struct AddPrescriptionForm: View {
                 "doctorId": currentUserID,
                 "patentId": patientId,
                 "appointmentID": appointmentID,
-                "prescription": "",
+                "prescription": prescription,
                 "patientStatus": patientStatus,
                 "description": description,
                 "isAdmitted": isAdmitted,
@@ -207,6 +220,7 @@ struct AddPrescriptionForm: View {
 
         addPatientRecord(patientId: patientId, doctorId: currentUserID, prescriptionData: prescriptionData)
         admitPatient(isAdmitted: isAdmitted)
+        addToCompleteAppointment()
     }
     
 }
