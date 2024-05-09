@@ -79,7 +79,7 @@ struct AdminProfile: View {
 
 struct AdminProfile_Previews: PreviewProvider {
     static var previews: some View {
-        let admin = AdminDetails(name: "Admin Name", email: "admin@example.com", contact: "123-456-7890")
+        let admin = AdminDetails(name: "Admin", email: "admin@admin.com", contact: "123-456-7890")
         return AdminProfile(admin: admin)
     }
 }

@@ -80,7 +80,6 @@
 		F514B40F2BE100680003B731 /* imagepicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = F514B40E2BE100680003B731 /* imagepicker.swift */; };
 		F5318A4A2BDFD94A00469110 /* health-events-patient.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5318A492BDFD94A00469110 /* health-events-patient.swift */; };
 		F534A69A2BECA35400B79C5F /* gview.swift in Sources */ = {isa = PBXBuildFile; fileRef = F534A6992BECA35400B79C5F /* gview.swift */; };
-		F534A69C2BECCE6E00B79C5F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F534A69B2BECCE6E00B79C5F /* GoogleService-Info.plist */; };
 		F534A69E2BECEF5300B79C5F /* FinView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F534A69D2BECEF5300B79C5F /* FinView.swift */; };
 		F534A6A02BECF25E00B79C5F /* emergraph.swift in Sources */ = {isa = PBXBuildFile; fileRef = F534A69F2BECF25E00B79C5F /* emergraph.swift */; };
 		F54E18452BEB3AE600D3A7A0 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = F54E18442BEB3AE600D3A7A0 /* FirebaseFirestore */; };
@@ -155,7 +154,6 @@
 		F514B40E2BE100680003B731 /* imagepicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = imagepicker.swift; sourceTree = "<group>"; };
 		F5318A492BDFD94A00469110 /* health-events-patient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "health-events-patient.swift"; sourceTree = "<group>"; };
 		F534A6992BECA35400B79C5F /* gview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = gview.swift; sourceTree = "<group>"; };
-		F534A69B2BECCE6E00B79C5F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		F534A69D2BECEF5300B79C5F /* FinView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinView.swift; sourceTree = "<group>"; };
 		F534A69F2BECF25E00B79C5F /* emergraph.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = emergraph.swift; sourceTree = "<group>"; };
 		F54E18462BEB3B2A00D3A7A0 /* pcount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = pcount.swift; sourceTree = "<group>"; };
@@ -225,6 +223,7 @@
 		41149EF72BD6349700E32FD7 /* Admin */ = {
 			isa = PBXGroup;
 			children = (
+				F534A69F2BECF25E00B79C5F /* emergraph.swift */,
 				8414566D2BD9109A00691A79 /* DoctorProfileView.swift */,
 				2723C01B2BDA18D90069BB71 /* StaffInfoView.swift */,
 				F57FCC452BE4C04E00D53B42 /* admin-profile.swift */,
@@ -298,7 +297,6 @@
 		413A15D42BD0F6330035CDAB = {
 			isa = PBXGroup;
 			children = (
-				F534A69F2BECF25E00B79C5F /* emergraph.swift */,
 				412405D82BD9053900C6482E /* .gitignore */,
 				413A15DF2BD0F6330035CDAB /* HMS */,
 				413A15DE2BD0F6330035CDAB /* Products */,

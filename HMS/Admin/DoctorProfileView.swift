@@ -43,12 +43,18 @@ struct ProfileHeader: View {
         VStack {
             ZStack(alignment: .bottomTrailing) {
                 Spacer()
-                Image("profilePic")
-                    .resizable()
-                    .scaledToFill()
-                    .frame(width: 150, height: 150)
-                    .clipShape(Circle())
-                    .overlay(Circle().stroke(Color.white, lineWidth: 4))
+                if let url = URL(string: doctor.image) {
+                    AsyncImage(url: url) { image in
+                        image.resizable().clipShape(Circle()).frame(width: 120, height: 120)
+                                            .foregroundColor(.blueShade)
+                    } placeholder: {
+                        ProgressView()
+                    }
+                    .aspectRatio(contentMode: .fill)
+                    .frame(height: 150)
+                    .clipped()
+                    .cornerRadius(11)
+                }
             }
             Text(doctor.name)
                 .font(.title)
@@ -122,7 +128,7 @@ struct BadgeView: View {
             .padding(.bottom)
             .background(Color.white)
             .cornerRadius(10)
-            .shadow(radius: 2)
+            .shadow(radius: 5)
             VStack {
                 ZStack{
                     Image("experienceIcon")

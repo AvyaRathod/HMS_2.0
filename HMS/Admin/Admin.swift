@@ -40,7 +40,7 @@ struct Admin: View {
             
             managePatient()
                 .tabItem { Image(systemName: "person.3.fill")
-                    Text("Manage Admissions") }
+                    Text("Admissions") }
         }
     }
 }
