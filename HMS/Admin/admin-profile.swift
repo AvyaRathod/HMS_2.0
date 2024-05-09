@@ -4,6 +4,7 @@
 //  Created by Protyush Kundu on 02/05/24.
 
 import SwiftUI
+import Firebase
 
 struct AdminDetails {
     var name: String
@@ -15,7 +16,8 @@ struct AdminDetails {
 struct AdminProfile: View {
    
     @State private var showAlert = false
-    
+    @EnvironmentObject var userTypeManager: UserTypeManager
+
     let admin: AdminDetails
     
     var body: some View {
@@ -58,7 +60,7 @@ struct AdminProfile: View {
             }
             
             // Logout Button
-            LogoutView()
+            LogoutButton(showAlert: $showAlert )
         }
         .alert(isPresented: $showAlert) {
             Alert(title: Text("Logout"), message: Text("Are you sure you want to logout?"), primaryButton: .default(Text("Yes")) {
@@ -68,12 +70,22 @@ struct AdminProfile: View {
     }
     
     func logout() {
-        // Perform logout action here
-        // For demonstration purposes, I'm just printing a message
-        print("Logging out...")
-        
-        // Redirect to login screen
-        // You should replace this with your actual navigation logic
+        do {
+            try Auth.auth().signOut() // Sign out from Firebase authentication
+
+            // Reset user defaults
+            UserDefaults.standard.removeObject(forKey: "userType")
+            UserDefaults.standard.removeObject(forKey: "userID")
+            
+            // Reset environment objects
+            userTypeManager.userType = .unknown
+            userTypeManager.userID = ""
+
+            
+        } catch let signOutError as NSError {
+            print("Error signing out: %@", signOutError)
+            // Handle errors if necessary, e.g., show an alert
+        }
     }
 }
 

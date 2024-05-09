@@ -83,8 +83,10 @@ struct DAppointments: View {
             .ignoresSafeArea(.container, edges: .top)
         }
         .onAppear{
-            fetchDoctor()
-            fetchCurrentWeek()
+            if !userTypeManager.userID.isEmpty {
+                fetchDoctor()
+                fetchCurrentWeek()
+            }
         }
     }
     

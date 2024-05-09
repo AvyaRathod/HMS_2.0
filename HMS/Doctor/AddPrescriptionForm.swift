@@ -21,7 +21,7 @@ struct AddPrescriptionForm: View {
     @State private var afterFood = false
     @State private var prescribedTest = ""
     @State private var isAdmitted = false // Added
-    
+    @State var formState = false
     @StateObject private var viewModel = PrescriptionViewModel()
     
     init(patientId: String, appointmentID: String) {
@@ -72,6 +72,7 @@ struct AddPrescriptionForm: View {
                     HStack {
                         Spacer()
                         
+                        
                             Button("Add Prescription") {
                                 addPrescription()
                             }
@@ -81,7 +82,10 @@ struct AddPrescriptionForm: View {
                             .cornerRadius(3.0)
                             .frame(width: 900 , height: 40)
                             Spacer() // Add another spacer to center the button
+                        NavigationLink(destination: Doc(),isActive:$formState){
+                            EmptyView()
                         }
+                    }
                 }
             }
             .navigationTitle("Prescription")

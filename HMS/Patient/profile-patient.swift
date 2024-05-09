@@ -33,10 +33,9 @@ struct PatientProfileView: View {
                             .padding(.horizontal, 40)
                     }
                     
-                    Spacer() // Add spacer to push logout button to the bottom
+                    Spacer()
                     
-                    //                LogoutButton(showAlert: $showAlert)
-                    LogoutView()
+                    LogoutButton(showAlert:$showAlert)
                 }
                 .padding() // Add padding to the VStack
                 .background(Color(.systemGroupedBackground)) // Set background color
@@ -225,11 +224,11 @@ struct SectionView: View {
 
 struct LogoutButton: View {
     @Binding var showAlert: Bool // Binding to show/hide the alert
-    
+    @EnvironmentObject var userTypeManager: UserTypeManager
+
     var body: some View {
         Button(action: {
             showAlert.toggle()
-            LogoutView()// Toggle the showAlert state to show the alert
         }) {
             Text("Logout")
                 .padding()
@@ -241,6 +240,7 @@ struct LogoutButton: View {
         .padding(.horizontal) // Add horizontal padding
         .padding(.bottom, 20) // Add bottom padding
             }
+    
 }
 
 struct PatientProfileView_Previews: PreviewProvider {
