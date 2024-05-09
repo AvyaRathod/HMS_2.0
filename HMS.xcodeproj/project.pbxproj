@@ -79,13 +79,11 @@
 		F514B40F2BE100680003B731 /* imagepicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = F514B40E2BE100680003B731 /* imagepicker.swift */; };
 		F5318A4A2BDFD94A00469110 /* health-events-patient.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5318A492BDFD94A00469110 /* health-events-patient.swift */; };
 		F534A69A2BECA35400B79C5F /* gview.swift in Sources */ = {isa = PBXBuildFile; fileRef = F534A6992BECA35400B79C5F /* gview.swift */; };
-		F534A69C2BECCE6E00B79C5F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F534A69B2BECCE6E00B79C5F /* GoogleService-Info.plist */; };
 		F54E18452BEB3AE600D3A7A0 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = F54E18442BEB3AE600D3A7A0 /* FirebaseFirestore */; };
 		F54E18472BEB3B2A00D3A7A0 /* pcount.swift in Sources */ = {isa = PBXBuildFile; fileRef = F54E18462BEB3B2A00D3A7A0 /* pcount.swift */; };
 		F54E184B2BEB4ECC00D3A7A0 /* earnings.swift in Sources */ = {isa = PBXBuildFile; fileRef = F54E184A2BEB4ECC00D3A7A0 /* earnings.swift */; };
 		F57FCC402BE4BFC800D53B42 /* profile-doctor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F57FCC3F2BE4BFC800D53B42 /* profile-doctor.swift */; };
 		F57FCC422BE4C00400D53B42 /* profile-patient.swift in Sources */ = {isa = PBXBuildFile; fileRef = F57FCC412BE4C00400D53B42 /* profile-patient.swift */; };
-		F57FCC442BE4C01900D53B42 /* editprofile-patient.swift in Sources */ = {isa = PBXBuildFile; fileRef = F57FCC432BE4C01900D53B42 /* editprofile-patient.swift */; };
 		F57FCC462BE4C04E00D53B42 /* admin-profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = F57FCC452BE4C04E00D53B42 /* admin-profile.swift */; };
 		F5A456262BD90AA00068A069 /* vitals.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5A456252BD90AA00068A069 /* vitals.swift */; };
 		F5A456622BD91B000068A069 /* appointments-upcoming.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5A456612BD91B000068A069 /* appointments-upcoming.swift */; };
@@ -119,7 +117,6 @@
 		2DAC00582BD78B8D0080098C /* PdetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PdetailView.swift; sourceTree = "<group>"; };
 		2DAC005A2BD78BCC0080098C /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
 		41136D432BEB73D000998C75 /* managePatient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = managePatient.swift; sourceTree = "<group>"; };
-		41136D452BECCC2F00998C75 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		41149EFD2BD63E9000E32FD7 /* AppointmentModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppointmentModel.swift; sourceTree = "<group>"; };
 		41149F012BD63EA200E32FD7 /* Patient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Patient.swift; sourceTree = "<group>"; };
 		41149F052BD63EAF00E32FD7 /* Doc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Doc.swift; sourceTree = "<group>"; };
@@ -153,12 +150,10 @@
 		F514B40E2BE100680003B731 /* imagepicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = imagepicker.swift; sourceTree = "<group>"; };
 		F5318A492BDFD94A00469110 /* health-events-patient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "health-events-patient.swift"; sourceTree = "<group>"; };
 		F534A6992BECA35400B79C5F /* gview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = gview.swift; sourceTree = "<group>"; };
-		F534A69B2BECCE6E00B79C5F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		F54E18462BEB3B2A00D3A7A0 /* pcount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = pcount.swift; sourceTree = "<group>"; };
 		F54E184A2BEB4ECC00D3A7A0 /* earnings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = earnings.swift; sourceTree = "<group>"; };
 		F57FCC3F2BE4BFC800D53B42 /* profile-doctor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "profile-doctor.swift"; sourceTree = "<group>"; };
 		F57FCC412BE4C00400D53B42 /* profile-patient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "profile-patient.swift"; sourceTree = "<group>"; };
-		F57FCC432BE4C01900D53B42 /* editprofile-patient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "editprofile-patient.swift"; sourceTree = "<group>"; };
 		F57FCC452BE4C04E00D53B42 /* admin-profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "admin-profile.swift"; sourceTree = "<group>"; };
 		F5A456252BD90AA00068A069 /* vitals.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = vitals.swift; sourceTree = "<group>"; };
 		F5A456272BD90AC80068A069 /* HMS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = HMS.entitlements; sourceTree = "<group>"; };
@@ -248,7 +243,6 @@
 				6B18905C2BE0EAB90067DC82 /* PrescriptionView.swift */,
 				41149F012BD63EA200E32FD7 /* Patient.swift */,
 				F57FCC412BE4C00400D53B42 /* profile-patient.swift */,
-				F57FCC432BE4C01900D53B42 /* editprofile-patient.swift */,
 				E46B50D72BD76D12007A57F5 /* SlotBookView.swift */,
 				F5318A492BDFD94A00469110 /* health-events-patient.swift */,
 				F5B406612BDF666600569CDF /* payment-confirm.swift */,
@@ -464,7 +458,6 @@
 				6BB048CE2BE364CA0053AA67 /* CheckoutView.swift in Sources */,
 				6B14B04F2BD6CCA9004F0B78 /* VitalsHeartView.swift in Sources */,
 				F514B40F2BE100680003B731 /* imagepicker.swift in Sources */,
-				F57FCC442BE4C01900D53B42 /* editprofile-patient.swift in Sources */,
 				168B85732BEB7414005C66D2 /* DocumentPicker.swift in Sources */,
 				413A15E12BD0F6330035CDAB /* HMSApp.swift in Sources */,
 				41149F062BD63EAF00E32FD7 /* Doc.swift in Sources */,

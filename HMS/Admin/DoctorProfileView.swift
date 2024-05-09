@@ -16,7 +16,7 @@ struct DoctorProfileView: View {
             .background(
                 GeometryReader { geometry in
                     LinearGradient(
-                        gradient: Gradient(colors: [Color.customBlue.opacity(0.1), Color.customBlue.opacity(1)]),
+                        gradient: Gradient(colors: [Color.customBlue.opacity(0.5), Color.customBlue.opacity(1)]),
                                            startPoint: .top,
                                            endPoint: .bottom
                                        )
@@ -43,20 +43,12 @@ struct ProfileHeader: View {
         VStack {
             ZStack(alignment: .bottomTrailing) {
                 Spacer()
-                if let url = URL(string: doctor.image) {
-                    AsyncImage(url: url) { image in
-                        image.resizable().scaledToFill()
-                            .frame(width: 150, height: 150)
-                            .clipShape(Circle())
-                            .overlay(Circle().stroke(Color.white, lineWidth: 4))
-                    } placeholder: {
-                        ProgressView()
-                    }
-                    .aspectRatio(contentMode: .fill)
-                    .frame(height: 150)
-                    .clipped()
-                    .cornerRadius(10)
-                }
+                Image("profilePic")
+                    .resizable()
+                    .scaledToFill()
+                    .frame(width: 150, height: 150)
+                    .clipShape(Circle())
+                    .overlay(Circle().stroke(Color.white, lineWidth: 4))
             }
             Text(doctor.name)
                 .font(.title)
@@ -106,7 +98,7 @@ struct BadgeView: View {
         
         
         default:
-            departmentImage = Image(systemName: "building.2")
+            departmentImage = Image(systemName: "questionmark")
         }
         
         return HStack(alignment: .top, spacing: 20) {
@@ -117,7 +109,7 @@ struct BadgeView: View {
                         .frame(width: 50, height: 50)
                 }
                 .padding()
-                .background(Color.blue.opacity(0.1))
+                
                 Text(doctor.department)
                     .font(.system(size: 20, weight: .bold))
                     .foregroundColor(.customBlue)
@@ -139,7 +131,7 @@ struct BadgeView: View {
                         .frame(width: 50, height: 50)
                 }
                 .padding()
-                .background(Color.blue.opacity(0.1))
+                
                 Text(doctor.experience)
                     .font(.system(size: 20, weight: .bold))
                     .foregroundColor(.customBlue)
@@ -230,7 +222,5 @@ struct DoctorProfileView_Previews: PreviewProvider {
         return DoctorProfileView(doctor: sampleDoctor)
     }
 }
-
-
 
 
