@@ -35,6 +35,7 @@ struct PdetailView: View {
                         .font(.largeTitle)
                         .padding(.bottom)
                         .bold()
+                        .foregroundColor(.customBlue)
                     
                     ZStack {
                         Picker("Gender", selection: $patientGenderIndex) {
@@ -43,18 +44,18 @@ struct PdetailView: View {
                                 
                             }
                         }
-                        .accentColor(.black)
+                        .accentColor(.customBlue)
                         .pickerStyle(DefaultPickerStyle())
                         .frame(width: 360, height: 52) // Set frame size to match InputFieldView
                         .overlay(
                             RoundedRectangle(cornerRadius: 4)
-                                .stroke(Color.gray, lineWidth: 1)
+                                .stroke(Color.customBlue, lineWidth: 1)
                         )
                         HStack {
                             Text("Gender")
                                 .font(.headline)
                                 .fontWeight(.medium)
-                                .foregroundColor(Color.black)
+                                .foregroundColor(Color.customBlue)
                                 .multilineTextAlignment(.leading)
                                 .padding(.bottom, 4)
                                 .background(Color.white)
@@ -74,18 +75,18 @@ struct PdetailView: View {
                                 
                             }
                         }
-                        .accentColor(.black)
+                        .accentColor(.customBlue)
                         .pickerStyle(DefaultPickerStyle())
                         .frame(width: 360, height: 52) // Set frame size to match InputFieldView
                         .overlay(
-                            RoundedRectangle(cornerRadius: 4)
-                                .stroke(Color.gray, lineWidth: 1)
+                            RoundedRectangle(cornerRadius: 11)
+                                .stroke(Color.customBlue, lineWidth: 1)
                         )
                         HStack {
                             Text("Blood Group")
                                 .font(.headline)
                                 .fontWeight(.medium)
-                                .foregroundColor(Color.black)
+                                .foregroundColor(Color.customBlue)
                                 .multilineTextAlignment(.leading)
                                 .padding(.bottom, 4)
                                 .background(Color.white)
@@ -108,13 +109,13 @@ struct PdetailView: View {
                         .frame(width: 360, height: 52)
                         .overlay(
                             RoundedRectangle(cornerSize: CGSize(width: 4, height: 4))
-                                .stroke(Color.gray, lineWidth: 1)
+                                .stroke(Color.customBlue, lineWidth: 1)
                         )
                         HStack {
                             Text(title ?? "Height")
                                 .font(.headline)
                                 .fontWeight(.medium)
-                                .foregroundColor(Color.black)
+                                .foregroundColor(Color.customBlue)
                                 .multilineTextAlignment(.leading)
                                 .padding(.bottom,4)
                                 .background(Color(Color.white))
@@ -135,13 +136,13 @@ struct PdetailView: View {
                         .frame(width: 360, height: 52)
                         .overlay(
                             RoundedRectangle(cornerSize: CGSize(width: 4, height: 4))
-                                .stroke(Color.gray, lineWidth: 1)
+                                .stroke(Color.customBlue, lineWidth: 1)
                         )
                         HStack {
                             Text(title ?? "Weight")
                                 .font(.headline)
                                 .fontWeight(.medium)
-                                .foregroundColor(Color.black)
+                                .foregroundColor(Color.customBlue)
                                 .multilineTextAlignment(.leading)
                                 .padding(.bottom,4)
                                 .background(Color(Color.white))
@@ -164,8 +165,8 @@ struct PdetailView: View {
                             .font(.title3)
                             .frame(width: 300, height: 50)
                             .foregroundColor(.white)
-                            .background(Color.black)
-                            .cornerRadius(40)
+                            .background(Color.customBlue)
+                            .cornerRadius(11)
                     })
                 }.padding(.top,60)
                 
@@ -208,3 +209,7 @@ struct PdetailView: View {
 }
 
 
+//#Preview {
+//    PdetailView(patientData: PatientModel, userTypeManager: UserTypeManager, title: <#T##String?#>, gender: <#T##arg#>, height: <#T##arg#>, weight: <#T##arg#>, bloodGroup: <#T##arg#>, address: <#T##arg#>, emgContact: <#T##arg#>, patientGenderIndex: <#T##arg#>, patientBloodIndex: <#T##arg#>)
+//}
+//

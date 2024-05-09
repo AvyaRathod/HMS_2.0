@@ -113,7 +113,7 @@ struct DoctorCardView: View {
                     .aspectRatio(contentMode: .fill)
                     .frame(height: 150)
                     .clipped()
-                    .cornerRadius(10)
+                    .cornerRadius(11)
                 }
 
 //                Image(systemName: "person.fill")
@@ -128,14 +128,14 @@ struct DoctorCardView: View {
                         Text(doctor.name)
                             .font(.system(size: 20, weight: .bold))
                         Spacer()
-                        if showBookButton {
-                            Button(action: {
-                                isFavorite.toggle()
-                            }) {
-                                Image(systemName: isFavorite ? "heart.fill" : "heart")
-                                    .foregroundColor(isFavorite ? .red : .gray)
-                            }
-                        }
+//                        if showBookButton {
+//                            Button(action: {
+//                                isFavorite.toggle()
+//                            }) {
+//                                Image(systemName: isFavorite ? "heart.fill" : "heart")
+//                                    .foregroundColor(isFavorite ? .red : .gray)
+//                            }
+//                        }
                     }
                     
                     Text(doctor.specialisation)
