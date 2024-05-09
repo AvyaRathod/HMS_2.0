@@ -28,6 +28,7 @@ struct Doc: View {
                 }
             
         }
+        .navigationBarBackButtonHidden()
     }
 }
 

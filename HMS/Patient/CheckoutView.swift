@@ -234,16 +234,3 @@ struct PaymentMethodView: View {
         }
     }
 }
-
-
-
-
-
-//struct CheckoutView_Previews: PreviewProvider {
-//    
-//    static var previews: some View {
-//        NavigationView {
-//            CheckoutView(doctorName: "Dr. Kenny Adeola", selectedDate: "19 Nov, 2023", selectedSlot: "8:30 AM")
-//        }
-//    }
-//}
