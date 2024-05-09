@@ -21,6 +21,7 @@
 		168B85772BEB8A37005C66D2 /* DRecordsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 168B85762BEB8A37005C66D2 /* DRecordsView.swift */; };
 		2700B43B2BE102C70089F26D /* AddPrescriptionForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2700B43A2BE102C70089F26D /* AddPrescriptionForm.swift */; };
 		2700B43D2BE102E60089F26D /* PrescriptionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2700B43C2BE102E60089F26D /* PrescriptionModel.swift */; };
+		277BD2522BECDA230018A123 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 277BD2512BECDA230018A123 /* GoogleService-Info.plist */; };
 		2789DC4C2BEB8888003CA0AF /* AdmitModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2789DC4B2BEB8888003CA0AF /* AdmitModel.swift */; };
 		2D7D49E32BE0E2E000C84B9A /* DAppointments.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D7D49E22BE0E2E000C84B9A /* DAppointments.swift */; };
 		2D7D49F72BE8A9D000C84B9A /* AppointmentManage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D7D49F62BE8A9D000C84B9A /* AppointmentManage.swift */; };
@@ -108,6 +109,7 @@
 		2700B43A2BE102C70089F26D /* AddPrescriptionForm.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddPrescriptionForm.swift; sourceTree = "<group>"; };
 		2700B43C2BE102E60089F26D /* PrescriptionModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrescriptionModel.swift; sourceTree = "<group>"; };
 		2723C01B2BDA18D90069BB71 /* StaffInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaffInfoView.swift; sourceTree = "<group>"; };
+		277BD2512BECDA230018A123 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		2789DC4B2BEB8888003CA0AF /* AdmitModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdmitModel.swift; sourceTree = "<group>"; };
 		2D7D49E22BE0E2E000C84B9A /* DAppointments.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DAppointments.swift; sourceTree = "<group>"; };
 		2D7D49F62BE8A9D000C84B9A /* AppointmentManage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppointmentManage.swift; sourceTree = "<group>"; };
@@ -310,9 +312,8 @@
 		413A15DF2BD0F6330035CDAB /* HMS */ = {
 			isa = PBXGroup;
 			children = (
-				41136D452BECCC2F00998C75 /* GoogleService-Info.plist */,
+				277BD2512BECDA230018A123 /* GoogleService-Info.plist */,
 				F5A456272BD90AC80068A069 /* HMS.entitlements */,
-				F534A69B2BECCE6E00B79C5F /* GoogleService-Info.plist */,
 				41149EFA2BD634AD00E32FD7 /* Doctor */,
 				41149EF92BD634A700E32FD7 /* Login */,
 				41149EF82BD6349F00E32FD7 /* Patient */,
@@ -439,7 +440,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				412405D92BD9053A00C6482E /* .gitignore in Resources */,
-				F534A69C2BECCE6E00B79C5F /* GoogleService-Info.plist in Resources */,
+				277BD2522BECDA230018A123 /* GoogleService-Info.plist in Resources */,
 				413A15E82BD0F6340035CDAB /* Preview Assets.xcassets in Resources */,
 				413A15E52BD0F6340035CDAB /* Assets.xcassets in Resources */,
 			);
