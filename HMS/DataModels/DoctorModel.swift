@@ -21,6 +21,7 @@ struct DoctorModel: Hashable, Codable, Identifiable {
     var degree: String
     var cabinNumber: String
     
+    
     enum CodingKeys: String, CodingKey {
         case id
         case name
@@ -39,7 +40,7 @@ struct DoctorModel: Hashable, Codable, Identifiable {
         case Cardiologist = "Cardiologist"
         case Orthopedic = "Orthopedic"
         case Endocrinologist = "Endocrinologist"
-        case Gastroenterology = "Gastroenterology"
+        case Gastroenterologist = "Gastroenterologist"
         case Hematologist = "Hematologist"
         case Neurologist = "Neurologist"
         case Oncologist = "Oncologist"

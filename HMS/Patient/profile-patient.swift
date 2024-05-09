@@ -22,7 +22,8 @@ struct PatientProfileView: View {
                 
                 Spacer() // Add spacer to push logout button to the bottom
                 
-                LogoutButton(showAlert: $showAlert)
+//                LogoutButton(showAlert: $showAlert)
+                LogoutView()
             }
             .padding() // Add padding to the VStack
             .background(Color(.systemGroupedBackground)) // Set background color
@@ -201,7 +202,8 @@ struct LogoutButton: View {
     
     var body: some View {
         Button(action: {
-            showAlert.toggle() // Toggle the showAlert state to show the alert
+            showAlert.toggle()
+            LogoutView()// Toggle the showAlert state to show the alert
         }) {
             Text("Logout")
                 .padding()
