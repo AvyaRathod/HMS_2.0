@@ -69,7 +69,7 @@ struct SignUpView: View {
                         Text("Confirm Password")
                             .font(.headline)
                             .fontWeight(.medium)
-                            .foregroundColor(Color.black)
+                            .foregroundColor(Color.customBlue)
                             .multilineTextAlignment(.leading)
                             .padding(.bottom, 0)
                             .background(Color(Color.white))
@@ -85,7 +85,7 @@ struct SignUpView: View {
                             .font(.title3)
                             .frame(width: 300, height: 50)
                             .foregroundColor(.white)
-                            .background(Color.black)
+                            .background(Color.customBlue)
                             .cornerRadius(40)
                     }
                     .disabled(!isFormValid)
@@ -102,7 +102,7 @@ struct SignUpView: View {
                 HStack {
                     Text("Already have an account?")
                     NavigationLink("Log In", destination: LoginView())
-                        .foregroundColor(.blue)
+                        .foregroundColor(.customBlue)
                         .underline()
                 }
             }

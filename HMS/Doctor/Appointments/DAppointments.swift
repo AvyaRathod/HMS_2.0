@@ -191,7 +191,7 @@ struct DAppointments: View {
                             .padding(-3)
                     )
                 Rectangle()
-                    .fill(.black)
+                    .fill(.customBlue)
                     .frame(width: 3)
             }
             
@@ -332,23 +332,25 @@ extension View{
 struct AppointmentDetailsView: View {
   let appointment: AppointmentModel
     
-  var body: some View {
-    VStack(alignment: .leading, spacing: 20) {
-      Text(appointment.patientID)
-        .font(.title2.bold())
-
-      Text(appointment.reason)
-        .font(.title3)
-
-      Text(appointment.timeSlot)
-
-        NavigationLink("Add Prescription", destination:
-                        AddPrescriptionForm(patientId: appointment.patientID, appointmentID: appointment.id))
-      // Add more details as needed (e.g., location, attendees)
+    var body: some View {
+        VStack(alignment: .leading, spacing: 20) {
+            Text(appointment.patientID)
+                .font(.title2.bold())
+            
+            Text(appointment.reason)
+                .font(.title3)
+            
+            Text(appointment.timeSlot)
+            
+            NavigationLink("Add Prescription", destination:
+                            AddPrescriptionForm(patientId: appointment.patientID, appointmentID: appointment.id))
+            // Add more details as needed (e.g., location, attendees)
+        }
+        .padding()
+        //    .navigationTitle(appointment.patientName!) // Set navigation title using task title
+        
     }
-    .padding()
-//    .navigationTitle(appointment.patientName!) // Set navigation title using task title
-  }
+    
 }
 
 

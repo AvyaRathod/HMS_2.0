@@ -73,6 +73,7 @@
 		E43788722BDA4EC300EE6EDF /* PageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E43788712BDA4EC300EE6EDF /* PageModel.swift */; };
 		E43788742BDA4EDF00EE6EDF /* PageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E43788732BDA4EDF00EE6EDF /* PageView.swift */; };
 		E46B50D82BD76D12007A57F5 /* SlotBookView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E46B50D72BD76D12007A57F5 /* SlotBookView.swift */; };
+		E4A27E792BECCD520056EB44 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E4A27E782BECCD520056EB44 /* GoogleService-Info.plist */; };
 		F514B4092BE0E5600003B731 /* events-doctor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F514B4082BE0E5600003B731 /* events-doctor.swift */; };
 		F514B40B2BE0E81A0003B731 /* healthevents-admin.swift in Sources */ = {isa = PBXBuildFile; fileRef = F514B40A2BE0E81A0003B731 /* healthevents-admin.swift */; };
 		F514B40D2BE0EDFD0003B731 /* EventsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F514B40C2BE0EDFD0003B731 /* EventsModel.swift */; };
@@ -140,6 +141,7 @@
 		E43788712BDA4EC300EE6EDF /* PageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageModel.swift; sourceTree = "<group>"; };
 		E43788732BDA4EDF00EE6EDF /* PageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageView.swift; sourceTree = "<group>"; };
 		E46B50D72BD76D12007A57F5 /* SlotBookView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlotBookView.swift; sourceTree = "<group>"; };
+		E4A27E782BECCD520056EB44 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		F514B4082BE0E5600003B731 /* events-doctor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "events-doctor.swift"; sourceTree = "<group>"; };
 		F514B40A2BE0E81A0003B731 /* healthevents-admin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "healthevents-admin.swift"; sourceTree = "<group>"; };
 		F514B40C2BE0EDFD0003B731 /* EventsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsModel.swift; sourceTree = "<group>"; };
@@ -297,6 +299,7 @@
 			children = (
 				41136D452BECCC2F00998C75 /* GoogleService-Info.plist */,
 				F5A456272BD90AC80068A069 /* HMS.entitlements */,
+				E4A27E782BECCD520056EB44 /* GoogleService-Info.plist */,
 				41149EFA2BD634AD00E32FD7 /* Doctor */,
 				41149EF92BD634A700E32FD7 /* Login */,
 				41149EF82BD6349F00E32FD7 /* Patient */,
@@ -422,7 +425,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				412405D92BD9053A00C6482E /* .gitignore in Resources */,
-				41136D462BECCC2F00998C75 /* GoogleService-Info.plist in Resources */,
+				E4A27E792BECCD520056EB44 /* GoogleService-Info.plist in Resources */,
 				413A15E82BD0F6340035CDAB /* Preview Assets.xcassets in Resources */,
 				413A15E52BD0F6340035CDAB /* Assets.xcassets in Resources */,
 			);
