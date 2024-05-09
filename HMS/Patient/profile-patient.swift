@@ -18,7 +18,9 @@ struct PatientProfileView: View {
             VStack {
                 ProfileHeaderView(patient: patient)
                 
-                SectionView(icon: Image("reportIcon"), title: "View Records", subtitle: "")
+                NavigationLink("View Records", destination: {
+                    HealthRecordAdd()
+                })
                 
                 Spacer() // Add spacer to push logout button to the bottom
                 
@@ -152,9 +154,11 @@ struct ProfileHeaderView: View {
             
         }
         .padding(.vertical) // Add vertical padding
-//        .sheet(isPresented: $showEditSheet) {
-//            editPatientDetails(patientData: patient, showEditSheet: $showEditSheet)
-//        }
+
+        .sheet(isPresented: $showEditSheet) {
+            editPatientDetails(patientData: patient, showEditSheet: $showEditSheet)
+        }
+
     }
 }
 

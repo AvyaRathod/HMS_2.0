@@ -19,6 +19,7 @@
 		168B85712BEB7211005C66D2 /* RecordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 168B85702BEB7211005C66D2 /* RecordView.swift */; };
 		168B85732BEB7414005C66D2 /* DocumentPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 168B85722BEB7414005C66D2 /* DocumentPicker.swift */; };
 		168B85772BEB8A37005C66D2 /* DRecordsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 168B85762BEB8A37005C66D2 /* DRecordsView.swift */; };
+		168B857D2BECE8F7005C66D2 /* editPatientDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 168B857C2BECE8F7005C66D2 /* editPatientDetails.swift */; };
 		2700B43B2BE102C70089F26D /* AddPrescriptionForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2700B43A2BE102C70089F26D /* AddPrescriptionForm.swift */; };
 		2700B43D2BE102E60089F26D /* PrescriptionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2700B43C2BE102E60089F26D /* PrescriptionModel.swift */; };
 		277BD2522BECDA230018A123 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 277BD2512BECDA230018A123 /* GoogleService-Info.plist */; };
@@ -104,6 +105,7 @@
 		168B85702BEB7211005C66D2 /* RecordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordView.swift; sourceTree = "<group>"; };
 		168B85722BEB7414005C66D2 /* DocumentPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentPicker.swift; sourceTree = "<group>"; };
 		168B85762BEB8A37005C66D2 /* DRecordsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DRecordsView.swift; sourceTree = "<group>"; };
+		168B857C2BECE8F7005C66D2 /* editPatientDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = editPatientDetails.swift; sourceTree = "<group>"; };
 		2700B43A2BE102C70089F26D /* AddPrescriptionForm.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddPrescriptionForm.swift; sourceTree = "<group>"; };
 		2700B43C2BE102E60089F26D /* PrescriptionModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrescriptionModel.swift; sourceTree = "<group>"; };
 		2723C01B2BDA18D90069BB71 /* StaffInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaffInfoView.swift; sourceTree = "<group>"; };
@@ -255,6 +257,7 @@
 				6B5FFCCE2BD63F4C00224FC2 /* Patient Components */,
 				E424E7682BE36B7200811836 /* SosView.swift */,
 				168B85702BEB7211005C66D2 /* RecordView.swift */,
+				168B857C2BECE8F7005C66D2 /* editPatientDetails.swift */,
 			);
 			path = Patient;
 			sourceTree = "<group>";
@@ -498,6 +501,7 @@
 				2789DC4C2BEB8888003CA0AF /* AdmitModel.swift in Sources */,
 				1645716F2BD7B74A00855DDF /* PatientModel.swift in Sources */,
 				2D7D49E32BE0E2E000C84B9A /* DAppointments.swift in Sources */,
+				168B857D2BECE8F7005C66D2 /* editPatientDetails.swift in Sources */,
 				2DAC005B2BD78BCC0080098C /* SignUpView.swift in Sources */,
 				F514B40D2BE0EDFD0003B731 /* EventsModel.swift in Sources */,
 				2DAC00572BD78B6E0080098C /* phoneVerificationView.swift in Sources */,

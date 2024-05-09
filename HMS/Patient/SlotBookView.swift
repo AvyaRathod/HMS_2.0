@@ -58,6 +58,8 @@ struct SlotBookView: View {
     @EnvironmentObject var userTypeManager: UserTypeManager
     
 //    let appointments: AppointmentModel
+    @State private var reason: String = ""
+
     let doctor: DoctorModel
     let gridItems = Array(repeating: GridItem(.flexible()), count: 3)
     let times = ["9:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00"]
@@ -174,10 +176,10 @@ struct SlotBookView: View {
                             .shadow(radius: 5)
                             .frame(width: 360, height: 55)
                         
-//                        TextField("  reason", text: $appointments.reason)
-//                            .frame(height: 40)
-//                            .padding()
-//                            .cornerRadius(11)
+                        TextField("Enter reason...", text: $reason)
+                            .frame(height: 40)
+                            .padding(.leading, 25)
+                            .cornerRadius(11)
                     }
                     
                     
@@ -204,7 +206,7 @@ struct SlotBookView: View {
                     NavigationLink(destination: CheckoutView(doctorName: doctor.name,selectedDate: selectedDate.formatted(date: .numeric, time: .omitted), selectedSlot: selectedSlot ?? "",Bill: 1000,
                                                              DocID: doctor.employeeID,
                                                              PatID: userTypeManager.userID,
-                                                             reason: "Fever" ), isActive: $paymentConfirmationActive) {
+                                                             reason: reason ), isActive: $paymentConfirmationActive) {
                         EmptyView()
                     }
                                                              .hidden()
