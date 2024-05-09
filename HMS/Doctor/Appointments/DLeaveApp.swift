@@ -3,7 +3,7 @@ import Firebase
 
 struct DLeaveAppView: View {
     @EnvironmentObject var userTypeManager: UserTypeManager
-    
+    @State private var showAlert = false
     var DocID: String
     @State private var startDate = Date()
     @State private var endDate = Date()
@@ -12,12 +12,13 @@ struct DLeaveAppView: View {
     @State private var leaveSlots: [String] = [] // Initialize as empty
     let gridItems = Array(repeating: GridItem(.flexible()), count: 3)
     let times = ["9:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00"]
-
+   
     var body: some View {
+        NavigationStack{
         ScrollView {
             Text("Leave Application")
                 .font(.largeTitle)
-               
+            
             VStack {
                 ZStack {
                     RoundedRectangle(cornerRadius: 11)
@@ -112,6 +113,8 @@ struct DLeaveAppView: View {
                     } else {
                         createMultipleDayLeave()
                     }
+                    showAlert=true
+                    
                 }) {
                     Text("Submit")
                         .font(.title3.bold())
@@ -123,10 +126,26 @@ struct DLeaveAppView: View {
                 }
             }
             .padding()
+            
+            
         }.onAppear {
             print(DocID)
             fetchAppointments(for: startDate)
         }
+        .alert(isPresented: $showAlert) {
+            Alert(
+                title: Text("Leave Submitted!"),
+                message: Text("Leave submitted successfully"),
+                dismissButton: .default(
+                    Text("OK")
+                    
+                )
+            )
+        }
+    }
+        
+        
+        
     }
     
     func createOneDayLeave() {
@@ -271,7 +290,7 @@ struct LeaveButton: View {
     var bookedSlots: [String]
     var selectedDate: Date
     @Binding var selectedSlots: [String]
-    
+    @State private var showEditSheet: Bool = false
     let currentTime = Calendar.current.dateComponents([.hour, .minute], from: Date())
     
     var body: some View {

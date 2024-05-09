@@ -2,7 +2,7 @@
 import SwiftUI
 import Firebase
 struct LoginView: View {
-    @State var usernameTitle : String = "Username"
+    @State var usernameTitle : String = "Email"
     @State var passwordTitle : String = "Password"
     
     @EnvironmentObject var userTypeManager: UserTypeManager
@@ -15,7 +15,7 @@ struct LoginView: View {
     @State private var showingResetPasswordAlert = false
     @State private var resetPasswordAlertMessage = ""
 
-    
+    @State private var showAlert = false
     var body: some View {
         NavigationStack {
             ZStack {
@@ -134,6 +134,8 @@ struct LoginView: View {
                     
                 }
                 
+            }.alert(isPresented: $showAlert) {
+                Alert(title: Text("Error"), message: Text("The supplied username or password is incorrect."), dismissButton: .default(Text("OK")))
             }
         }
     }
@@ -141,6 +143,7 @@ struct LoginView: View {
         Auth.auth().signIn(withEmail: username, password: password) { result, error in
             if let error = error {
                 print(error.localizedDescription)
+                self.showAlert = true
             } else if let result = result {
                 let userUID = result.user.uid
                 print("User UID: \(userUID)")
@@ -188,6 +191,4 @@ struct LoginView: View {
     }
 
 }
-//#Preview {
-//  LoginView()
-//}
+
