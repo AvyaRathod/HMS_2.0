@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Firebase
 
 struct DoctorDetails {
     var name: String
@@ -20,6 +21,7 @@ struct DoctorProfile: View {
     @State private var isEditingProfile = false
     @State private var isViewingRecords = false
     @State private var showAlert = false
+    @EnvironmentObject var userTypeManager: UserTypeManager
     
     let doctor: DoctorDetails
     
@@ -91,7 +93,7 @@ struct DoctorProfile: View {
             }
             
             // Logout Button
-            LogoutView()
+            LogoutButton(showAlert: $showAlert)
         }
         .alert(isPresented: $showAlert) {
             Alert(title: Text("Logout"), message: Text("Are you sure you want to logout?"), primaryButton: .default(Text("Yes")) {
@@ -101,12 +103,23 @@ struct DoctorProfile: View {
     }
     
     func logout() {
-        // Perform logout action here
-        // For demonstration purposes, I'm just printing a message
-        print("Logging out...")
-        
-        // Redirect to login screen
-        // You should replace this with your actual navigation logic
+        do {
+            try Auth.auth().signOut() // Sign out from Firebase authentication
+
+            // Reset user defaults
+            UserDefaults.standard.removeObject(forKey: "userType")
+            UserDefaults.standard.removeObject(forKey: "userID")
+            
+            // Reset environment objects
+            userTypeManager.userType = .unknown
+            userTypeManager.userID = ""
+
+            
+        } catch let signOutError as NSError {
+            print("Error signing out: %@", signOutError)
+            // Handle errors if necessary, e.g., show an alert
+        }
+    
     }
 }
 

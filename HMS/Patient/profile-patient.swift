@@ -52,8 +52,22 @@ struct PatientProfileView: View {
     }
 
     func logout() {
-        // Your logout logic here
-        print("Logging out...")
+        do {
+            try Auth.auth().signOut() // Sign out from Firebase authentication
+
+            // Reset user defaults
+            UserDefaults.standard.removeObject(forKey: "userType")
+            UserDefaults.standard.removeObject(forKey: "userID")
+            
+            // Reset environment objects
+            userTypeManager.userType = .unknown
+            userTypeManager.userID = ""
+
+            
+        } catch let signOutError as NSError {
+            print("Error signing out: %@", signOutError)
+            // Handle errors if necessary, e.g., show an alert
+        }
     }
 }
 
