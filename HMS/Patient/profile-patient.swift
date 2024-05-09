@@ -74,6 +74,8 @@ struct PatientProfileView: View {
 
 struct ProfileHeaderView: View {
     var patient: PatientModel
+    
+    @State private var showEditSheet: Bool = false
 
     var body: some View {
         VStack(alignment: .leading) {
@@ -121,9 +123,14 @@ struct ProfileHeaderView: View {
                         .font(.title2)
                         .fontWeight(.bold)
                     Spacer()
+                    Button {
+                        showEditSheet.toggle()
+                    } label: {
                         Image(systemName: "pencil")
                         .foregroundColor(.black)
                         .padding()
+                    }
+                        
                 }
                 if let email = patient.email {
                     Text("Email: \(email)")
@@ -145,6 +152,9 @@ struct ProfileHeaderView: View {
             
         }
         .padding(.vertical) // Add vertical padding
+//        .sheet(isPresented: $showEditSheet) {
+//            editPatientDetails(patientData: patient, showEditSheet: $showEditSheet)
+//        }
     }
 }
 
