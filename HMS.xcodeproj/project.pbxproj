@@ -30,7 +30,6 @@
 		2DAC00592BD78B8D0080098C /* PdetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DAC00582BD78B8D0080098C /* PdetailView.swift */; };
 		2DAC005B2BD78BCC0080098C /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DAC005A2BD78BCC0080098C /* SignUpView.swift */; };
 		41136D442BEB73D000998C75 /* managePatient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41136D432BEB73D000998C75 /* managePatient.swift */; };
-		41136D462BECCC2F00998C75 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 41136D452BECCC2F00998C75 /* GoogleService-Info.plist */; };
 		41149EFE2BD63E9000E32FD7 /* AppointmentModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41149EFD2BD63E9000E32FD7 /* AppointmentModel.swift */; };
 		41149F022BD63EA200E32FD7 /* Patient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41149F012BD63EA200E32FD7 /* Patient.swift */; };
 		41149F062BD63EAF00E32FD7 /* Doc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41149F052BD63EAF00E32FD7 /* Doc.swift */; };
@@ -73,7 +72,6 @@
 		E43788722BDA4EC300EE6EDF /* PageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E43788712BDA4EC300EE6EDF /* PageModel.swift */; };
 		E43788742BDA4EDF00EE6EDF /* PageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E43788732BDA4EDF00EE6EDF /* PageView.swift */; };
 		E46B50D82BD76D12007A57F5 /* SlotBookView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E46B50D72BD76D12007A57F5 /* SlotBookView.swift */; };
-		E4A27E792BECCD520056EB44 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E4A27E782BECCD520056EB44 /* GoogleService-Info.plist */; };
 		F514B4092BE0E5600003B731 /* events-doctor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F514B4082BE0E5600003B731 /* events-doctor.swift */; };
 		F514B40B2BE0E81A0003B731 /* healthevents-admin.swift in Sources */ = {isa = PBXBuildFile; fileRef = F514B40A2BE0E81A0003B731 /* healthevents-admin.swift */; };
 		F514B40D2BE0EDFD0003B731 /* EventsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F514B40C2BE0EDFD0003B731 /* EventsModel.swift */; };
@@ -147,7 +145,6 @@
 		E43788712BDA4EC300EE6EDF /* PageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageModel.swift; sourceTree = "<group>"; };
 		E43788732BDA4EDF00EE6EDF /* PageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageView.swift; sourceTree = "<group>"; };
 		E46B50D72BD76D12007A57F5 /* SlotBookView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlotBookView.swift; sourceTree = "<group>"; };
-		E4A27E782BECCD520056EB44 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		F514B4082BE0E5600003B731 /* events-doctor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "events-doctor.swift"; sourceTree = "<group>"; };
 		F514B40A2BE0E81A0003B731 /* healthevents-admin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "healthevents-admin.swift"; sourceTree = "<group>"; };
 		F514B40C2BE0EDFD0003B731 /* EventsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsModel.swift; sourceTree = "<group>"; };
@@ -283,9 +280,9 @@
 			children = (
 				2D7D49DD2BE0DC2F00C84B9A /* Appointments */,
 				41149F052BD63EAF00E32FD7 /* Doc.swift */,
+				F57FCC3F2BE4BFC800D53B42 /* profile-doctor.swift */,
 				164571B22BDA0CD000855DDF /* DoctorHome.swift */,
 				F514B4082BE0E5600003B731 /* events-doctor.swift */,
-				F57FCC3F2BE4BFC800D53B42 /* profile-doctor.swift */,
 				2700B43A2BE102C70089F26D /* AddPrescriptionForm.swift */,
 				168B85762BEB8A37005C66D2 /* DRecordsView.swift */,
 			);
