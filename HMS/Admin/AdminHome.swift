@@ -23,6 +23,9 @@ struct AdminHomePage: View {
                     
                     // Add more views/components below
                     MonthlyAppointmentsChartView()
+                    MonthlyFinanceChartView()
+                    ChartUi()
+//                    EmergencyLineChartView()
                 }
                 .padding(.top, 20) // Adjusted top padding to add space between the components and the top edge
             }
