@@ -8,7 +8,6 @@
 //  HMS
 //
 //  Created by Protyush Kundu on 08/05/24.
-//
 import SwiftUI
 import Firebase
 import FirebaseFirestore
@@ -18,6 +17,8 @@ struct TotalUsersView: View {
     @State private var totalAppointments: Int = 0
     @State private var totalPrescriptions: Int = 0
     @State private var totalEarnings: Int = 0
+    @State private var totalDoctors: Int = 0
+    @State private var totalEmergencies: Int = 0
     
     // Custom colors
     let blueShade = Color(red: 24/255, green: 116/255, blue: 205/255)
@@ -31,7 +32,7 @@ struct TotalUsersView: View {
                     .frame(width: 150, height: 100)
                     .overlay(
                         VStack {
-                            Text("Total Users")
+                            Text("Users")
                                 .font(.headline)
                                 .foregroundColor(.white)
                                 .padding(.top)
@@ -41,14 +42,13 @@ struct TotalUsersView: View {
                                 .foregroundColor(.white)
                         }
                     )
-                   
                 
                 RoundedRectangle(cornerRadius: 20)
                     .fill(LinearGradient(gradient: Gradient(colors: [darkBlue.opacity(0.8), blueShade.opacity(0.8)]), startPoint: .leading, endPoint: .trailing))
                     .frame(width: 150, height: 100)
                     .overlay(
                         VStack {
-                            Text("Total Appointments")
+                            Text("Appointments")
                                 .font(.headline)
                                 .foregroundColor(.white)
                                 .padding(.top)
@@ -58,13 +58,13 @@ struct TotalUsersView: View {
                                 .foregroundColor(.white)
                         }
                     )
-                    
+                
                 RoundedRectangle(cornerRadius: 20)
                     .fill(LinearGradient(gradient: Gradient(colors: [darkBlue.opacity(0.8), blueShade.opacity(0.8)]), startPoint: .leading, endPoint: .trailing))
                     .frame(width: 150, height: 100)
                     .overlay(
                         VStack {
-                            Text("Total Prescriptions")
+                            Text("Prescriptions")
                                 .font(.headline)
                                 .foregroundColor(.white)
                                 .padding(.top)
@@ -74,14 +74,13 @@ struct TotalUsersView: View {
                                 .foregroundColor(.white)
                         }
                     )
-                    
                 
                 RoundedRectangle(cornerRadius: 20)
                     .fill(LinearGradient(gradient: Gradient(colors: [darkBlue.opacity(0.8), blueShade.opacity(0.8)]), startPoint: .leading, endPoint: .trailing))
                     .frame(width: 150, height: 100)
                     .overlay(
                         VStack {
-                            Text("Total Earnings")
+                            Text("Earnings")
                                 .font(.headline)
                                 .foregroundColor(.white)
                                 .padding(.top)
@@ -91,7 +90,39 @@ struct TotalUsersView: View {
                                 .foregroundColor(.white)
                         }
                     )
-                    
+                
+                RoundedRectangle(cornerRadius: 20)
+                    .fill(LinearGradient(gradient: Gradient(colors: [darkBlue.opacity(0.8), blueShade.opacity(0.8)]), startPoint: .leading, endPoint: .trailing))
+                    .frame(width: 150, height: 100)
+                    .overlay(
+                        VStack {
+                            Text("Doctors")
+                                .font(.headline)
+                                .foregroundColor(.white)
+                                .padding(.top)
+                            Text("\(totalDoctors)")
+                                .font(.title)
+                                .fontWeight(.bold)
+                                .foregroundColor(.white)
+                        }
+                    )
+                
+                RoundedRectangle(cornerRadius: 20)
+                    .fill(LinearGradient(gradient: Gradient(colors: [darkBlue.opacity(0.8), blueShade.opacity(0.8)]), startPoint: .leading, endPoint: .trailing))
+                    .frame(width: 150, height: 100)
+                    .overlay(
+                        VStack {
+                            Text("Emergencies")
+                                .font(.headline)
+                                .foregroundColor(.white)
+                                .padding(.top)
+                            Text("\(totalEmergencies)")
+                                .font(.title)
+                                .fontWeight(.bold)
+                                .foregroundColor(.white)
+                        }
+                    )
+                
             }
             .padding(.horizontal)
         }
@@ -99,6 +130,8 @@ struct TotalUsersView: View {
             fetchTotalUsers()
             fetchTotalAppointments()
             fetchTotalPrescriptions()
+            fetchTotalDoctors()
+            fetchTotalEmergencies()
             // Start a timer to periodically update the counts
            
         }
@@ -128,7 +161,7 @@ struct TotalUsersView: View {
         let db = Firestore.firestore()
         let appointmentsCollection = db.collection("appointments")
         
-        appointmentsCollection.getDocuments { (snapshot, error) in
+        appointmentsCollection.whereField("Bill", isEqualTo: 1000).getDocuments { (snapshot, error) in
             if let error = error {
                 print("Error fetching documents: \(error)")
                 return
@@ -161,6 +194,44 @@ struct TotalUsersView: View {
             
             self.totalPrescriptions = documents.count
            
+        }
+    }
+    
+    func fetchTotalDoctors() {
+        let db = Firestore.firestore()
+        let doctorsCollection = db.collection("doctors")
+        
+        doctorsCollection.getDocuments { (snapshot, error) in
+            if let error = error {
+                print("Error fetching documents: \(error)")
+                return
+            }
+            
+            guard let documents = snapshot?.documents else {
+                print("No documents found")
+                return
+            }
+            
+            self.totalDoctors = documents.count
+        }
+    }
+    
+    func fetchTotalEmergencies() {
+        let db = Firestore.firestore()
+        let emergenciesCollection = db.collection("Emergency")
+        
+        emergenciesCollection.getDocuments { (snapshot, error) in
+            if let error = error {
+                print("Error fetching documents: \(error)")
+                return
+            }
+            
+            guard let documents = snapshot?.documents else {
+                print("No documents found")
+                return
+            }
+            
+            self.totalEmergencies = documents.count
         }
     }
     
