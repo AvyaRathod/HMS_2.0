@@ -32,6 +32,7 @@
 		2DAC00592BD78B8D0080098C /* PdetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DAC00582BD78B8D0080098C /* PdetailView.swift */; };
 		2DAC005B2BD78BCC0080098C /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DAC005A2BD78BCC0080098C /* SignUpView.swift */; };
 		41136D442BEB73D000998C75 /* managePatient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41136D432BEB73D000998C75 /* managePatient.swift */; };
+		41136D482BED5F2500998C75 /* managePatientDoc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41136D472BED5F2500998C75 /* managePatientDoc.swift */; };
 		41149EFE2BD63E9000E32FD7 /* AppointmentModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41149EFD2BD63E9000E32FD7 /* AppointmentModel.swift */; };
 		41149F022BD63EA200E32FD7 /* Patient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41149F012BD63EA200E32FD7 /* Patient.swift */; };
 		41149F062BD63EAF00E32FD7 /* Doc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41149F052BD63EAF00E32FD7 /* Doc.swift */; };
@@ -120,6 +121,7 @@
 		2DAC00582BD78B8D0080098C /* PdetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PdetailView.swift; sourceTree = "<group>"; };
 		2DAC005A2BD78BCC0080098C /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
 		41136D432BEB73D000998C75 /* managePatient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = managePatient.swift; sourceTree = "<group>"; };
+		41136D472BED5F2500998C75 /* managePatientDoc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = managePatientDoc.swift; sourceTree = "<group>"; };
 		41149EFD2BD63E9000E32FD7 /* AppointmentModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppointmentModel.swift; sourceTree = "<group>"; };
 		41149F012BD63EA200E32FD7 /* Patient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Patient.swift; sourceTree = "<group>"; };
 		41149F052BD63EAF00E32FD7 /* Doc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Doc.swift; sourceTree = "<group>"; };
@@ -287,6 +289,7 @@
 				F514B4082BE0E5600003B731 /* events-doctor.swift */,
 				2700B43A2BE102C70089F26D /* AddPrescriptionForm.swift */,
 				168B85762BEB8A37005C66D2 /* DRecordsView.swift */,
+				41136D472BED5F2500998C75 /* managePatientDoc.swift */,
 			);
 			path = Doctor;
 			sourceTree = "<group>";
@@ -457,6 +460,7 @@
 				E46B50D82BD76D12007A57F5 /* SlotBookView.swift in Sources */,
 				2DAC00552BD78B450080098C /* InputFieldView.swift in Sources */,
 				168B85712BEB7211005C66D2 /* RecordView.swift in Sources */,
+				41136D482BED5F2500998C75 /* managePatientDoc.swift in Sources */,
 				F514B4092BE0E5600003B731 /* events-doctor.swift in Sources */,
 				413A15E32BD0F6330035CDAB /* ContentView.swift in Sources */,
 				8414566F2BD9109A00691A79 /* DoctorProfileView.swift in Sources */,
@@ -651,7 +655,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"HMS/Preview Content\"";
-				DEVELOPMENT_TEAM = GP39UVDW82;
+				DEVELOPMENT_TEAM = B5CFL92X42;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHealthShareUsageDescription = "need for functioning";
@@ -685,7 +689,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"HMS/Preview Content\"";
-				DEVELOPMENT_TEAM = GP39UVDW82;
+				DEVELOPMENT_TEAM = B5CFL92X42;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHealthShareUsageDescription = "need for functioning";

@@ -21,6 +21,11 @@ struct Doc: View {
                     Image(systemName: "calendar")
                     Text("Events")
                 }
+            
+            ManagePatientDoc()
+                .tabItem { Image(systemName: "person.3.fill")
+                    Text("Manage discharge") }
+            
             DoctorAccountView()
                 .tabItem {
                     Image(systemName: "person")
