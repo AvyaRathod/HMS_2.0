@@ -135,25 +135,33 @@ struct HealthVitalsView: View {
 struct UpcomingAppointmentCardView: View {
     var appointments: [AppointmentModel]
     @State private var appointmenta: [AppointmentModel] = []
-    
+
     var body: some View {
-        Text("Upcoming Appointments")
-            . font(. system(size: 22))
-            .font(.headline)
-            .fontWeight(.semibold)
-            .padding(.horizontal)
-        ScrollView(.horizontal, showsIndicators: false) {
+        VStack {
+            Text("Upcoming Appointments")
+                .font(.system(size: 22))
+                .font(.headline)
+                .fontWeight(.semibold)
+                .padding(.horizontal)
             
+            if appointments.isEmpty {
+                Text("No upcoming appointments")
+                    .font(.title3)
+                    .padding()
+            } else {
+                ScrollView(.horizontal, showsIndicators: false) {
                     HStack(spacing: 20) {
                         ForEach(appointments) { appointment in
                             AppointmentCardView(appointment: appointment, appointments: $appointmenta)
                         }
                     }
-
                     .padding(.bottom)
                 }
             }
         }
+    }
+}
+
 
 
 struct BookView: View {
@@ -214,10 +222,12 @@ struct BookView: View {
 
 struct AppointmentCardView: View {
     var appointment: AppointmentModel
-    @Binding var appointments: [AppointmentModel] 
+    @Binding var appointments: [AppointmentModel]
     @State private var doctorName: String = "Loading..."
     @State private var specialisation: String = "Loading..."
     @State private var doctorImageURL: String? = nil
+    @State private var showAlert = false
+
     
     var body: some View {
         ZStack{
@@ -232,14 +242,14 @@ struct AppointmentCardView: View {
                                     .aspectRatio(contentMode: .fill)
                                     .frame(height: 150)
                                     .clipped()
-                                    .cornerRadius(10)
+                                    .cornerRadius(11)
                                 } else {
                                     Rectangle()
                                         .fill(Color.white)
-                                        .frame(width: 300, height: 130)
+                                        .frame(width: 800, height: 130)
                                         .cornerRadius(30)
                                         .padding(.leading, 60)
-                                        .frame(minWidth: 300,minHeight: 150)
+                                       
                                 }
                 VStack(alignment: .leading) {
                     Text(doctorName)
@@ -255,26 +265,37 @@ struct AppointmentCardView: View {
                     Text("Time: \(appointment.timeSlot)")
                         .font(.subheadline)
                     Button(action: {
-                        cancelAppointment()
-                    }) {
-                        Text("Cancel")
-                            .fontWeight(.bold)
-                            .foregroundColor(.white)
-                            .padding(.vertical, 8)
-                            .padding(.horizontal, 16)
-                            .background(Color.customBlue)
-                            .cornerRadius(11)
-                    }
+                                showAlert = true
+                            }) {
+                                Text("Cancel")
+                                    .fontWeight(.bold)
+                                    .foregroundColor(.white)
+                                    .padding(.vertical, 8)
+                                    .padding(.horizontal, 30)
+                                    .background(Color.customBlue)
+                                    .cornerRadius(11)
+                            }
+                            .alert(isPresented: $showAlert) {
+                                Alert(title: Text("Cancel Appointment"), message: Text("Are you sure you want to cancel the appointment?"), primaryButton: .default(Text("Yes")) {
+                                    // Call function to cancel appointment
+                                    cancelAppointment()
+                                }, secondaryButton: .cancel())
+                            }
                 }
+                .padding(40)
+                
             }
                 .padding()
+            .frame(width: 350,height: 200)
                 .background(Color.white)
                 .cornerRadius(11)
                 .shadow(radius: 4)
                 .padding(.bottom)
                 .padding(.leading)
                 .padding(.trailing)
+                
             }
+        
         .onAppear {
             fetchDoctorDetails()
         }

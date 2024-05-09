@@ -19,7 +19,7 @@ struct InputFieldView: View {
       .frame(width: 360, height: 52)
       .overlay(
        RoundedRectangle(cornerSize: CGSize(width: 4, height: 4))
-         .stroke(Color.gray, lineWidth: 1)
+         .stroke(Color.customBlue, lineWidth: 1)
       ).onChange(of: data) { newValue in
           // Validate contact number format only if it's the contact field
           if title == "Contact" {
@@ -33,7 +33,7 @@ struct InputFieldView: View {
       Text(title ?? "Input")
        .font(.headline)
        .fontWeight(.medium)
-       .foregroundColor(Color.black)
+       .foregroundColor(Color.customBlue)
        .multilineTextAlignment(.leading)
        .padding(.bottom,4)
        .background(Color(Color.white))
